@@ -1,0 +1,85 @@
+
+-- v1 - zmienne globalne
+def draw_player
+	goto (px-pw/2) (py-ph/2)
+	ink pi
+	spr ps
+end
+
+-- v4 - ala FORTH, :s powoduje, ze najpierw szukamy w slowniku s
+def draw_spr :s
+	goto (x-w/2) (y-h/2)
+	ink i
+	spr s
+end
+
+-- v2 - atrybuty
+-- bardzo jednoznaczne ale wiecej halasu
+def draw_spr :s
+	goto (s.x-s.w/2) (s.y-s.h/2) --> 
+	ink s.i
+	spr s.s
+end
+
+-- forth + args
+def center_spr :s (x y)
+	s.x s.w 2 div sub (x)
+	s.y s.h 2 div sub (y)
+end
+
+-- forth
+def center_spr (s -- x y)
+	(s) dup .x get swap (x s) dup .w get (x s w) 2 div rot (s w x) swap sub swap (x s)
+	(x s) dup .y get swap (x y s) .h get (x y h) 2 div sub (x y)
+end
+
+def draw_spr :s
+	s center_spr (x y) goto
+	s.i ink
+	s.s spr
+end
+
+-- forth + infix
+def center_spr :s (x y)
+	i[ s.x - s.w/2 ]
+	i[ s.y - s.h/2 ]
+end
+
+-------------------------------------------------------------------------------
+
+-- v3 - atrybuty 
+-- a co jak wiecej argumentow? .a :b -> .x to a.x a :x to b.x ??? a co jak 3 argumenty @?
+def draw_spr :s
+	goto (.x-.w/2) (.y-.h/2)
+	ink .i
+	spr .s
+end
+
+-- v5 argumenty zawsze 1 znak, dzialaja jak prefix obiektu, zawsze z duzej aby nie bylo kolizji
+def dist A: B:
+	var dx (Ax-Bx)
+	var dy (Ay-By)
+	ret (sqrt (dx*dx + dy*dy))
+end
+
+def dist a: b:
+	let dx (a.x-b.x)
+	let dy (a.y-b.y)
+	ret (sqrt (dx*dx + dy*dy))
+end
+
+-- forth
+def dist a: b:
+	a.x b.x sub dup mul
+	a.y b.y sub dup mul
+	add sqrt
+end
+
+-- forth
+def dist a: b:
+	a.x b.x - dup *
+	a.y b.y - dup *
+	+ sqrt
+end
+
+
