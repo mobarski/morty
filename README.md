@@ -38,7 +38,7 @@ dup  (a -- a a)
 drop (a --)
 over (a b -- a b a)
 swap (a b -- b a)
-rot (a b c -- b c a) ( optional )
+rot  (a b c -- b c a) ( optional )
 ```
 
 ## ALU
@@ -58,17 +58,17 @@ xor (a b -- c)
 ## mem
 
 ```
-poke (val addr --)
-peek (addr -- val)
+poke (v a --)
+peek (a -- v)
 ```
 
 ## control
 
 ```
-jz {} (a --) # branch when a==0, addr is relative
-call {} (--) # push return addr onto return stack
+jz   {} (a --)  # branch when a==0, addr is relative
+call {} (--)    # push return addr onto return stack
+push {} (-- a)  # push literal onto data stack
 ret (--)
-push {} (-- a)
 ```
 
 ## registers

@@ -92,6 +92,15 @@ class CanonicalVM:
 		self.ram[self.s+1] = self.ram[self.r]
 		self.s += 1
 		self.r += 1 # grows down
+	
+	# memory
+	
+	def op_peek(self):
+		self.ram[self.s] = self.ram[self.ram[self.s]]
+
+	def op_poke(self):
+		self.ram[self.ram[self.s]] = self.ram[self.s-1]
+		self.s -= 2
 
 
 class ExtendedVM(CanonicalVM):
@@ -116,11 +125,16 @@ class ExtendedVM(CanonicalVM):
 	def op_mod(self):
 		self.ram[self.s-1] %= self.ram[self.s]
 		self.s -= 1
-
+	
+	def op_dot(self):
+		v = self.ram[self.s]
+		self.s -= 1
+		print(v,end=' ')
 
 if __name__=="__main__":
 	vm = ExtendedVM()
-	vm.rom = ['push',40,'push',2,'add','jz',0,'push',666,'push',777,'push',111,'rot','swap','swap','stop']
-	for i in range(11):
+	vm.rom = ['push',40,'push',2,'add','jz',0,'push',666,'push',777,'push',111,'rot','swap','swap','dot','dot','stop']
+	vm.rom = ['push',42,'push',0,'poke','push',111,'stop']
+	for i in range(15):
 		vm.tick()
 		print(vm.ram)
