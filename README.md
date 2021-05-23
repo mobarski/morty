@@ -5,9 +5,9 @@ TODO
 ## Idea
 
 - language for simple game dev (demakes)
-- language that is small
+- language that is small (like Go)
 - language that is easy to implement (close to the stack machine like Forth)
-- language that is easy to read (named arguments, dot properties, less symbols)
+- language that is easy to read (like Python, Basic or Logo; named arguments, dot properties, less symbols)
 
 ## Targets
 
