@@ -85,17 +85,17 @@ r> (-- a)
 
 ```
 def kinetic_energy (m v -- e)
-	dup (m v v) mul mul
+    dup (m v v) mul mul
 end
 
 def potential_energy (m h -- e)
-	g (m h g) mul mul
+    g (m h g) mul mul
 end
 
 def total_energy (m v h -- e) :h :v :m
-	m v kinetic_energy   (ek)
-	m h potential_energy (ek ep)
-	add
+    m v kinetic_energy   (ek)
+    m h potential_energy (ek ep)
+    add
 end
 ```
 
@@ -108,7 +108,7 @@ To use a variable just use its name.
 ```
 (x = a*a * b + c)
 def example (a b c -- x) :c :b :a
-	a dup mul b mul c add
+    a dup mul b mul c add
 end
 ```
 Variables cannot be reassigned (this might change).
