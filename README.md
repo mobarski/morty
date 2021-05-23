@@ -107,8 +107,8 @@ To use a variable just use its name.
 
 ```
 (x = a*a * b + c)
-def example (a b c -- x) :c :b :a
-    a dup mul b mul c add
+def example (a b c -- x) :c :b
+    (a) dup mul b mul c add
 end
 ```
 Variables cannot be reassigned (this might change).
