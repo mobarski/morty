@@ -23,7 +23,7 @@ TODO
 R - return stack pointer
 S - (data) stack pointer
 I - instruction pointer
-B - base pointer
+F - frame pointer
 
 TOS - top of stack register
 
@@ -115,8 +115,8 @@ Variables cannot be reassigned (this might change).
 
 Captured values are stored on the return stack (the capture is just >R plus compiler logic)
 On function end or early return they will be automatically discarded - this is possible
-by the use of the B register which stores the "base" of the return stack.
-On function call both B and I registers are stored on the return stack.
+by the use of the F register which stores the "frame" of the return stack.
+On function call both F and I registers are stored on the return stack.
 
 Using a variable is compiled into opcode "local" with the parameter in the next program cell, which stores information about variable index.
 First captured value has index 1, second 2 etc.

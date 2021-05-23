@@ -27,7 +27,7 @@ class BaseVM:
 		print()
 
 	def show(self):
-		print(f"I:{self.i} R:{self.r} B:{self.b} OP:{self.op}")
+		print(f"I:{self.i} R:{self.r} F:{self.f} OP:{self.op}")
 			
 class CanonicalVM(BaseVM):
 
@@ -152,7 +152,7 @@ class ExtendedVM(CanonicalVM):
 
 class LocalsVM(ExtendedVM):
 	def __init__(self):
-		self.b = 0
+		self.f = 0
 		super().__init__()
 
 	def op_local(self):
@@ -160,20 +160,20 @@ class LocalsVM(ExtendedVM):
 		self.i += 1
 		self.ram[self.s+1] = self.tos
 		self.s += 1
-		self.tos = self.ram[self.b-v] # grows down
+		self.tos = self.ram[self.f-v] # grows down
 
 	# TODO: as xcall, used only when needed
 	def op_call(self):
-		self.ram[self.r-1] = self.b
+		self.ram[self.r-1] = self.f
 		self.ram[self.r-2] = self.i+1
 		self.r -= 2 # grows down
-		self.b = self.r
+		self.f = self.r
 		self.i = self.rom[self.i]
 	
 	# TODO: as xret, used only when needed
 	def op_ret(self):
-		self.i = self.ram[self.b]
-		self.b = self.ram[self.b+1] # grows down
+		self.i = self.ram[self.f]
+		self.f = self.ram[self.f+1] # grows down
 		self.r += 2 # grows down
 
 if __name__=="__main__":
