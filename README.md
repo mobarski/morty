@@ -42,12 +42,13 @@ VM instructions are based on the p-code machine.
 | oper X |            | extension operation X (see below) |
 | push X | (--x)      | push X onto stack |  
 | jz   X | (v--)      | add X to the instruction pointer if v==0 |
-| call X | (--)(--fr) | call function X |
+| call X | (--)(=fr)  | call function X |
 
 ### operations
 
 | name   | effect     | info | 
 | ------ | ---------- | ---- |
+| ret    | (fr*=)     | return from function call |
 | dup    | (a--aa)    |  |
 | drop   | (a--)      |  |
 | swap   | (ab--ba)   |  |
@@ -56,7 +57,7 @@ VM instructions are based on the p-code machine.
 | add    | (ab--c)    |  |
 | xor    | (ab--c)    |  |
 | and    | (ab--c)    |  |
-| nz     | (a--b)     |  |
+| nz     | (a--b)     | aka bool |
 | get    | (a--b)     |  |
 | set    | (va--)     |  |
 | frame  | (--a)      |  |
