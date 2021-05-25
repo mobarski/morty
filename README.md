@@ -127,24 +127,6 @@ On function end or early return they will be automatically discarded - this is p
 by the use of the F register which stores the "frame" of the return stack.
 On function call both F and I registers are stored on the return stack.
 
-## Attributes
-
-TODO
-
-```
-def check-collision (e p -- c)
-	(e p) dup .x swap .y (e px py) rot (px py e)
-	(..e) dup .x swap .y (px py ex ey) distance (d)
-	8 or-less (c)
-end
-
-def check-collision (e p -- c) :p :e
-	e.x e.y p.x p.y distance (d)
-	8 or-less (c)
-end
-
-```
-
 ## Loops
 
 TODO

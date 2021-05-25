@@ -1,3 +1,59 @@
+-- atrybuty
+
+# !!!!!!!!!
+def check-collision (e p -- bool) :p :e
+	e get-xy (ex ey)
+	p get-xy (ex ey px py)
+	distance (n) 8 or-less (bool)
+end
+
+def check-collision (e p -- c) :p :e
+	e 0 at  e 1 at (ex ey)
+	p 0 at  p 1 at (ex ey px py)
+	distance (d) 8 or-less (c)
+end
+
+
+czyli raczej nie robimy atrybutów
+chyba, że .x jako "macro .x 0 at end"
+
+def check-collision (e p -- bool)
+	get-xy (e px py) rot (px py e)
+	get-xy (px py ex ey)
+	distance (n) 8 or-less (bool)
+end
+
+def check-collision (e p -- c) :p :e
+	e.x e.y p.x p.y distance (d)
+	8 or-less (c)
+end
+
+def check-collision (e p -- c) :p :e
+	e .x  e .y   p .x  p .y distance (d)
+	8 or-less (c)
+end
+
+def check-collision (e p -- c) #p #e x:0 y:1
+	e.x e.y p.x p.y distance (d)
+	8 or-less (c)
+end
+
+def check-collision (e p -- c) $p $e
+	e:0 e:1 p:0 p:1 distance (d)
+	8 or-less (c)
+end
+
+def check-collision (e p -- c) :p :e
+	e.0 e.1 p.0 p.1 distance (d)
+	8 or-less (c)
+end
+
+def check-collision (e p -- c) :p :e
+	e @0 e @0 p  p[1] distance (d)
+	8 or-less (c)
+end
+
+
 
 -- v1 - zmienne globalne
 def draw_player
