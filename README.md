@@ -154,8 +154,9 @@ TODO
 | **Generic stack machine** | https://users.ece.cmu.edu/~koopman/stack_computers/sec3_2.html |
 |        **Permacomputing** | http://viznut.fi/texts-en/permacomputing.html                  |
 |        **Thinking Forth** | http://thinking-forth.sourceforge.net/thinking-forth-ans.pdf   |
+|        **P-code machine** | https://en.wikipedia.org/wiki/P-code_machine                   |
 |                **Fabris** | https://github.com/mobarski/fabris                             |
-|                **UCBLogo**| https://en.wikipedia.org/wiki/UCBLogo                          |
+|               **UCBLogo** | https://en.wikipedia.org/wiki/UCBLogo                          |
 |                   **Uxn** | https://100r.co/site/uxn.html                                  |
 
 [//]: # (online .md editor: https://markdown-editor.github.io/ )
