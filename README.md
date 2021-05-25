@@ -7,16 +7,15 @@ TODO
 - language for simple game dev (demakes)
 - language that is small (like Go)
 - language that is easy to implement (close to the stack machine like Forth)
-- language that is easy to read (like Python, Basic or Logo; named arguments, dot properties, less symbols)
+- language that is easy to read (like Python, Logo or Basic; named arguments, dot properties, less symbols)
 
 ## Targets
 
-- JS
 - Python
+- JS
 - MicroPython
 - C
 - Go
-- Rust
 
 # VM Architecture
 
@@ -25,63 +24,78 @@ S - (data) stack pointer
 I - instruction pointer
 F - frame pointer
 
-TOS - top of stack register
+T - top of stack register
 
-ROM - program memory
+CODE - program memory
 RAM - main memory for both stacks
 
-# Instructions
+# VM Instructions
 
-## stack
+VM instructions are based on the p-code machine.
 
-```
-dup  (a -- a a)
-drop (a --)
-over (a b -- a b a)
-swap (a b -- b a)
-rot  (a b c -- b c a) ( optional )
-```
+## minimal VM
 
-## ALU
+### main instructions
 
-```
-add (a b -- c)
-sub (a b -- c)
-mul (a b -- c) ( optional )
-div (a b -- c) ( optional )
-mod (a b -- c) ( optional )
+| name   | effect     | info | 
+| ------ | ---------- | ---- |
+| oper X |            | extension operation X (see below) |
+| push X | (--x)      | push X onto stack |  
+| jz   X | (v--)      | add X to the instruction pointer if v==0 |
+| call X | (--)(=fr)  | call function X |
 
-and (a b -- c)
-or  (a b -- c)
-xor (a b -- c)
-```
+### operations
 
-## mem
+| name   | effect     | info | 
+| ------ | ---------- | ---- |
+| ret    | (fr*=)     | return from function call |
+| dup    | (a--aa)    |  |
+| drop   | (a--)      |  |
+| swap   | (ab--ba)   |  |
+| stor   | (a--)(=a)  |  |
+| rtos   | (--a)(a=)  |  |
+| add    | (ab--c)    |  |
+| xor    | (ab--c)    |  |
+| and    | (ab--c)    |  |
+| nz     | (a--b)     | aka bool |
+| get    | (a--b)     |  |
+| set    | (va--)     |  |
+| frame  | (--a)      |  |
 
-```
-get (a -- v)
-set (v a --)
-```
+## basic VM
 
-## control
+### additional operations
 
-```
-jz   {} (a --)  # branch when a==0, addr is relative
-call {} (--)    # push return addr onto return stack
-push {} (-- a)  # push literal onto data stack
-ret (--)
-```
+| name   | effect     | info | 
+| ------ | ---------- | ---- |
+| rot    | (abc--bca) |  |
+| over   | (ab--aba)  |  |
+| sub    | (ab--c)    |  |
+| mul    | (ab--c)    |  |
+| div    | (ab--c)    |  |
+| mod    | (ab--c)    |  |
+| or     | (ab--c)    |  |
+| ltz    | (a--b)     |  |
+| ralloc | (n--a)     |  |
+| eq     | (ab--c)    |  |
+| ne     | (ab--c)    |  |
+| le     | (ab--c)    |  |
+| ge     | (ab--c)    |  |
+| lt     | (ab--c)    |  |
+| gt     | (ab--c)    |  |
+| neg    | (a--b)     |  |
+| clock  | (--a)      |  |
+| dot    | (a--)      |  |
+| emit   | (a--)      |  |
 
-## registers
 
-not so nice names as these operations should be performed with care
+# Language
 
-```
->r (a --)
-r> (-- a)
-```
+Morty language is similar to Morty VM instruction set.
+VM operations can be used directly in the language.
+VM instructions are not directly available - they are used by the compiler.
 
-# Language Examples
+## Language Examples
 
 ```
 def kinetic_energy (m v -- e)
@@ -111,14 +125,13 @@ def example (a b c -- x) :c :b
     (a) dup mul b mul c add
 end
 ```
-Variables cannot be reassigned (this might change).
 
 Captured values are stored on the return stack (the capture is just >R plus compiler logic)
 On function end or early return they will be automatically discarded - this is possible
 by the use of the F register which stores the "frame" of the return stack.
 On function call both F and I registers are stored on the return stack.
 
-Using a variable is compiled into opcode "local" with the parameter in the next program cell, which stores information about variable index.
+Using a variable compiles into "frame" operation ie "frame 1 add get"
 First captured value has index 1, second 2 etc.
 
 ## Loops
