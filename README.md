@@ -155,8 +155,10 @@ TODO
 |        **Permacomputing** | http://viznut.fi/texts-en/permacomputing.html                  |
 |        **Thinking Forth** | http://thinking-forth.sourceforge.net/thinking-forth-ans.pdf   |
 |        **P-code machine** | https://en.wikipedia.org/wiki/P-code_machine                   |
+|         **Stack machine** | https://en.wikipedia.org/wiki/Stack_machine                    |
 |                **Fabris** | https://github.com/mobarski/fabris                             |
 |               **UCBLogo** | https://en.wikipedia.org/wiki/UCBLogo                          |
 |                   **Uxn** | https://100r.co/site/uxn.html                                  |
+|         **Threaded code** | https://en.wikipedia.org/wiki/Threaded_code                    |
 
 [//]: # (online .md editor: https://markdown-editor.github.io/ )
