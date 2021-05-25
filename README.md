@@ -121,6 +121,25 @@ On function call both F and I registers are stored on the return stack.
 Using a variable is compiled into opcode "local" with the parameter in the next program cell, which stores information about variable index.
 First captured value has index 1, second 2 etc.
 
+## Loops
+
+TODO
+
+## Conditionals
+
+TODO
+
+## Lists
+
+TODO
+
+## Arrays
+
+TODO
+
+## Strings
+
+TODO
 
 # References
 
