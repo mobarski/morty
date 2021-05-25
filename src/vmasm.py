@@ -17,6 +17,7 @@ def asm_to_cells(text):
 	cells = apply_labels(cells, labels)
 	return cells
 
+# TODO: mozliwosc podania listy OP_NAMES
 # TODO: relative jump for jz +5
 
 # -----------------------------------------------------------------------------
