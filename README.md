@@ -45,47 +45,47 @@ MEM - main memory for both stacks
 
 ### operations
 
-| name   | effect     | info | 
-| ------ | ---------- | ---- |
-| ret    | (fr*=)     | return from procedure call |
-| dup    | (a--aa)    |  |
-| drop   | (a--)      |  |
-| swap   | (ab--ba)   |  |
-| stor   | (a--)(=a)  | aka >R |
-| rtos   | (--a)(a=)  | aka R> |
-| add    | (ab--c)    |  |
-| xor    | (ab--c)    |  |
-| and    | (ab--c)    |  |
-| nz     | (a--b)     | aka bool |
-| get    | (a--b)     | aka @ |
-| set    | (va--)     | aka ! |
+| asm    | effect     | morty | info | 
+| ------ | ---------- | ----- | ---- |
+| ret    | (fr*=)     |       | return from procedure call |
+| dup    | (a--aa)    |       |  |
+| drop   | (a--)      |       |  |
+| swap   | (ab--ba)   |       |  |
+| stor   | (a--)(=a)  |       | aka >R |
+| rtos   | (--a)(a=)  |       | aka R> |
+| add    | (ab--c)    |       |  |
+| xor    | (ab--c)    |       |  |
+| and    | (ab--c)    |       |  |
+| nz     | (a--b)     | bool  |  |
+| get    | (a--b)     |       | aka @ |
+| set    | (va--)     |       | aka ! |
 
 ## basic VM
 
 ### additional operations
 
-| name   | effect     | info | 
-| ------ | ---------- | ---- |
-| rot    | (abc--bca) |  |
-| over   | (ab--aba)  |  |
-| sub    | (ab--c)    |  |
-| mul    | (ab--c)    |  |
-| div    | (ab--c)    |  |
-| mod    | (ab--c)    |  |
-| or     | (ab--c)    |  |
-| ltz    | (a--b)     |  |
-| ralloc | (n--a)     |  |
-| eq     | (ab--c)    |  |
-| ne     | (ab--c)    |  |
-| or-less | (ab--c)   | le |
-| or-more | (ab--c)   | ge |
-| lt     | (ab--c)    |  |
-| gt     | (ab--c)    |  |
-| neg    | (a--b)     |  |
-| clock  | (--a)      |  |
-| dot    | (a--)      |  |
-| emit   | (a--)      |  |
-| frame  | (--a)      |  |
+| asm    | effect     | morty   | info | 
+| ------ | ---------- | ------- | ---- |
+| rot    | (abc--bca) |         |  |
+| over   | (ab--aba)  |         |  |
+| sub    | (ab--c)    |         |  |
+| mul    | (ab--c)    |         |  |
+| div    | (ab--c)    |         |  |
+| mod    | (ab--c)    |         |  |
+| or     | (ab--c)    |         |  |
+| ltz    | (a--b)     |         |  |
+| ralloc | (n--a)     |         |  |
+| eq     | (ab--c)    |         |  |
+| ne     | (ab--c)    |         |  |
+| le     | (ab--c)    | or-less |  |
+| ge     | (ab--c)    | or-more |  |
+| lt     | (ab--c)    |         |  |
+| gt     | (ab--c)    |         |  |
+| neg    | (a--b)     |         |  |
+| clock  | (--a)      |         |  |
+| dot    | (a--)      |         |  |
+| emit   | (a--)      |         |  |
+| frame  | (--a)      |         |  |
 
 # Language
 
