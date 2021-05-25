@@ -1,13 +1,13 @@
 
 class CanonicalVM:
-	"""Morty VM prototype
+	"""Morty VM prototype, no TOS register
+	   simplification: ignores cell limits / structure
 	"""
 	RAM_SIZE = 32
 	def __init__(self):
 		self.i = 0
 		self.r = self.RAM_SIZE-1
 		self.s = 0
-		self.tos = 0 # TODO !!!
 		self.rom = []
 		self.ram = [0]*self.RAM_SIZE
 	
