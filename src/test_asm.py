@@ -20,6 +20,6 @@ code = """
 	
 	stop
 """
-op_names = "stop call ret jz push mul div".split(' ')
+op_names = "stop call$ ret jz$ push$ mul div".split(' ')
 cells = vmasm.asm_to_cells(code, op_names)
 print(cells)

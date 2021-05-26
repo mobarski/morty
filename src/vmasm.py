@@ -1,6 +1,11 @@
 import re
 
-def asm_to_cells(text, op_names, arg_ops=[]):
+# TODO: relative jump target using stacks -> if if then then
+
+def asm_to_cells(text, op_names):
+	arg_ops  = [a.replace('$','') for a in op_names if a[-1]=='$']
+	op_names = [a.replace('$','') for a in op_names]
+	#
 	op_code = {n:i for i,n in enumerate(op_names)}
 	text = strip_comments(text)
 	macros = get_macros(text)
@@ -12,7 +17,6 @@ def asm_to_cells(text, op_names, arg_ops=[]):
 	cells = apply_labels(cells, labels)
 	return cells
 
-# TODO: relative jump target using stacks -> if if then then
 
 # -----------------------------------------------------------------------------
 # -----------------------------------------------------------------------------
@@ -53,14 +57,12 @@ def precompile(tokens, op_code, arg_ops):
 	prev_t = ''
 	for t in tokens:
 		c = op_code.get(t)
-		if t in ['call','jz']:
+		if t in arg_ops:
 			cells += [c]
 		elif t[0]=='@':
 			cells += [t]
 		elif t[-1]==':':
 			cells += [t]
-		elif t in arg_ops:
-			cells += [c]
 		elif prev_t in arg_ops:
 			cells += [int(t)]
 		elif c is not None: # must be before else
@@ -130,7 +132,7 @@ if __name__=="__main__":
 		
 		stop
 	"""
-	op_names = "stop call ret jz push mul div vincr vget vset".split(' ')
-	cells = asm_to_cells(code, op_names, arg_ops=['vincr','vget','vset'])
+	op_names = "stop call$ ret jz$ push$ mul div vincr$ vget$ vset$".split(' ')
+	cells = asm_to_cells(code, op_names)
 	print(cells)
 	

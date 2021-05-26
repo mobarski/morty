@@ -1,7 +1,7 @@
 from basevm import Test1VM
 from vmasm import asm_to_cells
 
-op_names = "stop _ call ret jz push _ mul add".split(' ')
+op_names = "stop _ call$ ret jz$ push$ _ mul add".split(' ')
 
 code1 = asm_to_cells("5 15 add 2 mul 1 1 add add stop", op_names)
 

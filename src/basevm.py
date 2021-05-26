@@ -21,7 +21,7 @@ class BaseVM:
 		self.code = []
 		self.time = time()
 		self.op_cnt = defaultdict(int)
-		self.op_name = {i:n for i,n in enumerate(op_names)}
+		self.op_name = {i:n.replace('$','') for i,n in enumerate(op_names)}
 
 	def tick(self):
 		"""dispatch based on op to name dictionary"""
