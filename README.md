@@ -51,8 +51,8 @@ MEM - main memory for both stacks
 | dup    | (a--aa)    |       |  |
 | drop   | (a--)      |       |  |
 | swap   | (ab--ba)   |       |  |
-| stor   | (a--)(=a)  |       | aka >R |
-| rtos   | (--a)(a=)  |       | aka R> |
+| stor   | (a--)(=a)  | >R    |  |
+| rtos   | (--a)(a=)  | R>    |  |
 | add    | (ab--c)    |       |  |
 | xor    | (ab--c)    |       |  |
 | and    | (ab--c)    |       |  |
@@ -61,6 +61,13 @@ MEM - main memory for both stacks
 | set    | (va--)     |       | aka ! |
 
 ## basic VM
+
+### additional operations with argument
+
+| name    | effect     | morty | info | 
+| ------- | ---------- | ----- | ---- |
+| vget  X | (--n)      | x     |  |
+| vset  X | (n--)      | :x    |  |
 
 ### additional operations
 
@@ -85,7 +92,6 @@ MEM - main memory for both stacks
 | clock  | (--a)      |         |  |
 | dot    | (a--)      |         |  |
 | emit   | (a--)      |         |  |
-| frame  | (--a)      |         |  |
 
 # Language
 
@@ -153,9 +159,10 @@ TODO
 | ------------------------: | -------------------------------------------------------------- |
 | **Generic stack machine** | https://users.ece.cmu.edu/~koopman/stack_computers/sec3_2.html |
 |        **Permacomputing** | http://viznut.fi/texts-en/permacomputing.html                  |
-|        **Thinking Forth** | http://thinking-forth.sourceforge.net/thinking-forth-ans.pdf   |
+|        **Starting Forth** | https://www.forth.com/starting-forth/                          |
 |        **P-code machine** | https://en.wikipedia.org/wiki/P-code_machine                   |
 |         **Stack machine** | https://en.wikipedia.org/wiki/Stack_machine                    |
+|        **Thinking Forth** | http://thinking-forth.sourceforge.net/thinking-forth-ans.pdf   |
 |                **Fabris** | https://github.com/mobarski/fabris                             |
 |               **UCBLogo** | https://en.wikipedia.org/wiki/UCBLogo                          |
 |                   **Uxn** | https://100r.co/site/uxn.html                                  |
