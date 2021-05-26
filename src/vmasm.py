@@ -11,7 +11,6 @@ def asm_to_cells(text, op_names):
 	cells = apply_labels(cells, labels)
 	return cells
 
-# TODO: relative jump for jz @+5 @-5
 # TODO: relative jump target using stacks -> if if then then
 
 # -----------------------------------------------------------------------------
@@ -79,6 +78,8 @@ def apply_labels(cells, labels):
 	for c in cells:
 		if type(c) is int:
 			out += [c]
+		elif c[:2] in ['@+','@-']:
+			out += [int(c[1:])]
 		else:
 			name = c[1:]
 			out += [labels[name]]
@@ -102,6 +103,8 @@ if __name__=="__main__":
 		start:
 		
 		call @mul4
+		
+		jz @-2
 		
 		stop
 	"""
