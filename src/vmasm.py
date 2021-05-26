@@ -1,24 +1,18 @@
 import re
 
-OP_NAMES = re.findall('\w+',"""
-	stop call ret jz push mul div
-""")
-
-OP_CODE = {n:i for i,n in enumerate(OP_NAMES)}
-OP_NAME = {i:n for i,n in enumerate(OP_NAMES)}
-
-def asm_to_cells(text):
+def asm_to_cells(text, op_names):
+	op_code = {n:i for i,n in enumerate(op_names)}
 	macros = get_macros(text)
 	text = strip_macros(text)
 	tokens = tokenize(text)
 	tokens = apply_macros(tokens, macros)
-	cells = precompile(tokens)
+	cells = precompile(tokens, op_code)
 	cells,labels = strip_labels(cells)
 	cells = apply_labels(cells, labels)
 	return cells
 
-# TODO: mozliwosc podania listy OP_NAMES
-# TODO: relative jump for jz +5
+# TODO: relative jump for jz @+5 @-5
+# TODO: relative jump target using stacks -> if if then then
 
 # -----------------------------------------------------------------------------
 # -----------------------------------------------------------------------------
@@ -49,11 +43,11 @@ def apply_macros(tokens, macros):
 			out += [t]
 	return out
 
-def precompile(tokens):
+def precompile(tokens, op_code):
 	cells = []
-	p = OP_CODE['push']
+	p = op_code['push']
 	for t in tokens:
-		c = OP_CODE.get(t)
+		c = op_code.get(t)
 		if t in ['call','jz']:
 			cells += [c]
 		elif c is not None:
@@ -111,6 +105,7 @@ if __name__=="__main__":
 		
 		stop
 	"""
-	cells = asm_to_cells(code)
+	op_names = "stop call ret jz push mul div".split(' ')
+	cells = asm_to_cells(code, op_names)
 	print(cells)
 	
