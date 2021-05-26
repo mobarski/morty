@@ -1,12 +1,12 @@
 import re
 
-def asm_to_cells(text, op_names):
+def asm_to_cells(text, op_names, arg_ops=[]):
 	op_code = {n:i for i,n in enumerate(op_names)}
 	macros = get_macros(text)
 	text = strip_macros(text)
 	tokens = tokenize(text)
 	tokens = apply_macros(tokens, macros)
-	cells = precompile(tokens, op_code)
+	cells = precompile(tokens, op_code, arg_ops)
 	cells,labels = strip_labels(cells)
 	cells = apply_labels(cells, labels)
 	return cells
@@ -42,21 +42,28 @@ def apply_macros(tokens, macros):
 			out += [t]
 	return out
 
-def precompile(tokens, op_code):
+# TODO how to extend
+def precompile(tokens, op_code, arg_ops):
 	cells = []
 	p = op_code['push']
+	prev_t = ''
 	for t in tokens:
 		c = op_code.get(t)
 		if t in ['call','jz']:
 			cells += [c]
-		elif c is not None:
-			cells += [c,0]
 		elif t[0]=='@':
 			cells += [t]
 		elif t[-1]==':':
 			cells += [t]
-		else:
+		elif t in arg_ops:
+			cells += [c]
+		elif prev_t in arg_ops:
 			cells += [int(t)]
+		elif c is not None: # must be before else
+			cells += [c,0]
+		else:
+			cells += [p,int(t)]
+		prev_t = t
 	return cells
 
 def strip_labels(cells):
@@ -90,6 +97,7 @@ def apply_labels(cells, labels):
 
 if __name__=="__main__":
 	code = """
+		vincr 3
 		macro 2+ 2 add
 		21
 		macro 2* 2 mul
@@ -110,7 +118,7 @@ if __name__=="__main__":
 		
 		stop
 	"""
-	op_names = "stop call ret jz push mul div".split(' ')
-	cells = asm_to_cells(code, op_names)
+	op_names = "stop call ret jz push mul div vincr vget vset".split(' ')
+	cells = asm_to_cells(code, op_names, arg_ops=['vincr','vget','vset'])
 	print(cells)
 	
