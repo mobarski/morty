@@ -80,6 +80,9 @@ def apply_labels(cells, labels):
 			out += [c]
 		elif c[:2] in ['@+','@-']:
 			out += [int(c[1:])]
+		elif c[:2] in ['@@']:
+			name = c[2:]
+			out += [labels[name] - len(out)]
 		else:
 			name = c[1:]
 			out += [labels[name]]
@@ -92,7 +95,7 @@ if __name__=="__main__":
 		macro 2* 2 mul
 		macro 2/ 2 div
 		
-		0 jz @start
+		11 jz @@start
 		
 		mul4:
 			2* 2* ret
@@ -101,10 +104,9 @@ if __name__=="__main__":
 			2/ 2/ ret
 		
 		start:
+			44
 		
 		call @mul4
-		
-		jz @-2
 		
 		stop
 	"""
