@@ -2,6 +2,7 @@ import re
 
 def asm_to_cells(text, op_names, arg_ops=[]):
 	op_code = {n:i for i,n in enumerate(op_names)}
+	text = strip_comments(text)
 	macros = get_macros(text)
 	text = strip_macros(text)
 	tokens = tokenize(text)
@@ -16,6 +17,9 @@ def asm_to_cells(text, op_names, arg_ops=[]):
 # -----------------------------------------------------------------------------
 # -----------------------------------------------------------------------------
 # -----------------------------------------------------------------------------
+
+def strip_comments(text):
+	return re.sub('(?ms)[(].*?[)]', ' ', text)
 
 def get_macros(text):
 	macros = {}
@@ -97,11 +101,19 @@ def apply_labels(cells, labels):
 
 if __name__=="__main__":
 	code = """
+		( this is a comment)
 		vincr 3
 		macro 2+ 2 add
 		21
 		macro 2* 2 mul
 		macro 2/ 2 div
+		
+		(
+			this
+			is
+			multi line
+			comment
+		)
 		
 		11 jz @@start
 		

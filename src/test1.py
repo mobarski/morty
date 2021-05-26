@@ -9,7 +9,7 @@ if __name__=="__main__":
 	vm = Test1VM(op_names)
 	vm.s = 0
 	vm.r = vm.f = 10
-	vm.code = code1
+	vm.code = code1 # <---[ SELECT CODE HERE ]
 	# --------------------------
 	for i in range(20):
 		name,op,arg = vm.tick()
