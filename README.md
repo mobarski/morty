@@ -172,6 +172,14 @@ end
 
 ```
 
+## Macros
+
+TODO
+
+```
+macro rot  >R swap <R swap
+```
+
 ## Lists
 
 TODO
