@@ -10,7 +10,7 @@ Why:
 - stack VM / concatenative language experimentation
 
 Target usage:
-- simple game dev (demakes, fantasy consoles/computers)
+- simple game/utility dev (demakes, fantasy consoles/computers)
 - education
 - robotics
 
@@ -25,6 +25,13 @@ Target VM implementations:
 - MicroPython
 - C
 - Go
+
+## Morty Philosophy
+
+1. Start from scratch.
+2. Add parts one by one observing how they interact.
+3. Remove parts that can be cheaply built using other parts.
+4. Keep parts that are expensive to build but make building other parts easier.
 
 # VM Architecture
 
