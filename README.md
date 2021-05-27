@@ -189,14 +189,16 @@ Morty:
 
 MortyVM ASM:
 ```
-(push) 21
-(push) 1  (unconditional jump)
-jnz +3    (unconditional jump)
-dup (0)
-add (0)
-ret (0)
-(push) @-4 (absolute addr given as relative)
-call execute
+    push 21
+    push 1             (unconditional jump)
+    jnz @@end_of_list  (unconditional jump)
+start_of_list:
+    dup 0
+    add 0
+    ret 0
+end_of_list:
+    push @start_of_list
+    call execute
 ```
 
 ## Lists
