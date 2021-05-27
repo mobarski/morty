@@ -198,7 +198,7 @@ start_of_list:
     ret 0
 end_of_list:
     push @start_of_list
-    call execute
+    call @execute
 ```
 
 ## Lists
