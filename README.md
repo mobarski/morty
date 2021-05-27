@@ -19,7 +19,7 @@ Design principles:
 - small and easy to implement (close to the stack machine like Forth)
 - easy to read (like Python, Logo or Basic; named arguments, dot properties, less symbols)
 
-Target platforms:
+Target VM implementations:
 - Python
 - JS
 - MicroPython
@@ -28,16 +28,14 @@ Target platforms:
 
 # VM Architecture
 
-R - return stack pointer
-S - (data) stack pointer
-I - instruction pointer
-F - frame pointer
-
-T - top of stack register
-N - next on stack register
-
-CODE - program memory
-MEM - main memory for both stacks
+VM:
+- R - return stack pointer
+- S - (data) stack pointer
+- I - instruction pointer
+- F - frame pointer
+- T - top of stack register
+- CODE - program memory
+- MEM - main memory for both stacks
 
 # VM Instructions
 
