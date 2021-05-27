@@ -4,14 +4,23 @@ TODO
 
 ## Idea
 
-- language for simple game dev (demakes)
-- language that is small (like Go)
-- language that is easy to implement (close to the stack machine like Forth)
-- language that is easy to read (like Python, Logo or Basic; named arguments, dot properties, less symbols)
+Why:
+- permacomputing
+- internet of things
+
+Target usage:
+- simple game dev (demakes, fantasy consoles/computers)
+- education
+
+Design principles:
+- small and easy to learn (like Go)
+- small and easy to implement (close to the stack machine like Forth)
+- easy to read (like Python, Logo or Basic; named arguments, dot properties, less symbols)
+
+Other:
 - family of VMs to experiment on
 
-## Targets
-
+Target platforms:
 - Python
 - JS
 - MicroPython
