@@ -102,10 +102,10 @@ VM:
 | nz     | (a--b)     | bool    |  |
 | eq     | (ab--c)    |         |  |
 | ne     | (ab--c)    |         |  |
-| le     | (ab--c)    | or-less |  |
-| ge     | (ab--c)    | or-more |  |
-| lt     | (ab--c)    |         |  |
-| gt     | (ab--c)    |         |  |
+| le     | (ab--c)    | or-less | TODO: readablity vs <= |
+| ge     | (ab--c)    | or-more | TODO: readablity vs >= |
+| lt     | (ab--c)    | is-less | TODO: readablity vs < |
+| gt     | (ab--c)    | is-more | TODO: readablity vs > |
 | neg    | (a--b)     |         |  |
 
 
