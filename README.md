@@ -32,6 +32,10 @@ Target VM implementations:
 2. Add parts one by one observing how they interact.
 3. Remove parts that can be cheaply built using other parts.
 4. Keep parts that are expensive to build but make building other parts easier.
+5. A state should be achieved where removing any single part should have drastic consequences.
+6. This is the system's core.
+7. Now add parts that will make the system more friendly / usable / performant.
+8. Try to cover 80% of requirements with 20% of features.
 
 # VM Architecture
 
