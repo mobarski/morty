@@ -28,9 +28,17 @@ http://dada.perl.it/shootout/fibo.html
 ```
 
 def fib (n--f)
-       (n) dup 2 lt if drop 1 ret then   (Forth contitionals, TODO: Morty)
+                (Forth contitionals, TODO: more Morty)
+       (n) dup 2 lt if drop 1 ret then
        (n) dup 2 sub fib (n f2) swap
     (f2 n) 1 sub fib (f2 f1) add (f)
+end
+
+def fib2 (n--f) :n
+	   (Forth contitionals, TODO: more Morty)
+    n 2 lt if 1 ret then
+    n 2 sub fib (f2)
+    n 1 sub fib (f2 f1) add (f)
 end
 
 clock 8 fib 
