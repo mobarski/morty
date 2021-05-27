@@ -63,7 +63,7 @@ VM:
 ### operations
 
 | asm    | effect     | morty | info | 
-| ------ | ---------- | ----- | ---- |
+| ------ | ---------- | ----- | ---- 
 | ret    | (fr*=)     |       | return from procedure call |
 | dup    | (a--aa)    |       |  |
 | drop   | (a--)      |       |  |
@@ -90,6 +90,7 @@ VM:
 
 | asm    | effect     | morty   | info | 
 | ------ | ---------- | ------- | ---- |
+| call   | (a--)      |         | call procedure from the stack TODO: rename vs call X |
 | rot    | (abc--bca) |         |  |
 | over   | (ab--aba)  |         |  |
 | sub    | (ab--c)    |         |  |
