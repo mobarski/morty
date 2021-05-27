@@ -180,6 +180,24 @@ TODO
 macro rot  >R swap <R swap
 ```
 
+## Lambdas
+
+Morty:
+```
+21 [ dup add ] execute 
+```
+
+MortyVM ASM:
+```
+(push) 21
+(push) 1  (unconditional jump)
+jnz +2    (unconditional jump)
+dup (0)
+add (0)
+(push) @-3 (absolute addr given as relative)
+call execute
+```
+
 ## Lists
 
 TODO
