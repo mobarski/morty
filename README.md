@@ -171,15 +171,8 @@ TODO
 TODO
 
 ```
-(better for grep and syntax highlight)
 struct point   .x .y   
 struct circle  .r .x .y
-
-(or)
-
-(less writing)
-struct point   x y  
-struct circle  r x y
 
 def dist-to-circle (c p -- d) :p:point :c:circle
     p.x c.x sub dup mul
@@ -187,8 +180,11 @@ def dist-to-circle (c p -- d) :p:point :c:circle
     add sqrt               (distance to the center)
     c.r sub
 end
-
 ```
+
+Struct definition cannot be longer than 1 line.
+This is on purpose to keep the structures simple.
+Field names are prefixed with a dot to make them easier to grep and highlight.
 
 ## Macros
 
