@@ -50,9 +50,9 @@ VM:
 
 # VM Instructions
 
-## minimal VM
+## Core
 
-### operations with argument
+### universal operations with argument
 
 | name    | effect     | info | 
 | ------- | ---------- | ---- |
@@ -60,7 +60,7 @@ VM:
 | jz    X | (v--)      | set I to X if v==0 |
 | call  X | (--)(=fr)  | call procedure at X |
 
-### operations
+### universal operations
 
 | asm    | effect     | morty | info | 
 | ------ | ---------- | ----- | ---- 
@@ -76,15 +76,15 @@ VM:
 | get    | (a--b)     |       | aka @ |
 | set    | (va--)     |       | aka ! |
 
-## basic VM
-
-### additional operations with argument
+### operations for handling local variables
 
 | name    | effect     | morty | info | 
 | ------- | ---------- | ----- | ---- |
 | vget  X | (--n)      | x     |  |
 | vset  X | (n--)      | :x    |  |
 | radd  X | (=?\*x)    |       | add X to the R register |
+
+## Other
 
 ### additional operations
 
@@ -99,7 +99,6 @@ VM:
 | mod    | (ab--c)    |         |  |
 | or     | (ab--c)    |         |  |
 | ltz    | (a--b)     |         |  |
-| ralloc | (n--a)     |         |  |
 | nz     | (a--b)     | bool    |  |
 | eq     | (ab--c)    |         |  |
 | ne     | (ab--c)    |         |  |
@@ -108,9 +107,16 @@ VM:
 | lt     | (ab--c)    |         |  |
 | gt     | (ab--c)    |         |  |
 | neg    | (a--b)     |         |  |
+
+
+### debugging
+
+| asm    | effect     | morty   | info | 
+| ------ | ---------- | ------- | ---- |
 | clock  | (--a)      |         |  |
 | dot    | (a--)      |         |  |
 | emit   | (a--)      |         |  |
+| ok     | (ab--a)    |         | panic when a != b |
 
 # Language
 
