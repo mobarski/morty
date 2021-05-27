@@ -90,7 +90,7 @@ VM:
 
 | asm    | effect     | morty   | info | 
 | ------ | ---------- | ------- | ---- |
-| call   | (a--)      |         | call procedure from the stack TODO: rename vs call X |
+| call   | (a--)      |         | call procedure from the stack TODO: rename - tcall exec execute |
 | rot    | (abc--bca) |         |  |
 | over   | (ab--aba)  |         |  |
 | sub    | (ab--c)    |         |  |
@@ -210,7 +210,7 @@ start_of_list:
     ret 0
 end_of_list:
     push @start_of_list
-    call @execute
+    tcall 0
 ```
 
 ## Lists
