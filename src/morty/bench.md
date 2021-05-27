@@ -43,6 +43,23 @@ clock swap (c1 c2 n) dot swap sub dot
 http://dada.perl.it/shootout/random.html
 
 ```
+(temporary global rstack variable notation)
+	139968 $IM
+	  3877 $IA
+	 29573 $IC
+		42 $LAST
+
+def gen-random (max)
+	LAST IA mul IC add IM mod dup $LAST
+	(max last) mul IM div
+end
+
+def main (n)
+    (n) times 100 gen-random loop
+end
+
+clock 1000 main
+clock (c1 c2) swap sub dot
 ```
 
 
