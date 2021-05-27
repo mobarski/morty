@@ -54,7 +54,7 @@ class BaseVM:
 	def op_jz(self, arg):
 		v = self.pop()
 		if not v:
-			self.i += arg
+			self.i = arg
 	
 	def op_call(self, arg):
 		self.mem[self.r+1] = self.f
