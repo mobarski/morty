@@ -73,7 +73,6 @@ VM:
 | add    | (ab--c)    |       |  |
 | xor    | (ab--c)    |       |  |
 | and    | (ab--c)    |       |  |
-| nz     | (a--b)     | bool  |  |
 | get    | (a--b)     |       | aka @ |
 | set    | (va--)     |       | aka ! |
 
@@ -100,6 +99,7 @@ VM:
 | or     | (ab--c)    |         |  |
 | ltz    | (a--b)     |         |  |
 | ralloc | (n--a)     |         |  |
+| nz     | (a--b)     | bool    |  |
 | eq     | (ab--c)    |         |  |
 | ne     | (ab--c)    |         |  |
 | le     | (ab--c)    | or-less |  |
