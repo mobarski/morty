@@ -141,6 +141,29 @@ TODO
 
 TODO
 
+## Structures
+
+TODO
+
+```
+
+type point   .x .y     end
+type circle  .r .x .y  end
+
+(or)
+
+type point   x y    end
+type circle  r x y  end
+
+def dist-to-circle (c p -- d) :p:point :c:circle
+    p.x c.x sub dup mul
+    p.y c.y sub dup mul
+    add sqrt               (distance to the center)
+    c.r sub
+end
+
+```
+
 ## Lists
 
 TODO
