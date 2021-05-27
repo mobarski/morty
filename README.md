@@ -245,5 +245,8 @@ TODO
 |               **UCBLogo** | https://en.wikipedia.org/wiki/UCBLogo                          |
 |                   **Uxn** | https://100r.co/site/uxn.html                                  |
 |         **Threaded code** | https://en.wikipedia.org/wiki/Threaded_code                    |
+|       **Forth threading** | http://www.complang.tuwien.ac.at/forth/threading/              |
+|   **Forth threaded code** | http://www.complang.tuwien.ac.at/forth/threaded-code.html      |
+|          **Interpreters** | http://realityforge.org/code/virtual-machines/2011/05/19/interpreters.html |
 
 [//]: # (online .md editor: https://markdown-editor.github.io/ )
