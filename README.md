@@ -76,6 +76,7 @@ MEM - main memory for both stacks
 | ------- | ---------- | ----- | ---- |
 | vget  X | (--n)      | x     |  |
 | vset  X | (n--)      | :x    |  |
+| radd  X | (--)(=?)   |       | add X to the R register |
 
 ### additional operations
 
