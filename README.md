@@ -147,14 +147,14 @@ TODO
 
 ```
 (better for grep)
-type point   .x .y     end
-type circle  .r .x .y  end
+struct point   .x .y   
+struct circle  .r .x .y
 
 (or)
 
 (less writing)
-type point   x y    end
-type circle  r x y  end
+struct point   x y  
+struct circle  r x y
 
 def dist-to-circle (c p -- d) :p:point :c:circle
     p.x c.x sub dup mul
