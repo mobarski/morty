@@ -154,7 +154,7 @@ TODO
 TODO
 
 ```
-(better for grep)
+(better for grep and syntax highlight)
 struct point   .x .y   
 struct circle  .r .x .y
 
