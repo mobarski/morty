@@ -140,11 +140,11 @@ def total_energy (m v h -- e) :h :v :m
 end
 ```
 
-## Named parameters
+## Named local variables
 
-Morty allows capturing input parametrs into local constants.
-To capture a param prefix its name with a colon (ie :my-param).
-Use the param name to push its value onto the stack.
+Morty allows capturing values into named local variables.
+To capture a value prefix target variable name with a colon (ie :my-var).
+Use the variable name to push its value onto the stack.
 
 ```
 (x = a*a * b + c)
@@ -153,7 +153,7 @@ def example (a b c -- x) :c :b
 end
 ```
 
-Captured values are stored on the return stack.
+Local variables are stored on the return stack.
 On function end or early return they will be automatically discarded - this is possible
 by the use of the F register which stores the "frame" of the return stack.
 On function call both F and I registers are stored on the return stack.
