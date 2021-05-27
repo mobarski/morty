@@ -7,7 +7,7 @@ TODO
 Why:
 - permacomputing
 - internet of things
-- stack VM / language experimentation
+- stack VM / concatenative language experimentation
 
 Target usage:
 - simple game dev (demakes, fantasy consoles/computers)
