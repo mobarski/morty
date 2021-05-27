@@ -191,10 +191,11 @@ MortyVM ASM:
 ```
 (push) 21
 (push) 1  (unconditional jump)
-jnz +2    (unconditional jump)
+jnz +3    (unconditional jump)
 dup (0)
 add (0)
-(push) @-3 (absolute addr given as relative)
+ret (0)
+(push) @-4 (absolute addr given as relative)
 call execute
 ```
 
