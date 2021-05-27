@@ -208,8 +208,8 @@ Morty:
 MortyVM ASM:
 ```
     push 21
-    push 1             (unconditional jump)
-    jnz  @end_of_list  (unconditional jump)
+    push 0             (unconditional jump)
+    jz   @end_of_list  (unconditional jump)
 start_of_list:
     dup 0
     add 0
