@@ -29,10 +29,10 @@ Target VM implementations:
 # VM Architecture
 
 VM:
+- F - frame pointer
+- I - instruction pointer
 - R - return stack pointer
 - S - (data) stack pointer
-- I - instruction pointer
-- F - frame pointer
 - T - top of stack register
 - CODE - program memory
 - MEM - main memory for both stacks
