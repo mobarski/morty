@@ -146,12 +146,13 @@ TODO
 TODO
 
 ```
-
+(better for grep)
 type point   .x .y     end
 type circle  .r .x .y  end
 
 (or)
 
+(less writing)
 type point   x y    end
 type circle  r x y  end
 
