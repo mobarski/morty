@@ -49,13 +49,13 @@ http://dada.perl.it/shootout/random.html
    29573 $IC
       42 $LAST
 
-def gen-random (max)
+def gen-random (max--n)
     LAST IA mul IC add IM mod dup $LAST
     (max last) mul IM div
 end
 
 def main (n)
-    (n) times 100 gen-random loop
+    (n) times 100 gen-random drop loop
 end
 
 clock 1000 main
