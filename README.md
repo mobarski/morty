@@ -46,7 +46,7 @@ VM:
 | name    | effect     | info | 
 | ------- | ---------- | ---- |
 | push  X | (--x)      | push X onto stack |  
-| jz    X | (v--)      | add X to the instruction pointer if v==0 |
+| jz    X | (v--)      | set I to X if v==0 |
 | call  X | (--)(=fr)  | call procedure at X |
 
 ### operations
@@ -191,7 +191,7 @@ MortyVM ASM:
 ```
     push 21
     push 1             (unconditional jump)
-    jnz @@end_of_list  (unconditional jump)
+    jnz  @end_of_list  (unconditional jump)
 start_of_list:
     dup 0
     add 0
