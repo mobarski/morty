@@ -10,10 +10,10 @@ http://dada.perl.it/shootout/nestedloop.html
 
 ```
 def nested-loops (x--y) :x
-	0
-	x times x times x times x times x times x times
-		1 add
-	loop loop loop loop loop loop
+    0
+    x times x times x times x times x times x times
+        1 add
+    loop loop loop loop loop loop
 end
 
 clock 8 nested-loops
@@ -44,14 +44,14 @@ http://dada.perl.it/shootout/random.html
 
 ```
 (temporary global rstack variable notation)
-	139968 $IM
-	  3877 $IA
-	 29573 $IC
-		42 $LAST
+  139968 $IM
+    3877 $IA
+   29573 $IC
+      42 $LAST
 
 def gen-random (max)
-	LAST IA mul IC add IM mod dup $LAST
-	(max last) mul IM div
+    LAST IA mul IC add IM mod dup $LAST
+    (max last) mul IM div
 end
 
 def main (n)
