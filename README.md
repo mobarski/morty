@@ -135,14 +135,14 @@ These operations might not be included in the final VM but are essential for deb
 
 ### ALU - comparators
 
-| asm    | effect     | morty   | info | 
-| ------ | ---------- | ------- | ---- |
-| eq     | (ab--c)    |         |  |
-| ne     | (ab--c)    |         |  |
-| le     | (ab--c)    | or-less | TODO: readablity vs <= |
-| ge     | (ab--c)    | or-more | TODO: readablity vs >= |
-| lt     | (ab--c)    | is-less | TODO: readablity vs < |
-| gt     | (ab--c)    | is-more | TODO: readablity vs > |
+| asm    | effect     | morty       | info   | 
+| ------ | ---------- | ----------- | ------ |
+| eq     | (ab--c)    | ==          | a == b |
+| ne     | (ab--c)    | !=          | a !=   |
+| le     | (ab--c)    | <=  or-less | a <= b |
+| ge     | (ab--c)    | >=  or-more | a >= b |
+| lt     | (ab--c)    | <   is-less | a < b  |
+| gt     | (ab--c)    | >   is-more | a > b  |
 
 
 ### stack manipulation
