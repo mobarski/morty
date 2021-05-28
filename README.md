@@ -84,8 +84,8 @@ VM:
 | asm    | effect     | morty | info | 
 | ------ | ---------- | ----- | ---- 
 | and    | (ab--c)    |       |  |
-| or     | (ab--c)    |       |  |
 | xor    | (ab--c)    |       |  |
+| nz     | (a--b)     | bool  |  |
 
 ### memory access
 
@@ -125,11 +125,11 @@ These operations might not be included in the final VM but are essential for deb
 
 | asm    | effect     | morty   | info | 
 | ------ | ---------- | ------- | ---- |
+| or     | (ab--c)    |         |  |
 | sub    | (ab--c)    |         |  |
 | mod    | (ab--c)    |         |  |
 | neg    | (a--b)     |         |  |
 | ltz    | (a--b)     |         |  |
-| nz     | (a--b)     | bool    |  |
 | eqz    | (a--b)     |         |  |
 | eq     | (ab--c)    |         |  |
 | ne     | (ab--c)    |         |  |
