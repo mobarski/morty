@@ -145,6 +145,7 @@ These operations might not be included in the final VM but are essential for deb
 | gt     | (ab--c)    | >  vs is-more | a > b  |
 
 TODO: decide is-less vs <
+TODO: decide or-over vs or-more, or-under vs or-less
 
 ### stack manipulation
 
