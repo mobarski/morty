@@ -183,7 +183,8 @@ Use the variable name to push its value onto the stack.
 
 ```
 ( y = a*x*x + b*x + c )
-def poly2 (x a b c -- x) :c :b :a :x
+
+def poly2 (x a b c -- y) :c :b :a :x (capture params)
     x x mul a mul (axx)
     x b mul (axx bx) add
     c add
