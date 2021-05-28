@@ -20,8 +20,7 @@ Design principles:
 - easy to read (like Python, Logo or Basic; named arguments, dot properties, less symbols)
 
 Target VM implementations:
-- Python (easiest)
-- C (most performant)
+- C (most performant, easiest)
 - JS (portable, GUI)
 - MicroPython (portable - microcontrolers)
 - Go (performant backend)
