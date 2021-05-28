@@ -20,11 +20,11 @@ Design principles:
 - easy to read (like Python, Logo or Basic; named arguments, dot properties, less symbols)
 
 Target VM implementations:
-- Python
-- JS
-- MicroPython
-- C
-- Go
+- Python (easiest)
+- C (most performant)
+- JS (portable, GUI)
+- MicroPython (portable - microcontrolers)
+- Go (performant backend)
 
 ## Morty Philosophy
 
