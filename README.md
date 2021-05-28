@@ -109,14 +109,14 @@ VM:
 | neg    | (a--b)     |         |  |
 
 
-### debugging
+### debugging / simple output
 
 | asm    | effect     | morty   | info | 
 | ------ | ---------- | ------- | ---- |
-| clock  | (--a)      |         |  |
-| dot    | (a--)      |         |  |
-| emit   | (a--)      |         |  |
-| ok     | (ab--a)    |         | panic when a != b |
+| dot    | (n--)      |         | print n (as int) and a single space |
+| emit   | (a--)      |         | print character a |
+| ok     | (ab--a)    |         | panic when a != b showing a and b  |
+| clock  | (--a)      |         | push number of microsends since the program start |
 
 # Language
 
