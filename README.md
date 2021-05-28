@@ -224,10 +224,12 @@ Conditionals are based on lambda functions.
 
 ```
 distance 10 or-less [ collision-warning ] if
+age 18 or-more [ show-content ] [ show-restriction ] if-else
 ```
 
 MortyVM ASM
 ```
+(distance example)
     call @distance
     push 10
     le 0
@@ -244,10 +246,6 @@ end-of-lambda:
     qcall 0
 else:
     drop 0
-```
-
-```
-age 18 or-more [ show-content ] [ show-restriction ] if-else
 ```
 
 ## Loops
