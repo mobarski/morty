@@ -1,7 +1,7 @@
 #include "stdio.h"
 
 #include <sys/time.h>
-long long current_timestamp() {
+long long ms_clock() {
     struct timeval tv; 
     gettimeofday(&tv, NULL);
     long long ms = tv.tv_sec*1000LL + tv.tv_usec/1000;
@@ -80,7 +80,7 @@ int main() {
 				break;
 			// DEBUG
 			case CLOCK:
-				v = current_timestamp() - t_start;
+				v = ms_clock() - t_start;
 				s_push(v);
 				break;
 			case DOT:
