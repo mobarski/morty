@@ -129,9 +129,14 @@ These operations might not be included in the final VM but are essential for deb
 | ------ | ---------- | ------- | ---- |
 | mod    | (ab--c)    |         |  |
 | neg    | (a--b)     |         |  |
+| shl    | (ab--c)    |         | shift left |
+| shr    | (ab--c)    |         | shift right |
+| sshr   | (ab--c)    |         | signed shift right |
 
 ### ALU - comparators
 
+| asm    | effect     | morty   | info | 
+| ------ | ---------- | ------- | ---- |
 | eq     | (ab--c)    |         |  |
 | ne     | (ab--c)    |         |  |
 | le     | (ab--c)    | or-less | TODO: readablity vs <= |
