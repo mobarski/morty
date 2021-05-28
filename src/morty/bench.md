@@ -26,23 +26,23 @@ clock swap (c1 c2 n) dot swap sub dot
 http://dada.perl.it/shootout/fibo.html
 
 ```
-
-(Forth contitionals, TODO: more Morty)
-
 def fib (n--f)
-       (n) dup 2 lt if drop 1 ret then
+       (n) dup 2 lt [ drop 1 ret ] if
        (n) dup 2 sub fib (n f2) swap
     (f2 n) 1 sub fib (f2 f1) add (f)
 end
 
 def fib2 (n--f) :n
-    n 2 lt if 1 ret then
+    n 2 lt [ 1 ret ] if
     n 2 sub fib (f2)
     n 1 sub fib (f2 f1) add (f)
 end
 
-clock 8 fib 
-clock swap (c1 c2 n) dot swap sub dot
+debug
+8 fib 
+debug
+8 fib2
+debug
 ```
 
 
