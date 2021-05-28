@@ -1,4 +1,5 @@
 import re
+from array import array
 
 # TODO map token to file @ line
 
@@ -9,6 +10,12 @@ def to_cells(text, op_names):
 	tokens,labels = strip_labels(tokens)
 	tokens        = apply_labels(tokens, labels)
 	cells         = compile(tokens, op_code)
+	return cells
+
+def to_binary_file(filename, text, op_names):
+	cells = to_cells(code, op_names)
+	compiled = array("i", cells).tobytes()
+	open(filename,'wb').write(compiled)
 	return cells
 
 # -----------------------------------------------------------------------------
@@ -107,5 +114,5 @@ if __name__=="__main__":
 	"""
 	op_names = "stop call ret jz push mul div vincr vget vset emit".split(' ')
 	cells = to_cells(code, op_names)
+	to_binary_file('program.mrt', code, op_names)
 	print(cells)
-	
