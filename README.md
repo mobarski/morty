@@ -71,11 +71,18 @@ VM:
 | stor   | (a--)(=a)  | >R    |  |
 | rtos   | (--a)(a=)  | R>    |  |
 
-### ALU
+### ALU - arithmetic
 
 | asm    | effect     | morty | info | 
 | ------ | ---------- | ----- | ---- 
 | add    | (ab--c)    |       |  |
+| mul    | (ab--c)    |       |  |
+| div    | (ab--c)    |       |  |
+
+### ALU - logic
+
+| asm    | effect     | morty | info | 
+| ------ | ---------- | ----- | ---- 
 | and    | (ab--c)    |       |  |
 | or     | (ab--c)    |       |  |
 | xor    | (ab--c)    |       |  |
@@ -119,8 +126,6 @@ These operations might not be included in the final VM but are essential for deb
 | asm    | effect     | morty   | info | 
 | ------ | ---------- | ------- | ---- |
 | sub    | (ab--c)    |         |  |
-| mul    | (ab--c)    |         |  |
-| div    | (ab--c)    |         |  |
 | mod    | (ab--c)    |         |  |
 | neg    | (a--b)     |         |  |
 | ltz    | (a--b)     |         |  |
