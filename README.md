@@ -105,20 +105,24 @@ These operations might not be included in the final VM but are essential for deb
 | ok     | (ab--a)    |         | panic when a != b showing a and b, when a==b print b space "ok" space  |
 | clock  | (--a)      |         | push number of microsends since the program start |
 
-## Other
+## Extension
 
-### additional operations
+### Branching
 
 | asm    | effect     | morty   | info | 
 | ------ | ---------- | ------- | ---- |
-| call   | (a--)      |         | call procedure from the stack TODO: rename - tcall exec execute |
-| rot    | (abc--bca) |         |  |
-| over   | (ab--aba)  |         |  |
+| scall  | (a--)      | call    | call procedure from the stack TODO: rename - tcall exec execute |
+
+### ALU
+
+| asm    | effect     | morty   | info | 
+| ------ | ---------- | ------- | ---- |
+| or     | (ab--c)    |         |  |
 | sub    | (ab--c)    |         |  |
 | mul    | (ab--c)    |         |  |
 | div    | (ab--c)    |         |  |
 | mod    | (ab--c)    |         |  |
-| or     | (ab--c)    |         |  |
+| neg    | (a--b)     |         |  |
 | ltz    | (a--b)     |         |  |
 | nz     | (a--b)     | bool    |  |
 | eq     | (ab--c)    |         |  |
@@ -127,7 +131,14 @@ These operations might not be included in the final VM but are essential for deb
 | ge     | (ab--c)    | or-more | TODO: readablity vs >= |
 | lt     | (ab--c)    | is-less | TODO: readablity vs < |
 | gt     | (ab--c)    | is-more | TODO: readablity vs > |
-| neg    | (a--b)     |         |  |
+
+
+### stack manipulation
+
+| asm    | effect     | morty   | info | 
+| ------ | ---------- | ------- | ---- |
+| rot    | (abc--bca) |         |  |
+| over   | (ab--aba)  |         |  |
 
 
 # Language
@@ -214,7 +225,7 @@ This is on purpose to keep the macros simple.
 
 Morty:
 ```
-21 [ dup add ] execute 
+21 [ dup add ] call
 ```
 
 MortyVM ASM:
@@ -228,7 +239,7 @@ start_of_list:
     ret 0
 end_of_list:
     push @start_of_list
-    tcall 0
+    scall 0
 ```
 
 ## Lists
