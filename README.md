@@ -56,15 +56,15 @@ VM:
 
 | name    | effect     | morty | info | 
 | ------- | ---------- | ----- | ---- |
-| jz    X | (v--)      |       | set I to X (next instruction cell) if v==0 |
-| call  X | (--)(=fr)  |       | call procedure at X (next instruction cell) |
+| jz    X | (v--)      | if    | set I to X (next instruction cell) if v==0 |
+| call  X | (--)(=fr)  | x     | call procedure at X (next instruction cell) |
 | ret     | (fr*=)     |       | return from procedure call |
 
 ### stack manipulation
 
 | asm    | effect     | morty | info | 
 | ------ | ---------- | ----- | ---- 
-| push X | (--x)      | X     | push X (next instruction cell) onto the stack |  
+| push X | (--x)      | x     | push X (next instruction cell) onto the stack |  
 | dup    | (a--aa)    |       |  |
 | drop   | (a--)      |       |  |
 | swap   | (ab--ba)   |       |  |
@@ -92,7 +92,7 @@ VM:
 | ------- | ---------- | ----- | ---- |
 | vget  X | (--n)      | x     |  |
 | vset  X | (n--)      | :x    |  |
-| radd  X | (=?\*x)    |       | add X to the R register |
+| radd  X | (=?\*x)    | N/A   | add X to the R register |
 
 ### debugging / simple output
 
