@@ -131,25 +131,23 @@ VM:
 
 ### ALU - comparators
 
-| asm    | effect     | morty         | info   | 
-| ------ | ---------- | ------------- | ------ |
-| eq     | (ab--c)    | ==            | a == b |
-| ne     | (ab--c)    | !=            | a != b |
-| le     | (ab--c)    | <= vs or-less | a <= b |
-| ge     | (ab--c)    | >= vs or-more | a >= b |
-| lt     | (ab--c)    | <  vs is-less | a < b  |
-| gt     | (ab--c)    | >  vs is-more | a > b  |
+| asm    | effect     | morty   | info   | 
+| ------ | ---------- | ------- | ------ |
+| eq     | (ab--c)    | ==      | a == b |
+| ne     | (ab--c)    | !=      | a != b |
+| le     | (ab--c)    | or-less | a <= b |
+| ge     | (ab--c)    | or-more | a >= b |
+| lt     | (ab--c)    | below   | a < b  |
+| gt     | (ab--c)    | above   | a > b  |
 
-TODO: decide is-less vs <
-TODO: decide or-over vs or-more, or-under vs or-less
+TODO: decide about aliases: <= vs or-less vs le
 
 ### stack manipulation
 
 | asm    | effect     | morty   | info | 
 | ------ | ---------- | ------- | ---- |
-| rot    | (abc--bca) |         |  |
-| over   | (ab--aba)  |         |  |
-
+| rot    | (abc--bca) |         | ? not needed -> local variables |
+| over   | (ab--aba)  |         | ? not needed -> local variables |
 
 # Language
 
