@@ -53,11 +53,11 @@ VM:
 
 ### branching
 
-| name    | effect     | morty | info | 
-| ------- | ---------- | ----- | ---- |
-| jz    X | (v--)      | jz @x | set I to X (next instruction cell) if v==0 |
-| call  X | (--)(=fr)  | x     | call procedure at X (next instruction cell) |
-| ret     | (fr*=)     |       | return from procedure call |
+| name    | effect     | morty     | info | 
+| ------- | ---------- | --------- | ---- |
+| jz    X | (v--)      | jz @label | set I to X (next instruction cell) if v==0 |
+| call  X | (--)(=fr)  | x         | call procedure at X (next instruction cell) |
+| ret     | (fr*=)     |           | return from procedure call |
 
 ### stack manipulation
 
