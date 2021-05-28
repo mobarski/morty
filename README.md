@@ -100,8 +100,8 @@ VM:
 
 | asm    | effect     | morty   | info | 
 | ------ | ---------- | ------- | ---- |
-| lcall  | (a--)      | call    | call lambda from the stack |
-| lret   | (r==)      |         | return from lambda |
+| qcall  | (a--)      | call    | quick call without changing the frame pointer |
+| qret   | (r==)      |         | quick return without changing the frame pointer |
 
 ### local variables
 
@@ -168,13 +168,13 @@ def kinetic_energy (m v -- e)
     dup (m v v) mul mul
 end
 
-def potential_energy (m h -- e)
+def potential-energy (m h -- e)
     g (m h g) mul mul
 end
 
-def total_energy (m v h -- e) :h :v :m
-    m v kinetic_energy   (ek)
-    m h potential_energy (ek ep) add
+def total-energy (m v h -- e) :h :v :m
+    m v kinetic-energy   (ek)
+    m h potential-energy (ek ep) add
 end
 ```
 
@@ -185,9 +185,11 @@ To capture a value prefix target variable name with a colon (ie :my-var).
 Use the variable name to push its value onto the stack.
 
 ```
-(x = a*a * b + c)
-def example (a b c -- x) :c :b
-    (a) dup mul b mul c add
+( y = a*x*x + b*x + c )
+def poly3 (x a b c -- x) :c :b :a :x
+    x x mul a mul (axx)
+    x b mul (axx bx) add
+    c add
 end
 ```
 
@@ -210,10 +212,10 @@ MortyVM ASM:
 start_of_lambda:
     dup  0
     add  0
-    lret 0
+    qret 0
 end_of_lambda:
     push @start_of_lambda
-    lcall 0
+    qcall 0
 ```
 
 Lambda functions are using the stack frame of the parent.
@@ -236,13 +238,13 @@ MortyVM ASM
     jz @end-of-lambda
 start-of-lambda:
     call @callision-warning
-    lret 0
+    qret 0
 end-of-lambda:
     push @start-of-lambda
     swap 0                   (addr bool)
     jz @else
     dup   0                  (for drop after else)
-    lcall 0
+    qcall 0
 else:
     drop 0
 ```
