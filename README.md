@@ -55,7 +55,7 @@ VM:
 
 | name    | effect     | morty | info | 
 | ------- | ---------- | ----- | ---- |
-| jz    X | (v--)      | if    | set I to X (next instruction cell) if v==0 |
+| jz    X | (v--)      | jz @x | set I to X (next instruction cell) if v==0 |
 | call  X | (--)(=fr)  | x     | call procedure at X (next instruction cell) |
 | ret     | (fr*=)     |       | return from procedure call |
 
@@ -155,7 +155,7 @@ TODO: decide or-over vs or-more, or-under vs or-less
 
 Morty language is similar to Morty VM instruction set.
 Almost all VM instructions can be used directly.
-Only operations that require argument from the next program cell are reserved for the compiler.
+Morty allows the usage of "jz" (jump if zero) for the same reasons "goto" is still in C and GO: it's needed for some special cases (state machines / nested loop escape).
 
 ## Language Examples
 
