@@ -17,7 +17,7 @@ enum OPS {
 	CALL,RET,JZ,
 	QCALL,QRET,
 	GET,SET,ALLOT,
-	MOD,SHL,SHR,USHR,
+	MOD,SHL,SHR,USHR,MIN,MAX,
 	LE,LT,GE,GT,EQ,NE,
 	ROT,OVER, // TODO ???
 	VGET,VSET,RADD,
@@ -89,6 +89,8 @@ int main() {
 			case GE:    v=s_pop(); tos= tos>=v ? 1:0;  break; // NOT CORE
 			case EQ:    v=s_pop(); tos= tos==v ? 1:0;  break; // NOT CORE
 			case NE:    v=s_pop(); tos= tos!=v ? 1:0;  break; // NOT CORE
+			case MIN:   v=s_pop(); tos= tos<v ? tos:v; break; // NOT CORE
+			case MAX:   v=s_pop(); tos= tos>v ? tos:v; break; // NOT CORE
 			case NZ:    tos = tos!=0 ? 1:0;            break;
 			// MEMORY
 			case GET:   tos = mem[tos];                break;
