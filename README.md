@@ -125,6 +125,7 @@ These operations might not be included in the final VM but are essential for deb
 | neg    | (a--b)     |         |  |
 | ltz    | (a--b)     |         |  |
 | nz     | (a--b)     | bool    |  |
+| eqz    | (a--b)     |         |  |
 | eq     | (ab--c)    |         |  |
 | ne     | (ab--c)    |         |  |
 | le     | (ab--c)    | or-less | TODO: readablity vs <= |
