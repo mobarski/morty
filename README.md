@@ -109,7 +109,7 @@ VM:
 | ------- | ---------- | ----- | ---- |
 | vget  X | (--n)      | x     |  |
 | vset  X | (n--)      | :x    |  |
-| radd  X | (=?\*x)    | N/A   | add X to the R register |
+| radd  X | (=?\*x)    | N/A   | add X to the R register TODO: remove as this is early optimization |
 
 ### debugging
 
