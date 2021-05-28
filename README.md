@@ -76,8 +76,9 @@ VM:
 | asm    | effect     | morty | info | 
 | ------ | ---------- | ----- | ---- 
 | add    | (ab--c)    |       |  |
-| xor    | (ab--c)    |       |  |
 | and    | (ab--c)    |       |  |
+| or     | (ab--c)    |       |  |
+| xor    | (ab--c)    |       |  |
 
 ### memory access
 
@@ -117,7 +118,6 @@ These operations might not be included in the final VM but are essential for deb
 
 | asm    | effect     | morty   | info | 
 | ------ | ---------- | ------- | ---- |
-| or     | (ab--c)    |         |  |
 | sub    | (ab--c)    |         |  |
 | mul    | (ab--c)    |         |  |
 | div    | (ab--c)    |         |  |
