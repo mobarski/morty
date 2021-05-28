@@ -96,6 +96,13 @@ VM:
 | get    | (a--b)     |       | aka @ |
 | set    | (va--)     |       | aka ! |
 
+### lambda functions
+
+| asm    | effect     | morty   | info | 
+| ------ | ---------- | ------- | ---- |
+| lcall  | (a--)      | call    | call lambda from the stack |
+| lret   | (r==)      |         | return from lambda |
+
 ### local variables
 
 | name    | effect     | morty | info | 
@@ -116,12 +123,6 @@ These operations might not be included in the final VM but are essential for deb
 | clock  | (--a)      |         | push number of microsends since the program start |
 
 ## Extension
-
-### Branching
-
-| asm    | effect     | morty   | info | 
-| ------ | ---------- | ------- | ---- |
-| scall  | (a--)      | call    | call procedure from the stack TODO: rename - tcall exec execute |
 
 ### ALU
 
@@ -195,11 +196,41 @@ On function end or early return they will be automatically discarded - this is p
 by the use of the F register which stores the "frame" of the return stack.
 On function call both F and I registers are stored on the return stack.
 
-## Loops
+## Lambda functions
 
-TODO
+Morty:
+```
+21 [ dup add ] call
+```
+
+MortyVM ASM:
+```
+    push 21
+    push 0               (unconditional jump on [)
+    jz   @end_of_lambda  (unconditional jump on [)
+start_of_lambda:
+    dup  0
+    add  0
+    lret 0
+end_of_lambda:
+    push @start_of_lambda
+    lcall 0
+```
+
+Lambda functions are using stack frame of the parent.
+They are not closures and should not be shared if they are using parent's local variables.
 
 ## Conditionals
+
+Conditionals are based on lambda functions.
+
+```
+distance 10 or-less [ collision-warning ] if
+
+age 18 or-more [ show-content ] [ show-restriction ] if-else
+```
+
+## Loops
 
 TODO
 
@@ -234,27 +265,6 @@ macro rot  >R swap <R swap
 Macros cannot be longer than 1 line.
 This is on purpose to keep the macros simple.
 
-
-## Lambdas
-
-Morty:
-```
-21 [ dup add ] call
-```
-
-MortyVM ASM:
-```
-    push 21
-    push 0             (unconditional jump)
-    jz   @end_of_list  (unconditional jump)
-start_of_list:
-    dup 0
-    add 0
-    ret 0
-end_of_list:
-    push @start_of_list
-    scall 0
-```
 
 ## Lists
 
