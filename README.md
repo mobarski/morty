@@ -52,37 +52,58 @@ VM:
 
 ## Core
 
-### universal operations with argument
+### branching
 
-| name    | effect     | info | 
-| ------- | ---------- | ---- |
-| push  X | (--x)      | push X onto stack |  
-| jz    X | (v--)      | set I to X if v==0 |
-| call  X | (--)(=fr)  | call procedure at X |
+| name    | effect     | morty | info | 
+| ------- | ---------- | ----- | ---- |
+| jz    X | (v--)      |       | set I to X (next instruction cell) if v==0 |
+| call  X | (--)(=fr)  |       | call procedure at X (next instruction cell) |
+| ret     | (fr*=)     |       | return from procedure call |
 
-### universal operations
+### stack manipulation
 
 | asm    | effect     | morty | info | 
 | ------ | ---------- | ----- | ---- 
-| ret    | (fr*=)     |       | return from procedure call |
+| push X | (--x)      | X     | push X (next instruction cell) onto the stack |  
 | dup    | (a--aa)    |       |  |
 | drop   | (a--)      |       |  |
 | swap   | (ab--ba)   |       |  |
 | stor   | (a--)(=a)  | >R    |  |
 | rtos   | (--a)(a=)  | R>    |  |
+
+### ALU
+
+| asm    | effect     | morty | info | 
+| ------ | ---------- | ----- | ---- 
 | add    | (ab--c)    |       |  |
 | xor    | (ab--c)    |       |  |
 | and    | (ab--c)    |       |  |
+
+### memory access
+
+| asm    | effect     | morty | info | 
+| ------ | ---------- | ----- | ---- 
 | get    | (a--b)     |       | aka @ |
 | set    | (va--)     |       | aka ! |
 
-### operations for handling local variables
+### local variables
 
 | name    | effect     | morty | info | 
 | ------- | ---------- | ----- | ---- |
 | vget  X | (--n)      | x     |  |
 | vset  X | (n--)      | :x    |  |
 | radd  X | (=?\*x)    |       | add X to the R register |
+
+### debugging / simple output
+
+These operations might not be included in the final VM but are essential for debugging early versions of the VM.
+
+| asm    | effect     | morty   | info | 
+| ------ | ---------- | ------- | ---- |
+| dot    | (n--)      |         | print n (as int) and a single space |
+| emit   | (a--)      |         | print character a |
+| ok     | (ab--a)    |         | panic when a != b showing a and b, when a==b print b space "ok" space  |
+| clock  | (--a)      |         | push number of microsends since the program start |
 
 ## Other
 
@@ -108,15 +129,6 @@ VM:
 | gt     | (ab--c)    | is-more | TODO: readablity vs > |
 | neg    | (a--b)     |         |  |
 
-
-### debugging / simple output
-
-| asm    | effect     | morty   | info | 
-| ------ | ---------- | ------- | ---- |
-| dot    | (n--)      |         | print n (as int) and a single space |
-| emit   | (a--)      |         | print character a |
-| ok     | (ab--a)    |         | panic when a != b showing a and b  |
-| clock  | (--a)      |         | push number of microsends since the program start |
 
 # Language
 
