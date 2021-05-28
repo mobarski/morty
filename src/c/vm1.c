@@ -21,14 +21,14 @@ enum OPS {
 	LE,LT,GE,GT,EQ,NE,
 	ROT,OVER, // TODO ???
 	VGET,VSET,RADD,
-	DOT=100,EMIT,OK,CLOCK,DEBUG
+	DEBUG=777
 };
 
 int mem[100]  = {0};
 //int code[100] = { PUSH,400, PUSH,-1, ADD,0, DUP,0, JZ,14, PUSH,0, JZ,2, STOP,0 };
 //int code[100] = { CLOCK,0, PUSH,40, PUSH,2, ADD,0, PUSH,42, OK,0, DROP,0, CLOCK,0, SWAP,0, SUB,0, DOT,0, DEBUG,0, STOP,0 };
 //int code[100] = {PUSH,-42, PUSH,1, USHR,0, DOT,0, STOP,0};
-int code[100] = { PUSH,1, ALLOT,0, DUP,0, PUSH,40, SWAP,0, SET,0, PUSH,2, SWAP,0, GET,0, ADD,0, DOT,0, DEBUG,0, STOP,0 };
+int code[100] = { PUSH,1, ALLOT,0, DUP,0, PUSH,40, SWAP,0, SET,0, PUSH,2, SWAP,0, GET,0, ADD,0, DEBUG,0, STOP,0 };
 int tos = 0;
 int ip = 0;
 int sp = 0;
@@ -44,7 +44,7 @@ int dp = 0; // for ALLOT
 
 int main() {
 	unsigned int uv=0;
-	int t_start = ms_clock();
+	int t_debug = ms_clock();
 	rp = 20;
 	fp = rp;
 	dp = 40;
@@ -66,11 +66,12 @@ int main() {
 			case RADD:  rp+=arg;                           break; // local variables
 			case VGET:  v=mem[fp+arg]; s_push(v);          break; // local variables
 			case VSET:  v=s_pop(); mem[fp+arg]=v;          break; // local variables
-			// OTHER
+			// DATA STACK
 			case SWAP:  v=tos; tos=mem[sp]; mem[sp]=v; break;
 			case PUSH:  s_push(arg);                   break;
 			case DUP:   s_push(tos);                   break;
 			case DROP:  v=s_pop();                     break;
+			// ALU
 			case MUL:   v=s_pop(); tos *= v;           break;
 			case DIV:   v=s_pop(); tos /= v;           break;
 			case ADD:   v=s_pop(); tos += v;           break;
@@ -94,29 +95,9 @@ int main() {
 			case SET:   v=s_pop(); mem[v]=s_pop();     break;
 			case ALLOT: v=s_pop(); s_push(dp); dp+=v;  break;
 			// DEBUG
-			case CLOCK:
-				v = ms_clock() - t_start;
-				s_push(v);
-				break;
-			case DOT:
-				v = s_pop();
-				printf("%d ",v);
-				break;
-			case EMIT:
-				v = s_pop();
-				printf("%c",v);
-				break;
-			case OK:
-				v = s_pop();
-				if (v==tos) {
-					printf("%d ok ",v);
-				} else {
-					printf("\nERROR: %d != %d \n",tos,v);
-					return 1;
-				}
-				break;
 			case DEBUG:
-				printf("T:%d  SP:%d  RP:%d  FP:%d  IP:%d  DP:%d \n",tos,sp,rp,fp,ip,dp);
+				printf("T:%d  SP:%d  RP:%d  FP:%d  IP:%d  DP:%d  dt:%d ms \n",tos,sp,rp,fp,ip,dp,ms_clock()-t_debug);
+				t_debug = ms_clock();
 				break;
 		}
 	}
