@@ -198,7 +198,6 @@ On function call both F and I registers are stored on the return stack.
 
 ## Lambda functions
 
-Morty:
 ```
 21 [ dup add ] call
 ```
