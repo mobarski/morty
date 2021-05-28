@@ -109,7 +109,6 @@ VM:
 | ------- | ---------- | ----- | ---- |
 | vget  X | (--n)      | x     |  |
 | vset  X | (n--)      | :x    |  |
-| radd  X | (=?\*x)    | N/A   | add X to the R register TODO: remove as this is early optimization |
 
 ### debugging
 
@@ -265,7 +264,7 @@ Field names are prefixed with a dot to make them easier to grep and highlight.
 struct point   .x .y   
 struct circle  .r .x .y
 
-def dist-to-circle (c p -- d) :p:point :c:circle
+def dist-to-circle (p c -- d) :c:circle :p:point 
     p.x c.x sub dup mul
     p.y c.y sub dup mul
     add sqrt               (distance to the center)
@@ -277,9 +276,8 @@ MortyVM ASM
 ```
 dist-to-circle:
     (init local variables)
-    radd 2
-    vset 1  (circle)
-    vset 2  (point)
+    stor 0  (1-circle)
+    stor 0  (2-point)
     
     (line1)
     vget 2  (point)
