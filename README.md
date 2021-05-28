@@ -262,6 +262,10 @@ TODO
 
 TODO
 
+Struct definition cannot be longer than 1 line.
+This is on purpose to keep the structures simple.
+Field names are prefixed with a dot to make them easier to grep and highlight.
+
 ```
 struct point   .x .y   
 struct circle  .r .x .y
@@ -321,10 +325,6 @@ dist-to-circle:
     
     ret 0
 ```
-
-Struct definition cannot be longer than 1 line.
-This is on purpose to keep the structures simple.
-Field names are prefixed with a dot to make them easier to grep and highlight.
 
 ## Macros
 
