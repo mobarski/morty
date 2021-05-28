@@ -101,7 +101,7 @@ VM:
 | asm    | effect     | morty   | info | 
 | ------ | ---------- | ------- | ---- |
 | qcall  | (a--)      | call    | quick call to address from the stack without changing the frame pointer |
-| qret   | (r==)      |         | quick return without changing the frame pointer |
+| qret   | (r=)      |         | quick return without changing the frame pointer |
 
 ### local variables
 
