@@ -129,10 +129,9 @@ These operations might not be included in the final VM but are essential for deb
 | asm    | effect     | morty   | info | 
 | ------ | ---------- | ------- | ---- |
 | mod    | (ab--c)    |         |  |
-| neg    | (a--b)     |         |  |
 | shl    | (ab--c)    |         | shift left |
 | shr    | (ab--c)    |         | shift right |
-| sshr   | (ab--c)    |         | signed shift right |
+| ushr   | (ab--c)    |         | unsigned shift right |
 
 ### ALU - comparators
 
