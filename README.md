@@ -124,6 +124,8 @@ VM:
 | asm    | effect     | morty   | info | 
 | ------ | ---------- | ------- | ---- |
 | mod    | (ab--c)    |         |  |
+| min    | (ab--c)    |         |  |
+| max    | (ab--c)    |         |  |
 | shl    | (ab--c)    |         | shift left |
 | shr    | (ab--c)    |         | shift right |
 | ushr   | (ab--c)    |         | unsigned shift right |
