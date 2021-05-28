@@ -16,6 +16,8 @@ def to_cells(text, op_names):
 # -----------------------------------------------------------------------------
 
 def strip_comments(text):
+	# TODO handle character cells '( and ')
+	# TODO handle strings (FUTURE)
 	return re.sub('(?ms)[(].*?[)]', ' ', text)
 
 def tokenize(text):
@@ -41,6 +43,8 @@ def apply_labels(tokens, labels):
 			out += [labels[name]]
 		elif t[:2] in ['@+','@-']:
 			out += [len(out) + int(t[1:])]
+		elif t[0]=="'":
+			out += [ord(t[1:-1])]
 		else:
 			out += [t]
 	return out
@@ -79,7 +83,7 @@ if __name__=="__main__":
 			jz		@start
 		
 		mul4:
-			push 2 0
+			push 2
 			push 2
 			mul 0
 			mul 0
@@ -95,9 +99,13 @@ if __name__=="__main__":
 		
 			call @mul4
 		
+			push '*'
+			
+			emit 0
+		
 			stop 0
 	"""
-	op_names = "stop call ret jz push mul div vincr vget vset".split(' ')
+	op_names = "stop call ret jz push mul div vincr vget vset emit".split(' ')
 	cells = to_cells(code, op_names)
 	print(cells)
 	
