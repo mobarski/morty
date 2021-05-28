@@ -112,18 +112,13 @@ VM:
 | vset  X | (n--)      | :x    |  |
 | radd  X | (=?\*x)    | N/A   | add X to the R register |
 
-### debugging / simple output
-
-These operations might not be included in the final VM but are essential for debugging early versions of the VM.
+### debugging
 
 | asm    | effect     | morty   | info | 
 | ------ | ---------- | ------- | ---- |
-| dot    | (n--)      |         | print n (as int) and a single space |
-| emit   | (a--)      |         | print character a |
-| ok     | (ab--a)    |         | panic when a != b showing a and b, when a==b print b space "ok" space  |
-| clock  | (--a)      |         | push number of microsends since the program start |
+| debug  | (--)       |         | print values of all VM registers and show time in ms since last debug call |
 
-## Extension
+## Practical
 
 ### ALU
 
