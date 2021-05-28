@@ -217,7 +217,7 @@ end_of_lambda:
     lcall 0
 ```
 
-Lambda functions are using stack frame of the parent.
+Lambda functions are using the stack frame of the parent.
 They are not closures and should not be shared if they are using parent's local variables.
 
 ## Conditionals
@@ -226,7 +226,29 @@ Conditionals are based on lambda functions.
 
 ```
 distance 10 or-less [ collision-warning ] if
+```
 
+MortyVM ASM
+```
+    call @distance
+    push 10
+    le 0
+    push 0
+    jz @end-of-lambda
+start-of-lambda:
+    call @callision-warning
+    lret 0
+end-of-lambda:
+    push @start-of-lambda
+    swap 0                   (addr bool)
+    jz @else
+    dup   0                  (for drop after else)
+    lcall 0
+else:
+    drop 0
+```
+
+```
 age 18 or-more [ show-content ] [ show-restriction ] if-else
 ```
 
