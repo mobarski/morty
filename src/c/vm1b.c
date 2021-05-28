@@ -19,6 +19,10 @@ enum OPS {
 	DROP,
 	SWAP,
 	SUB,
+	DIV,
+	AND,
+	OR,
+	XOR,
 	DOT=100,
 	EMIT,
 	OK,
@@ -39,45 +43,26 @@ int tos = 0;
 #define s_push(x) mem[++sp] = tos, tos = x
 
 int main() {
-	int t_start = current_timestamp();
+	int t_start = ms_clock();
 	for(int i=0; i<100; i++) {
 		int op = code[ip++];
 		int arg = code[ip++];
 		int v;
 		switch(op) {
-			case STOP:
-				ip -= 2;
-				break;
-			case PUSH:
-				s_push(arg);
-				break;
-			case MUL:
-				v = s_pop();
-				tos *= v;
-				break;
-			case ADD:
-				v = s_pop();
-				tos += v;
-				break;
-			case JZ:
-				v = s_pop();
-				if (v==0) ip=arg;
-				break;
-			case DUP:
-				s_push(tos);
-				break;
-			case SUB:
-				v = s_pop();
-				tos -= v;
-				break;
-			case SWAP:
-				v = tos;
-				tos = mem[sp];
-				mem[sp] = v;
-				break;
-			case DROP:
-				v = s_pop();
-				break;
+			case STOP:  ip -= 2;                       break;
+			case PUSH:  s_push(arg);                   break;
+			case DUP:   s_push(tos);                   break;
+			case DROP:  v=s_pop();                     break;
+			case MUL:   v=s_pop();  tos *= v;          break;
+			case DIV:   v=s_pop();  tos /= v;          break;
+			case ADD:   v=s_pop();  tos += v;          break;
+			case SUB:   v=s_pop();  tos -= v;          break;
+			case AND:   v=s_pop();  tos &= v;          break;
+			case OR:    v=s_pop();  tos |= v;          break;
+			case XOR:   v=s_pop();  tos ^= v;          break;
+			case JZ:    v=s_pop();  if (v==0) ip=arg;  break;
+			case SWAP:  v=tos; tos=mem[sp]; mem[sp]=v; break;
+			
 			// DEBUG
 			case CLOCK:
 				v = ms_clock() - t_start;
