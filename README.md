@@ -95,13 +95,14 @@ VM:
 | ------ | ---------- | ----- | ---- 
 | get    | (a--b)     |       | aka @ |
 | set    | (va--)     |       | aka ! |
+| allot  | (n--a)     |       | allot n cells in the "dictionary" and return address to the first allocated cell |
 
 ### lambda functions
 
 | asm    | effect     | morty   | info | 
 | ------ | ---------- | ------- | ---- |
 | qcall  | (a--)      | call    | quick call to address from the stack without changing the frame pointer |
-| qret   | (r=)      |         | quick return without changing the frame pointer |
+| qret   | (r=)       |         | quick return without changing the frame pointer |
 
 ### local variables
 
