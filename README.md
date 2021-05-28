@@ -328,6 +328,10 @@ macro rot  >R swap <R swap
 Macros cannot be longer than 1 line.
 This is on purpose to keep the macros simple.
 
+## Global variables
+
+TODO
+
 ## Arrays
 
 TODO
@@ -336,9 +340,7 @@ TODO
 
 TODO
 
-## Lists
 
-TODO
 
 
 # References
