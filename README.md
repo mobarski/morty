@@ -159,7 +159,8 @@ TODO: decide or-over vs or-more, or-under vs or-less
 # Language
 
 Morty language is similar to Morty VM instruction set.
-VM operations besides push,jz,call can be used directly in the language.
+Almost all VM instructions can be used directly.
+Only operations that require argument from the next program cell are reserved for the compiler.
 
 ## Language Examples
 
@@ -271,6 +272,54 @@ def dist-to-circle (c p -- d) :p:point :c:circle
     add sqrt               (distance to the center)
     c.r sub
 end
+```
+
+MortyVM ASM
+```
+dist-to-circle:
+    (init local variables)
+    radd 2
+    vset 1  (circle)
+    vset 2  (point)
+    
+    (line1)
+    vget 2  (point)
+    push 0  (.x offset in point)
+    add 0   (.x + offset)
+    get 0   (.x value)
+    vget 1  (circle)
+    push 1  (.x offset in circle)
+    add 0
+    get 0  (.x value)
+    sub 0
+    dup 0
+    mul 0
+    
+    (line 2)
+    vget 2
+    push 1
+    add 0
+    get 0
+    vget 1
+    push 2
+    add 0
+    get 0
+    sub 0
+    dup 0
+    mul 0
+    
+    (line 3)
+    add 0
+    call @sqrt
+    
+    (line 4)
+    vget 1
+    push 0
+    add 0
+    get 0 (.r value)
+    sub 0
+    
+    ret 0
 ```
 
 Struct definition cannot be longer than 1 line.
