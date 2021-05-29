@@ -37,7 +37,7 @@ int mem[1000]  = {0};
 int code[100] = { PUSH,1, ALLOT,0, DUP,0, PUSH,40, SWAP,0, SET,0, PUSH,2, SWAP,0, GET,0, ADD,0, PUSH,0x2a2a2a20, ECHO,0, VMINFO,0, STOP,0 };
 
 // VM RUN
-vm_state run(int* mem, vm_state state) {
+vm_state run(int *mem, vm_state state) {
 	
 	// VM REGISTERS
 	int tos = state.tos;
@@ -133,7 +133,7 @@ vm_state run(int* mem, vm_state state) {
 
 // TODO: take vm_config as input
 // VM BOOT
-vm_state boot(int* mem, int* code, int code_len) {
+vm_state boot(int *mem, int *code, int code_len) {
 	vm_state state;
 	
 	state.tos = 0;
@@ -152,7 +152,38 @@ vm_state boot(int* mem, int* code, int code_len) {
 	return state;
 }
 
-// TODO: boot_from_file()
+int boot_from_file(char *path, int *code, int max_len) {
+	FILE *in;
+	int i; // byte position in the buffer
+	int c; // character buffer
+	int code_len; // output code len (in cells)
+	char *buf = (char*)(code); // code as byte buffer
+	
+	in = fopen(path,"r");
+	if (!in) {
+		fprintf(stderr, "ERROR: Cannot open input file.\n");
+		return 0;
+	}
+	
+	while ((c = fgetc(in)) != EOF) {
+		buf[i] = c;
+		i++;
+		if (i>=max_len*4) {
+			fprintf(stderr, "ERROR: Input longer then the code buffer.\n");
+			return 0;
+		}
+	}
+	
+	if (i%4 != 0) {
+		fprintf(stderr, "ERROR: Input code is not int-aligned.\n");
+		return 0;
+	}
+	code_len = i/4;
+	
+	// for (int i=0; i<code_len; i++) { printf("code[%02d] -> %d\n",i,code[i]); } // XXX DEBUG
+	
+	return code_len;
+}
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
@@ -161,7 +192,12 @@ vm_state boot(int* mem, int* code, int code_len) {
 int main() {
 	vm_state initial;
 	vm_state final;
+	int code_len = 40;
+	int max_len = 100;
 	
-	initial = boot(mem, code, 40);
-	final   = run(mem, initial);
+	//code_len = boot_from_file("input.mrt", code, max_len);
+	//return 0;
+	
+	initial  = boot(mem, code, code_len);
+	final    = run(mem, initial);
 }
