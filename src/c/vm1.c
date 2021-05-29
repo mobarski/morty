@@ -20,28 +20,42 @@ long long ms_clock() {
 #define r_push(x) mem[++rp] = x
 #define r_pop()   mem[rp--]
 
-int mem[100]  = {0};
+typedef struct {
+	int fp;
+	int ip;
+	int rp;
+	int sp;
+	int tos;
+	int dp;
+} vm_state;
+
+// TODO: propper mem[] and code[]
+int mem[1000]  = {0};
 //int code[100] = { PUSH,400, PUSH,-1, ADD,0, DUP,0, JZ,14, PUSH,0, JZ,2, STOP,0 };
 //int code[100] = { CLOCK,0, PUSH,40, PUSH,2, ADD,0, PUSH,42, OK,0, DROP,0, CLOCK,0, SWAP,0, SUB,0, DOT,0, VMINFO,0, STOP,0 };
 //int code[100] = {PUSH,-42, PUSH,1, USHR,0, DOT,0, STOP,0};
 int code[100] = { PUSH,1, ALLOT,0, DUP,0, PUSH,40, SWAP,0, SET,0, PUSH,2, SWAP,0, GET,0, ADD,0, VMINFO,0, STOP,0 };
 
+// VM RUN
+vm_state run(int* mem, vm_state state) {
+	
+	// VM REGISTERS
+	int tos = state.tos;
+	int ip  = state.ip;
+	int sp  = state.sp;
+	int rp  = state.rp;
+	int fp  = state.fp;
+	int dp  = state.dp; // for ALLOT
+	
+	// FINAL STATE
+	vm_state final;
 
-int run(int* mem, int* code) {
-	
-	// VM registers
-	int tos = 0;
-	int ip = 0;
-	int sp = 0;
-	int rp = 0;
-	int fp = 0;
-	int dp = 0; // for ALLOT
-	
-	unsigned int uv=0;
+	// AUX VARS
+	unsigned int uv=0; // for USHR
 	int ts_vminfo = ms_clock();
-	rp = 20;
-	fp = rp;
-	dp = 40;
+	
+	// TODO: propper main loop
+	// MAIN LOOP
 	for(int i=0; i<100; i++) {
 		int op = code[ip++];
 		int arg = code[ip++];
@@ -96,10 +110,50 @@ int run(int* mem, int* code) {
 				ts_vminfo = ms_clock();
 				break;
 		}
+		//printf("T:%d  SP:%d  RP:%d  FP:%d  IP:%d  DP:%d  dt:%d ms \n",tos,sp,rp,fp,ip,dp,ms_clock()-ts_vminfo); // XXX debug
 	}
+	
+	// RETURN FINAL VM STATE
+	final.tos = tos;
+	final.ip  = ip;
+	final.sp  = sp;
+	final.rp  = rp;
+	final.fp  = fp;
+	final.dp  = dp;
+	return final;
 }
 
+// TODO: take vm_config as input
+// VM BOOT
+vm_state boot(int* mem, int* code, int code_len) {
+	vm_state state;
+	
+	state.tos = 0;
+	state.ip  = 0;
+	
+	for (int i=0; i<code_len; i++) {
+		mem[state.ip+i] = code[i];
+		// printf("mem[%02d] -> %d\n", state.ip+i, code[i]); // XXX debug
+	}
+	
+	state.sp  = state.ip + code_len + 10; // 10 -> GAP
+	state.rp  = state.sp + 20; // 20 -> S-SIZE
+	state.dp  = state.rp + 40; // 40 -> R-SIZE
+	state.fp  = state.rp;
+	
+	return state;
+}
+
+// TODO: boot_from_file()
+
+// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 
 int main() {
-	run(mem, code);
+	vm_state initial;
+	vm_state final;
+	
+	initial = boot(mem, code, 40);
+	final   = run(mem, initial);
 }
