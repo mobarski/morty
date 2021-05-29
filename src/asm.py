@@ -24,6 +24,7 @@ def to_binary_file(filename, text, op_code):
 # -----------------------------------------------------------------------------
 
 def strip_comments(text):
+	text = re.sub('(?ms)[(]{2}.*?[)]{2}', ' ', text) # multiline comments (( ... ))
 	text = re.sub('\s[(].*?[)]', ' ', text)
 	text = re.sub('\s[(].*', ' ', text)
 	return text
@@ -126,6 +127,7 @@ OPS = [
 	'ROT','OVER',
 	'VGET','VSET','RADD',
 	'EMIT','DOT','ECHO',
+	'IF','IFELSE',
 	'VMINFO'
 ]
 OPCODE = {n.lower():i for i,n in enumerate(OPS)}
@@ -147,6 +149,8 @@ if __name__=="__main__":
 
 	if args.hl:
 		code = hlasm_to_asm(code)
+		if args.d:
+			print(code)
 
 	cells = to_cells(code, OPCODE)
 	if args.d:
