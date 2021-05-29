@@ -5,8 +5,7 @@ import sys
 
 # TODO: map token to file @ line
 
-def to_cells(text, op_names):
-	op_code = {n:i for i,n in enumerate(op_names)}
+def to_cells(text, op_code):
 	text          = strip_comments(text)
 	tokens        = tokenize(text)
 	tokens,labels = strip_labels(tokens)
@@ -14,8 +13,8 @@ def to_cells(text, op_names):
 	cells         = compile(tokens, op_code)
 	return cells
 
-def to_binary_file(filename, text, op_names):
-	cells = to_cells(code, op_names)
+def to_binary_file(filename, text, op_code):
+	cells = to_cells(code, op_code)
 	compiled = array("i", cells).tobytes()
 	open(filename,'wb').write(compiled)
 	return cells
@@ -73,6 +72,24 @@ def compile(tokens, op_code):
 
 # -----------------------------------------------------------------------------
 
+OPS = [
+	'STOP',
+	'PUSH','DUP','DROP','SWAP','STOR','RTOS',
+	'ADD','MUL','DIV','SUB',
+	'AND','OR','XOR','NZ',
+	'CALL','RET','JZ',
+	'QCALL','QRET',
+	'GET','SET','ALLOT',
+	'MOD','SHL','SHR','USHR','MIN','MAX',
+	'LE','LT','GE','GT','EQ','NE',
+	'ROT','OVER',
+	'VGET','VSET','RADD',
+	'EMIT','DOT','ECHO',
+	'VMINFO'
+]
+OPCODE = {n.lower():i for i,n in enumerate(OPS)}
+OPCODE['vminfo'] = 777
+
 if __name__=="__main__":
 
 	parser = argparse.ArgumentParser(description='Compile MortyVM assembler code into binary cells')
@@ -86,9 +103,8 @@ if __name__=="__main__":
 	else:
 		code = sys.stdin.read()		
 
-	op_names = "stop call ret jz push mul div vincr vget vset emit".split(' ')
-	cells = to_cells(code, op_names)
+	cells = to_cells(code, OPCODE)
 	if args.d:
 		print(cells)
 	if args.o:
-		to_binary_file(args.o, code, op_names)
+		to_binary_file(args.o, code, OPCODE)
