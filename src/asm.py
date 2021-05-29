@@ -24,7 +24,9 @@ def to_binary_file(filename, text, op_code):
 # -----------------------------------------------------------------------------
 
 def strip_comments(text):
-	return re.sub('\s[(].*', ' ', text)
+	text = re.sub('\s[(].*?[)]', ' ', text)
+	text = re.sub('\s[(].*', ' ', text)
+	return text
 
 def tokenize(text):
 	return re.split('\s+',text.strip())
@@ -70,7 +72,7 @@ def compile(tokens, op_code):
 			cells += [int(t)]
 	return cells
 
-# TODO: comments
+
 def hlasm_to_asm(code):
 	"""Morty High Level Assebler
 	
@@ -81,6 +83,8 @@ def hlasm_to_asm(code):
 		op.@xxx  -> op @xxx
 		op       -> op 0
 	"""
+	code = strip_comments(code)
+	
 	out = []
 	for line in code.split("\n"):
 		indent = len(line)-len(line.lstrip())
@@ -127,8 +131,8 @@ OPS = [
 OPCODE = {n.lower():i for i,n in enumerate(OPS)}
 OPCODE['vminfo'] = 777
 
-if __name__=="__main__":
 
+if __name__=="__main__":
 	parser = argparse.ArgumentParser(description='Compile MortyVM assembler code into binary cells')
 	parser.add_argument('-o',  metavar='path', type=str, help='output path')
 	parser.add_argument('-i',  metavar='path', type=str, help='input path (default: stdin)')
