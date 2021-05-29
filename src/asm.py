@@ -1,7 +1,8 @@
 import re
 from array import array
+import argparse
 
-# TODO map token to file @ line
+# TODO: map token to file @ line
 
 def to_cells(text, op_names):
 	op_code = {n:i for i,n in enumerate(op_names)}
@@ -23,9 +24,7 @@ def to_binary_file(filename, text, op_names):
 # -----------------------------------------------------------------------------
 
 def strip_comments(text):
-	# TODO handle character cells '( and ')
-	# TODO handle strings (FUTURE)
-	return re.sub('(?ms)[(].*?[)]', ' ', text)
+	return re.sub('\s[(].*', ' ', text)
 
 def tokenize(text):
 	return re.split('\s+',text.strip())
@@ -75,16 +74,16 @@ def compile(tokens, op_code):
 
 if __name__=="__main__":
 	code = """
-		( this is a comment)
+		( this is a comment
 			vincr	3
 			push	21
 		
 		(
-			this
-			is
-			multi line
-			comment
-		)
+		(	this
+		(	is
+		(	multi line
+		(	comment
+		(
 		
 			push	11
 			jz		@start
@@ -100,16 +99,18 @@ if __name__=="__main__":
 			push 4
 			div 0
 			ret 0
-		
+			
+( --- comment ---------------------- )
+
 		start:
 			push 44
 		
-			call @mul4
+			call @mul4		( comment)
 		
 			push '*'
 			
 			emit 0
-		
+		( ---------- )
 			stop 0
 	"""
 	op_names = "stop call ret jz push mul div vincr vget vset emit".split(' ')
