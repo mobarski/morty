@@ -17,7 +17,8 @@ def nested-loops (x--y) :x
     loop loop loop loop loop loop
 end
 
-debug  8 nested-loops  debug
+8 nested-loops
+debug
 ```
 
 
@@ -32,7 +33,8 @@ def fib (n--f) :n
     n 1 sub fib (f2 f1) add (f)
 end
 
-debug  8 fib  debug
+8 fib
+debug
 ```
 
 
@@ -54,7 +56,8 @@ def main (n)
     (n) times 100 gen-random drop loop
 end
 
-debug  1000 main  debug
+1000 main
+debug
 ```
 
 
