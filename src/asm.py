@@ -1,6 +1,7 @@
 import re
 from array import array
 import argparse
+import sys
 
 # TODO: map token to file @ line
 
@@ -73,47 +74,21 @@ def compile(tokens, op_code):
 # -----------------------------------------------------------------------------
 
 if __name__=="__main__":
-	code = """
-		( this is a comment
-			vincr	3
-			push	21
-		
-		(
-		(	this
-		(	is
-		(	multi line
-		(	comment
-		(
-		
-			push	11
-			jz		@start
-		
-		mul4:
-			push 2
-			push 2
-			mul 0
-			mul 0
-			ret 0
-		
-		div4:
-			push 4
-			div 0
-			ret 0
-			
-( --- comment ---------------------- )
 
-		start:
-			push 44
-		
-			call @mul4		( comment)
-		
-			push '*'
-			
-			emit 0
-		( ---------- )
-			stop 0
-	"""
+	parser = argparse.ArgumentParser(description='Compile MortyVM assembler code into binary cells')
+	parser.add_argument('-o', metavar='path', type=str, help='output path')
+	parser.add_argument('-i', metavar='path', type=str, help='input path (default: stdin)')
+	parser.add_argument('-d', action='store_true', help='debug')
+	args = parser.parse_args()
+
+	if args.i:
+		code = open(args.i,'r').read()
+	else:
+		code = sys.stdin.read()		
+
 	op_names = "stop call ret jz push mul div vincr vget vset emit".split(' ')
 	cells = to_cells(code, op_names)
-	to_binary_file('program.mrt', code, op_names)
-	print(cells)
+	if args.d:
+		print(cells)
+	if args.o:
+		to_binary_file(args.o, code, op_names)
