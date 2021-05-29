@@ -112,9 +112,9 @@ VM:
 
 ### debugging
 
-| asm    | effect     | morty   | info | 
-| ------ | ---------- | ------- | ---- |
-| debug  | (--)       |         | print values of all VM registers and show time in ms since last debug call |
+| asm     | effect     | morty   | info | 
+| ------- | ---------- | ------- | ---- |
+| vminfo  | (--)       |         | print values of all VM registers and show time in ms since last vminfo call or start of the program |
 
 ## Practical
 
