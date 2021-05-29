@@ -32,3 +32,5 @@ if __name__=="__main__":
 		print(name,arg)
 		print()
 		if op==0 and arg==0: break
+	
+	print(dict(vm.op_cnt))
