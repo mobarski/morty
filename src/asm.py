@@ -70,7 +70,17 @@ def compile(tokens, op_code):
 			cells += [int(t)]
 	return cells
 
+# TODO: comments
 def hlasm_to_asm(code):
+	"""Morty High Level Assebler
+	
+	Tranformations:
+		number   -> push number
+		'c'      -> push char
+		label:   -> label:
+		op.@xxx  -> op @xxx
+		op       -> op 0
+	"""
 	out = []
 	for line in code.split("\n"):
 		indent = len(line)-len(line.lstrip())
@@ -84,9 +94,12 @@ def hlasm_to_asm(code):
 				v = None
 			if v is not None:
 				asm += [f'push {v}']
+			elif t[0]=="'":
+				v = ord(t[1:2])
+				asm += [f'push {v}']
 			elif '.' in t:
 				asm += [t.replace('.',' ')]
-			elif ':' in t or '@' in t:
+			elif ':' in t:
 				asm += [t]
 			else:
 				asm += [f'{t} 0']
@@ -128,7 +141,7 @@ if __name__=="__main__":
 	else:
 		code = sys.stdin.read()		
 
-	if args.h:
+	if args.hl:
 		code = hlasm_to_asm(code)
 
 	cells = to_cells(code, OPCODE)
