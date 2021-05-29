@@ -18,7 +18,7 @@ def nested-loops (x--y) :x
 end
 
 8 nested-loops
-debug
+vminfo
 ```
 
 
@@ -34,7 +34,7 @@ def fib (n--f) :n
 end
 
 8 fib
-debug
+vminfo
 ```
 
 
@@ -57,7 +57,7 @@ def main (n)
 end
 
 1000 main
-debug
+vminfo
 ```
 
 
