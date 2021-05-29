@@ -30,11 +30,12 @@ typedef struct {
 } vm_state;
 
 // TODO: propper mem[] and code[]
-int mem[1000]  = {0};
+int mem[1000] = {0};
+int code[100] = {0};
 //int code[100] = { PUSH,400, PUSH,-1, ADD,0, DUP,0, JZ,14, PUSH,0, JZ,2, STOP,0 };
 //int code[100] = { CLOCK,0, PUSH,40, PUSH,2, ADD,0, PUSH,42, OK,0, DROP,0, CLOCK,0, SWAP,0, SUB,0, DOT,0, VMINFO,0, STOP,0 };
 //int code[100] = {PUSH,-42, PUSH,1, USHR,0, DOT,0, STOP,0};
-int code[100] = { PUSH,1, ALLOT,0, DUP,0, PUSH,40, SWAP,0, SET,0, PUSH,2, SWAP,0, GET,0, ADD,0, PUSH,0x2a2a2a20, ECHO,0, VMINFO,0, STOP,0 };
+//int code[100] = { PUSH,1, ALLOT,0, DUP,0, PUSH,40, SWAP,0, SET,0, PUSH,2, SWAP,0, GET,0, ADD,0, PUSH,0x2a2a2a20, ECHO,0, VMINFO,0, STOP,0 };
 
 // VM RUN
 vm_state run(int *mem, vm_state state) {
@@ -58,8 +59,8 @@ vm_state run(int *mem, vm_state state) {
 	// TODO: propper main loop
 	// MAIN LOOP
 	for(int i=0; i<100; i++) {
-		int op = code[ip++];
-		int arg = code[ip++];
+		int op  = mem[ip++];
+		int arg = mem[ip++];
 		int v;
 		switch(op) {
 			// BRANCHING
@@ -131,6 +132,12 @@ vm_state run(int *mem, vm_state state) {
 	return final;
 }
 
+
+// ----------------------------------------------------------------------------
+// ---[ BOOT ]-----------------------------------------------------------------
+// ----------------------------------------------------------------------------
+
+
 // TODO: take vm_config as input
 // VM BOOT
 vm_state boot(int *mem, int *code, int code_len) {
@@ -141,7 +148,7 @@ vm_state boot(int *mem, int *code, int code_len) {
 	
 	for (int i=0; i<code_len; i++) {
 		mem[state.ip+i] = code[i];
-		// printf("mem[%02d] -> %d\n", state.ip+i, code[i]); // XXX debug
+		printf("BOOT: mem[%02d] -> %d\n", state.ip+i, code[i]); // XXX debug
 	}
 	
 	state.sp  = state.ip + code_len + 10; // 10 -> GAP
@@ -152,41 +159,56 @@ vm_state boot(int *mem, int *code, int code_len) {
 	return state;
 }
 
+
 int boot_from_file(char *path, int *code, int max_len) {
 	FILE *in;
-	int i; // byte position in the buffer
-	int c; // character buffer
-	int code_len; // output code len (in cells)
-	char *buf = (char*)(code); // code as byte buffer
+	int i; // cell position in the code
 	
 	in = fopen(path,"r");
 	if (!in) {
 		fprintf(stderr, "ERROR: Cannot open input file.\n");
-		return 0;
+		return 0; // TODO: panic
 	}
 	
-	while ((c = fgetc(in)) != EOF) {
-		buf[i] = c;
-		i++;
-		if (i>=max_len*4) {
-			fprintf(stderr, "ERROR: Input longer then the code buffer.\n");
+	for (i=0; i<max_len; i++) {
+		int n = fread(&code[i],4,1,in);
+		if (n==0) {
+			break;
+		}
+	}
+	fclose(in);
+	if (i>=max_len) {
+		fprintf(stderr, "ERROR: Input longer than max_len (%d).\n",max_len);
+		return 0;
+	}
+		
+	return i; // code_len
+}
+
+
+int dump_mem(char *path, int *mem, int from, int ncells) {
+	FILE *out = fopen(path,"w");
+	int i;
+	
+	if (!out) {
+		fprintf(stderr, "ERROR: Cannot open output file.\n");
+		return 0; // TODO: panic
+	}
+	for (i=0; i<ncells; i++) {
+		int n = fwrite(&mem[i], 4, 1, out);
+		if (!n) {
+			fprintf(stderr, "ERROR: Cannot dump memory (i=%d).\n", i);
+			fclose(out);
 			return 0;
 		}
 	}
+	fclose(out);
 	
-	if (i%4 != 0) {
-		fprintf(stderr, "ERROR: Input code is not int-aligned.\n");
-		return 0;
-	}
-	code_len = i/4;
-	
-	// for (int i=0; i<code_len; i++) { printf("code[%02d] -> %d\n",i,code[i]); } // XXX DEBUG
-	
-	return code_len;
+	return i; // written cells cnt
 }
 
 // ----------------------------------------------------------------------------
-// ----------------------------------------------------------------------------
+// ---[ CLI ]------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
 int main() {
@@ -195,9 +217,9 @@ int main() {
 	int code_len = 40;
 	int max_len = 100;
 	
-	//code_len = boot_from_file("input.mrt", code, max_len);
-	//return 0;
-	
+	//dump_mem("dump.mrt",code,0,40);
+	code_len = boot_from_file("input.mrt", code, max_len);
 	initial  = boot(mem, code, code_len);
 	final    = run(mem, initial);
 }
+
