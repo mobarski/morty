@@ -1,12 +1,16 @@
-((
+((	Morty:
+
 	def fib (n--f) :n
 		n 2 lt [ 1 ret ] if
 		n 2 sub fib (f2)
 		n 1 sub fib (f2 f1) add (f)
 	end
+	
+	32 fib vminfo
 ))
 
 0 jz.@start
+
 fib: (n--f) stor
 	vget.1  2 lt   0 jz.@]  [: 1 ret qret ]: push.@[ if
 	vget.1  2  sub  call.@fib
@@ -14,11 +18,5 @@ fib: (n--f) stor
 ret
 
 start:
-vminfo
-0 call.@fib vminfo
-1 call.@fib vminfo
-2 call.@fib vminfo
-3 call.@fib vminfo
-4 call.@fib vminfo
-5 call.@fib vminfo
-stop
+
+	32 call.@fib vminfo

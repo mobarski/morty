@@ -56,7 +56,8 @@ vm_state run(vm_state state) {
 	
 	// TODO: propper main loop
 	// MAIN LOOP
-	for(int i=0; i<100; i++) {
+	//for(int i=0; i<10000000; i++) {
+	for(;;) {
 		int op  = mem[ip++];
 		int arg = mem[ip++];
 		int v,v2,v3;
@@ -108,7 +109,7 @@ vm_state run(vm_state state) {
 			case ALLOT: v=s_pop(); s_push(dp); dp+=v;  break;
 			// DEBUG
 			case VMINFO:
-				printf("T:%d  SP:%d  RP:%d  FP:%d  IP:%d  DP:%d  dt:%d ms \n",tos,sp,rp,fp,ip,dp,ms_clock()-ts_vminfo);
+				printf("T:%d\tSP:%d\tRP:%d\tFP:%d\tIP:%d\tDP:%d\tMEM[SP]:%d\tdt:%d ms \n",tos,sp,rp,fp,ip,dp,mem[sp],ms_clock()-ts_vminfo);
 				ts_vminfo = ms_clock();
 				break;
 			// PRIMITIVE OUTPUT
@@ -119,8 +120,9 @@ vm_state run(vm_state state) {
 				printf("%s",(char*)(&word_buf));
 				break;
 		}
-		//printf("T:%d  SP:%d  RP:%d  FP:%d  IP:%d  DP:%d  dt:%d ms \n",tos,sp,rp,fp,ip,dp,ms_clock()-ts_vminfo); // XXX debug
+		//printf("T:%d\tSP:%d\tRP:%d\tFP:%d\tIP:%d\tDP:%d\tMEM[SP]:%d\tOP:%d\tdt:%d ms \n",tos,sp,rp,fp,ip,dp,mem[sp],op,ms_clock()-ts_vminfo); // XXX debug
 	}
+	fprintf(stderr,"WARNING: Iterations limit reached!\n");
 	
 	stop:
 	// RETURN FINAL VM STATE
