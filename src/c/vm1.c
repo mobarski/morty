@@ -303,7 +303,7 @@ int main(int argc, char *argv[], char **env) {
 
 	int err = parse_args(argc, argv, env, &cfg);
 	if (err) return err;
-	printf("path:%s  ds:%d  rs:%d  mem:%d \n",cfg.path, cfg.data_stack_size, cfg.return_stack_size, cfg.memory_size);
+	//printf("path:%s  ds:%d  rs:%d  mem:%d \n",cfg.path, cfg.data_stack_size, cfg.return_stack_size, cfg.memory_size); // DEBUG
 	
 	code = calloc(cfg.max_code_size, CELL_SIZE);
 	mem  = calloc(cfg.memory_size, CELL_SIZE);
