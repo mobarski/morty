@@ -70,6 +70,30 @@ def compile(tokens, op_code):
 			cells += [int(t)]
 	return cells
 
+def hlasm_to_asm(code):
+	out = []
+	for line in code.split("\n"):
+		indent = len(line)-len(line.lstrip())
+		asm = []
+		tokens = re.split('\s+',line)
+		for t in tokens:
+			if not t: continue
+			try:
+				v = int(t)
+			except:
+				v = None
+			if v is not None:
+				asm += [f'push {v}']
+			elif '.' in t:
+				asm += [t.replace('.',' ')]
+			elif ':' in t or '@' in t:
+				asm += [t]
+			else:
+				asm += [f'{t} 0']
+		line_out = ' '*indent + '   '.join(asm)
+		out += [line_out]
+	return '\n'.join(out)
+
 # -----------------------------------------------------------------------------
 
 OPS = [
@@ -93,15 +117,19 @@ OPCODE['vminfo'] = 777
 if __name__=="__main__":
 
 	parser = argparse.ArgumentParser(description='Compile MortyVM assembler code into binary cells')
-	parser.add_argument('-o', metavar='path', type=str, help='output path')
-	parser.add_argument('-i', metavar='path', type=str, help='input path (default: stdin)')
-	parser.add_argument('-d', action='store_true', help='debug')
+	parser.add_argument('-o',  metavar='path', type=str, help='output path')
+	parser.add_argument('-i',  metavar='path', type=str, help='input path (default: stdin)')
+	parser.add_argument('-hl', action='store_true', help='treat input as high level assembler')
+	parser.add_argument('-d',  action='store_true', help='debug')
 	args = parser.parse_args()
 
 	if args.i:
 		code = open(args.i,'r').read()
 	else:
 		code = sys.stdin.read()		
+
+	if args.h:
+		code = hlasm_to_asm(code)
 
 	cells = to_cells(code, OPCODE)
 	if args.d:
