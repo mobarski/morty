@@ -53,11 +53,11 @@ VM:
 
 ### branching
 
-| name    | effect     | morty | info | 
-| ------- | ---------- | ----- | ---- |
-| jz    X | (v--)      | if    | set I to X (next instruction cell) if v==0 |
-| call  X | (--)(=fr)  | x     | call procedure at X (next instruction cell) |
-| ret     | (fr*=)     |       | return from procedure call |
+| name    | effect     | morty     | info | 
+| ------- | ---------- | --------- | ---- |
+| jz    X | (v--)      | jz @label | set I to X (next instruction cell) if v==0 |
+| call  X | (--)(=fr)  | x         | call procedure at X (next instruction cell) |
+| ret     | (fr*=)     |           | return from procedure call |
 
 ### stack manipulation
 
@@ -109,7 +109,6 @@ VM:
 | ------- | ---------- | ----- | ---- |
 | vget  X | (--n)      | x     |  |
 | vset  X | (n--)      | :x    |  |
-| radd  X | (=?\*x)    | N/A   | add X to the R register TODO: remove as this is early optimization |
 
 ### debugging
 
@@ -132,31 +131,29 @@ VM:
 
 ### ALU - comparators
 
-| asm    | effect     | morty         | info   | 
-| ------ | ---------- | ------------- | ------ |
-| eq     | (ab--c)    | ==            | a == b |
-| ne     | (ab--c)    | !=            | a != b |
-| le     | (ab--c)    | <= vs or-less | a <= b |
-| ge     | (ab--c)    | >= vs or-more | a >= b |
-| lt     | (ab--c)    | <  vs is-less | a < b  |
-| gt     | (ab--c)    | >  vs is-more | a > b  |
+| asm    | effect     | morty   | info   | 
+| ------ | ---------- | ------- | ------ |
+| eq     | (ab--c)    | ==      | a == b |
+| ne     | (ab--c)    | !=      | a != b |
+| le     | (ab--c)    | or-less | a <= b |
+| ge     | (ab--c)    | or-more | a >= b |
+| lt     | (ab--c)    | below   | a < b  |
+| gt     | (ab--c)    | above   | a > b  |
 
-TODO: decide is-less vs <
-TODO: decide or-over vs or-more, or-under vs or-less
+TODO: decide about aliases: <= vs or-less vs le
 
 ### stack manipulation
 
 | asm    | effect     | morty   | info | 
 | ------ | ---------- | ------- | ---- |
-| rot    | (abc--bca) |         |  |
-| over   | (ab--aba)  |         |  |
-
+| rot    | (abc--bca) |         | ? not needed -> local variables |
+| over   | (ab--aba)  |         | ? not needed -> local variables |
 
 # Language
 
 Morty language is similar to Morty VM instruction set.
 Almost all VM instructions can be used directly.
-Only operations that require argument from the next program cell are reserved for the compiler.
+Morty allows the usage of "jz" (jump if zero) for the same reasons "goto" is still in C and GO: it's needed for some special cases (state machines / nested loop escape).
 
 ## Language Examples
 
@@ -183,7 +180,8 @@ Use the variable name to push its value onto the stack.
 
 ```
 ( y = a*x*x + b*x + c )
-def poly2 (x a b c -- x) :c :b :a :x
+
+def poly2 (x a b c -- y) :c :b :a :x (capture params)
     x x mul a mul (axx)
     x b mul (axx bx) add
     c add
@@ -224,10 +222,12 @@ Conditionals are based on lambda functions.
 
 ```
 distance 10 or-less [ collision-warning ] if
+age 18 or-more [ show-content ] [ show-restriction ] if-else
 ```
 
 MortyVM ASM
 ```
+(distance example)
     call @distance
     push 10
     le 0
@@ -246,10 +246,6 @@ else:
     drop 0
 ```
 
-```
-age 18 or-more [ show-content ] [ show-restriction ] if-else
-```
-
 ## Loops
 
 TODO
@@ -266,7 +262,7 @@ Field names are prefixed with a dot to make them easier to grep and highlight.
 struct point   .x .y   
 struct circle  .r .x .y
 
-def dist-to-circle (c p -- d) :p:point :c:circle
+def dist-to-circle (p c -- d) :c:circle :p:point 
     p.x c.x sub dup mul
     p.y c.y sub dup mul
     add sqrt               (distance to the center)
@@ -278,9 +274,8 @@ MortyVM ASM
 ```
 dist-to-circle:
     (init local variables)
-    radd 2
-    vset 1  (circle)
-    vset 2  (point)
+    stor 0  (1-circle)
+    stor 0  (2-point)
     
     (line1)
     vget 2  (point)
@@ -333,6 +328,10 @@ macro rot  >R swap <R swap
 Macros cannot be longer than 1 line.
 This is on purpose to keep the macros simple.
 
+## Global variables
+
+TODO
+
 ## Arrays
 
 TODO
@@ -341,9 +340,7 @@ TODO
 
 TODO
 
-## Lists
 
-TODO
 
 
 # References
