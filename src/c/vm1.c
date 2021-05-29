@@ -1,3 +1,5 @@
+// Simple switch-based token-threaded MortyVM
+
 #include "stdio.h"
 
 #include <sys/time.h>
@@ -21,14 +23,14 @@ enum OPS {
 	LE,LT,GE,GT,EQ,NE,
 	ROT,OVER, // TODO ???
 	VGET,VSET,RADD,
-	DEBUG=777
+	VMINFO=777
 };
 
 int mem[100]  = {0};
 //int code[100] = { PUSH,400, PUSH,-1, ADD,0, DUP,0, JZ,14, PUSH,0, JZ,2, STOP,0 };
-//int code[100] = { CLOCK,0, PUSH,40, PUSH,2, ADD,0, PUSH,42, OK,0, DROP,0, CLOCK,0, SWAP,0, SUB,0, DOT,0, DEBUG,0, STOP,0 };
+//int code[100] = { CLOCK,0, PUSH,40, PUSH,2, ADD,0, PUSH,42, OK,0, DROP,0, CLOCK,0, SWAP,0, SUB,0, DOT,0, VMINFO,0, STOP,0 };
 //int code[100] = {PUSH,-42, PUSH,1, USHR,0, DOT,0, STOP,0};
-int code[100] = { PUSH,1, ALLOT,0, DUP,0, PUSH,40, SWAP,0, SET,0, PUSH,2, SWAP,0, GET,0, ADD,0, DEBUG,0, STOP,0 };
+int code[100] = { PUSH,1, ALLOT,0, DUP,0, PUSH,40, SWAP,0, SET,0, PUSH,2, SWAP,0, GET,0, ADD,0, VMINFO,0, STOP,0 };
 int tos = 0;
 int ip = 0;
 int sp = 0;
@@ -44,7 +46,7 @@ int dp = 0; // for ALLOT
 
 int main() {
 	unsigned int uv=0;
-	int t_debug = ms_clock();
+	int ts_vminfo = ms_clock();
 	rp = 20;
 	fp = rp;
 	dp = 40;
@@ -97,9 +99,9 @@ int main() {
 			case SET:   v=s_pop(); mem[v]=s_pop();     break;
 			case ALLOT: v=s_pop(); s_push(dp); dp+=v;  break;
 			// DEBUG
-			case DEBUG:
-				printf("T:%d  SP:%d  RP:%d  FP:%d  IP:%d  DP:%d  dt:%d ms \n",tos,sp,rp,fp,ip,dp,ms_clock()-t_debug);
-				t_debug = ms_clock();
+			case VMINFO:
+				printf("T:%d  SP:%d  RP:%d  FP:%d  IP:%d  DP:%d  dt:%d ms \n",tos,sp,rp,fp,ip,dp,ms_clock()-ts_vminfo);
+				ts_vminfo = ms_clock();
 				break;
 		}
 	}
