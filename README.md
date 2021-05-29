@@ -149,7 +149,7 @@ TODO: decide about aliases: <= vs or-less vs le
 | rot    | (abc--bca) |         | ? not needed -> local variables |
 | over   | (ab--aba)  |         | ? not needed -> local variables |
 
-### output (primitive!)
+### primitive output
 
 | asm    | effect     | morty   | info | 
 | ------ | ---------- | ------- | ---- |
