@@ -160,7 +160,7 @@ vm_state boot(int *mem, int *code, int code_len) {
 }
 
 
-int boot_from_file(char *path, int *code, int max_len) {
+int load_from_file(char *path, int *code, int max_len) {
 	FILE *in;
 	int i; // cell position in the code
 	
@@ -199,7 +199,7 @@ int dump_mem(char *path, int *mem, int from, int ncells) {
 		if (!n) {
 			fprintf(stderr, "ERROR: Cannot dump memory (i=%d).\n", i);
 			fclose(out);
-			return 0;
+			return 0; // TODO: panic
 		}
 	}
 	fclose(out);
@@ -218,8 +218,7 @@ int main() {
 	int max_len = 100;
 	
 	//dump_mem("dump.mrt",code,0,40);
-	code_len = boot_from_file("input.mrt", code, max_len);
+	code_len = load_from_file("input.mrt", code, max_len);
 	initial  = boot(mem, code, code_len);
 	final    = run(mem, initial);
 }
-
