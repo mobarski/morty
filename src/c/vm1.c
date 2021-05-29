@@ -1,6 +1,8 @@
 // Simple switch-based token-threaded MortyVM
 
-#include "stdio.h"
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
 
 // TODO: cleanup
 #include <sys/time.h>
@@ -27,6 +29,7 @@ typedef struct {
 	int sp;
 	int tos;
 	int dp;
+	int *mem;
 } vm_state;
 
 // TODO: propper mem[] and code[]
@@ -38,15 +41,16 @@ int code[100] = {0};
 //int code[100] = { PUSH,1, ALLOT,0, DUP,0, PUSH,40, SWAP,0, SET,0, PUSH,2, SWAP,0, GET,0, ADD,0, PUSH,0x2a2a2a20, ECHO,0, VMINFO,0, STOP,0 };
 
 // VM RUN
-vm_state run(int *mem, vm_state state) {
+vm_state run(vm_state state) {
 	
 	// VM REGISTERS
-	int tos = state.tos;
-	int ip  = state.ip;
-	int sp  = state.sp;
-	int rp  = state.rp;
-	int fp  = state.fp;
-	int dp  = state.dp; // for ALLOT
+	int  tos = state.tos;
+	int   ip = state.ip;
+	int   sp = state.sp;
+	int   rp = state.rp;
+	int   fp = state.fp;
+	int   dp = state.dp; // for ALLOT
+	int *mem = state.mem;
 	
 	// FINAL STATE
 	vm_state final;
@@ -66,7 +70,7 @@ vm_state run(int *mem, vm_state state) {
 			// BRANCHING
 			case CALL:  r_push(fp); r_push(ip); ip=arg; fp=rp; break; // TEST ME
 			case RET:   ip=mem[fp]; rp=fp-2; fp=mem[fp-1];     break; // TEST ME
-			case STOP:  ip -= 2;                               break;
+			case STOP:  goto stop;                             break;
 			case QCALL: r_push(ip); ip=s_pop();                break;
 			case QRET:  ip = r_pop();                          break;
 			case JZ:    v=s_pop();  if (v==0) ip=arg;          break;
@@ -122,6 +126,7 @@ vm_state run(int *mem, vm_state state) {
 		//printf("T:%d  SP:%d  RP:%d  FP:%d  IP:%d  DP:%d  dt:%d ms \n",tos,sp,rp,fp,ip,dp,ms_clock()-ts_vminfo); // XXX debug
 	}
 	
+	stop:
 	// RETURN FINAL VM STATE
 	final.tos = tos;
 	final.ip  = ip;
@@ -137,10 +142,15 @@ vm_state run(int *mem, vm_state state) {
 // ---[ BOOT ]-----------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
+typedef struct {
+	char *path;
+	int data_stack_size;
+	int return_stack_size;
+	int memory_size;
+} config;
 
-// TODO: take vm_config as input
 // VM BOOT
-vm_state boot(int *mem, int *code, int code_len) {
+vm_state boot(int *mem, int *code, int code_len, config cfg) {
 	vm_state state;
 	
 	state.tos = 0;
@@ -148,13 +158,14 @@ vm_state boot(int *mem, int *code, int code_len) {
 	
 	for (int i=0; i<code_len; i++) {
 		mem[state.ip+i] = code[i];
-		printf("BOOT: mem[%02d] -> %d\n", state.ip+i, code[i]); // XXX debug
+		//printf("BOOT: mem[%02d] -> %d\n", state.ip+i, code[i]); // XXX debug
 	}
 	
-	state.sp  = state.ip + code_len + 10; // 10 -> GAP
-	state.rp  = state.sp + 20; // 20 -> S-SIZE
-	state.dp  = state.rp + 40; // 40 -> R-SIZE
+	state.sp  = state.ip + code_len + 10; // 10 -> GAP between CODE and DATA STACK
+	state.rp  = state.sp + cfg.data_stack_size;
+	state.dp  = state.rp + cfg.return_stack_size;
 	state.fp  = state.rp;
+	state.mem = mem;
 	
 	return state;
 }
@@ -211,14 +222,81 @@ int dump_mem(char *path, int *mem, int from, int ncells) {
 // ---[ CLI ]------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-int main() {
+int main(int argc, char *argv[], char **env) {
+	
 	vm_state initial;
 	vm_state final;
-	int code_len = 40;
-	int max_len = 100;
+	config cfg;
+	int code_len;
+
+	// DEFAULT CONFIGURATION
+	cfg.memory_size = 1024;
+	cfg.data_stack_size = 64;
+	cfg.return_stack_size = 32;
+	cfg.path = "input.mrt";
+
+	// PRINT USAGE
+	if (argc<=1) {
+		usage:
+		fprintf(stderr, "\nUSAGE: %s filename.mrt [-mem n] [-ds n] [-rs n]\n", argv[0]);
+		fprintf(stderr, "\n");
+		fprintf(stderr, "OPTIONS:\n");
+		fprintf(stderr, " -mem N    memory cells count        (default: %d)\n", cfg.memory_size);
+		fprintf(stderr, "  -ds N    data stack cells count    (default: %d)\n", cfg.data_stack_size);
+		fprintf(stderr, "  -rs N    return stack cells count  (default: %d)\n", cfg.return_stack_size);
+		return 1;
+	}
+
+	// PARSE ARGUMENTS
+	for (int i=1; i<argc; i++) {
+		// data stack size (in cells)
+		if (strcmp("-ds",argv[i])==0) {
+			if (i+1>=argc) goto error_missing;
+			int v = atoi(argv[++i]);
+			if (!v) goto error_value;
+			cfg.data_stack_size = v;
+			continue;
+		}
+		// return stack size (in cells)
+		if (strcmp("-rs",argv[i])==0) {
+			if (i+1>=argc) goto error_missing;
+			int v = atoi(argv[++i]);
+			if (!v) goto error_value;
+			cfg.return_stack_size = v;
+			continue;
+		}
+		// memory size (in cells)
+		if (strcmp("-mem",argv[i])==0) {
+			if (i+1>=argc) goto error_missing;
+			int v = atoi(argv[++i]);
+			if (!v) goto error_value;
+			cfg.memory_size = v;
+			continue;
+		}
+		if (argv[i][0]=='-') {
+			fprintf(stderr,"ERROR: Invalid option %s\n",argv[i]);
+			goto usage;
+		} else {
+			cfg.path = argv[i];
+		}
+		continue;
+		
+		error_missing:
+			fprintf(stderr,"ERROR: Missing value after param %s\n",argv[i]);
+			return 1;
+
+		error_value:
+			fprintf(stderr,"ERROR: Invalid value %s for param %s\n",argv[i],argv[i-1]);
+			return 1;
+
+	}
+	//printf("path:%s  ds:%d  rs:%d  mem:%d \n",cfg.path, cfg.data_stack_size, cfg.return_stack_size, cfg.memory_size);
 	
+	// BOOT & RUN
 	//dump_mem("dump.mrt",code,0,40);
-	code_len = load_from_file("input.mrt", code, max_len);
-	initial  = boot(mem, code, code_len);
-	final    = run(mem, initial);
+	code_len = load_from_file(cfg.path, code, cfg.memory_size);
+	initial  = boot(mem, code, code_len, cfg);
+	final    = run(initial);
+	
+	return 0;
 }
