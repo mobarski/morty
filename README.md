@@ -157,7 +157,8 @@ TODO: decide about aliases: <= vs or-less vs le
 | dot    | (n--)      |         | print number from top of the stack and one space |
 | echo   | (w--)      |         | print word from top of the stack |
 
-Word is a short string (0-4 characters) encoded into integer value.
+Word is a short string (0-4 characters) encoded as integer value.
+Words are intended mainly for VMs without propper string support.
 
 # Language
 
