@@ -149,6 +149,16 @@ TODO: decide about aliases: <= vs or-less vs le
 | rot    | (abc--bca) |         | ? not needed -> local variables |
 | over   | (ab--aba)  |         | ? not needed -> local variables |
 
+### output (primitive!)
+
+| asm    | effect     | morty   | info | 
+| ------ | ---------- | ------- | ---- |
+| emit   | (c--)      |         | print single character |
+| dot    | (n--)      |         | print number from top of the stack and one space |
+| echo   | (w--)      |         | print word from top of the stack |
+
+Word is a short string (0-4 characters) encoded into integer value.
+
 # Language
 
 Morty language is similar to Morty VM instruction set.
