@@ -2,6 +2,7 @@
 
 #include "stdio.h"
 
+// TODO: cleanup
 #include <sys/time.h>
 long long ms_clock() {
     struct timeval tv; 
@@ -10,41 +11,32 @@ long long ms_clock() {
     return ms;
 }
 
+// AUTO GENERATED OPCODES
+#include "ops.h"
 
-enum OPS {
-	STOP=0,
-	PUSH,DUP,DROP,SWAP,STOR,RTOS,
-	ADD,MUL,DIV,SUB,
-	AND,OR,XOR,NZ,
-	CALL,RET,JZ,
-	QCALL,QRET,
-	GET,SET,ALLOT,
-	MOD,SHL,SHR,USHR,MIN,MAX,
-	LE,LT,GE,GT,EQ,NE,
-	ROT,OVER, // TODO ???
-	VGET,VSET,RADD,
-	VMINFO=777
-};
+// VM INTERNAL INSTRUCTIONS
+#define s_pop()   tos; tos = mem[sp--]
+#define s_push(x) mem[++sp] = tos; tos = x
+#define r_push(x) mem[++rp] = x
+#define r_pop()   mem[rp--]
 
 int mem[100]  = {0};
 //int code[100] = { PUSH,400, PUSH,-1, ADD,0, DUP,0, JZ,14, PUSH,0, JZ,2, STOP,0 };
 //int code[100] = { CLOCK,0, PUSH,40, PUSH,2, ADD,0, PUSH,42, OK,0, DROP,0, CLOCK,0, SWAP,0, SUB,0, DOT,0, VMINFO,0, STOP,0 };
 //int code[100] = {PUSH,-42, PUSH,1, USHR,0, DOT,0, STOP,0};
 int code[100] = { PUSH,1, ALLOT,0, DUP,0, PUSH,40, SWAP,0, SET,0, PUSH,2, SWAP,0, GET,0, ADD,0, VMINFO,0, STOP,0 };
-int tos = 0;
-int ip = 0;
-int sp = 0;
-int rp = 0;
-int fp = 0;
-int dp = 0; // for ALLOT
 
 
-#define s_pop()   tos; tos = mem[sp--]
-#define s_push(x) mem[++sp] = tos; tos = x
-#define r_push(x) mem[++rp] = x
-#define r_pop()   mem[rp--]
-
-int main() {
+int run(int* mem, int* code) {
+	
+	// VM registers
+	int tos = 0;
+	int ip = 0;
+	int sp = 0;
+	int rp = 0;
+	int fp = 0;
+	int dp = 0; // for ALLOT
+	
 	unsigned int uv=0;
 	int ts_vminfo = ms_clock();
 	rp = 20;
@@ -105,4 +97,9 @@ int main() {
 				break;
 		}
 	}
+}
+
+
+int main() {
+	run(mem, code);
 }
