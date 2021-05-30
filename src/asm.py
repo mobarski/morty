@@ -124,11 +124,12 @@ OPS = [
 	'GET','SET','ALLOT',
 	'MOD','SHL','SHR','USHR',
 	'LE','LT','GE','GT','EQ','NE',
-	'ROT','OVER',#'UNROT', # rozwala
+	'ROT','OVER','UNROT', # rozwala
 	'VGET','VSET','RADD',
 	'EMIT','DOT','ECHO',
 	'IF','IFELSE','GOTO',
 	'LAMBDA',
+	'MIN','MAX','PICK',
 	'VMINFO'
 ]
 OPCODE = {n.lower():i for i,n in enumerate(OPS)}
