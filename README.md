@@ -138,6 +138,7 @@ VM:
 | lt     | (ab--c)    | below   | a < b  |
 | gt     | (ab--c)    | above   | a > b  |
 
+TODO: decide if comparators are destructive or not or both versions are available
 TODO: decide about aliases: <= vs or-less vs le
 
 ### stack manipulation
