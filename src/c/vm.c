@@ -108,6 +108,7 @@ vm_state run(vm_state state) {
 				case SHL:   v=s_pop(); tos <<= v;          break; // NOT CORE
 				case SHR:   v=s_pop(); tos >>= v;          break; // NOT CORE
 				case USHR:  v=s_pop(); uv=tos; tos=uv>>v;  break; // NOT CORE
+				case ABS:   tos= tos<0 ? -tos:tos;         break; // NOT CORE
 				// COMPARATORS - MAIN
 				case LT:    v=s_pop(); tos= tos<v  ? 1:0;  break; // NOT CORE
 				case LE:    v=s_pop(); tos= tos<=v ? 1:0;  break; // NOT CORE
@@ -123,7 +124,10 @@ vm_state run(vm_state state) {
 				case XEQ:   s_push(mem[sp]==tos ? 1:0);  break; // NOT CORE
 				case XNE:   s_push(mem[sp]!=tos ? 1:0);  break; // NOT CORE
 				// COMPARATORS - AUX
-				case NZ:    tos = tos!=0 ? 1:0;            break;
+				case NZ:    tos = tos!=0 ? 1:0;            break; // NOT CORE
+				case GTZ:   tos = tos>0  ? 1:0;            break; // NOT CORE
+				case EQZ:   tos = tos==0 ? 1:0;            break; // NOT CORE
+				case LTZ:   tos = tos<0  ? 1:0;            break; // NOT CORE
 				case MIN:   v=s_pop(); tos=tos<v ? tos:v;  break; // NOT CORE
 				case MAX:   v=s_pop(); tos=tos>v ? tos:v;  break; // NOT CORE
 				case PICK:  tos= tos ? mem[sp-1]:mem[sp]; sp-=2; break; // NOT CORE NEW

@@ -122,7 +122,7 @@ OPS = [
 	'CALL','RET','JZ',
 	'QCALL','QRET',
 	'GET','SET','ALLOT',
-	'MOD','SHL','SHR','USHR',
+	'MOD','SHL','SHR','USHR','ABS',
 	'LE','LT','GE','GT','EQ','NE',
 	'XLE','XLT','XGE','XGT','XEQ','XNE',
 	'ROT','OVER','UNROT', # rozwala
@@ -131,6 +131,7 @@ OPS = [
 	'IF','IFELSE','GOTO',
 	'LAMBDA',
 	'MIN','MAX','PICK',
+	'GTZ','EQZ','LTZ',
 	'VMINFO'
 ]
 OPCODE = {n.lower():i for i,n in enumerate(OPS)}
