@@ -34,7 +34,7 @@ typedef struct {
 	int *mem;
 } vm_state;
 
-#include "vm_repl_switch.h"
+//include "vm_repl_switch.h"
 
 // VM RUN
 vm_state run(vm_state state) {
@@ -74,8 +74,9 @@ vm_state run(vm_state state) {
 			int v,v2,v3;
 			
 			//#include "vm_switch.c"
-			NEXT;
-			#include "vm_repl_switch.c"
+			//NEXT;
+			//include "vm_repl_switch.c"
+			#include "vm_indirect.c"
 			
 			//printf("T:%d\tSP:%d\tRP:%d\tFP:%d\tIP:%d\tDP:%d\tMEM[SP]:%d\tOP:%d\tdt:%d ms \n",tos,sp,rp,fp,ip,dp,mem[sp],op,ms_clock()-ts_vminfo); // XXX debug
 		}
