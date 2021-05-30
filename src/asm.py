@@ -122,7 +122,7 @@ OPS = [
 	'CALL','RET','JZ',
 	'QCALL','QRET',
 	'GET','SET','ALLOT',
-	'MOD','SHL','SHR','USHR','MIN','MAX',
+	'MOD','SHL','SHR','USHR',
 	'LE','LT','GE','GT','EQ','NE',
 	'ROT','OVER',
 	'VGET','VSET','RADD',

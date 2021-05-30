@@ -102,8 +102,6 @@ vm_state run(vm_state state) {
 			case GE:    v=s_pop(); tos= tos>=v ? 1:0;  break; // NOT CORE
 			case EQ:    v=s_pop(); tos= tos==v ? 1:0;  break; // NOT CORE
 			case NE:    v=s_pop(); tos= tos!=v ? 1:0;  break; // NOT CORE
-			case MIN:   v=s_pop(); tos= tos<v ? tos:v; break; // NOT CORE
-			case MAX:   v=s_pop(); tos= tos>v ? tos:v; break; // NOT CORE
 			case NZ:    tos = tos!=0 ? 1:0;            break;
 			// MEMORY
 			case GET:   tos = mem[tos];                break;
