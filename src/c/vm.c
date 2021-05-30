@@ -83,58 +83,60 @@ vm_state run(vm_state state) {
 				case GOTO:   ip=arg;                                break;
 				case STOP:   goto stop;                             break;
 				// RETURN STACK
-				case STOR:  v=s_pop(); r_push(v);              break;
-				case RTOS:  v=r_pop(); s_push(v);              break;
-				case RADD:  rp+=arg;                           break; // local variables
-				case VGET:  v=mem[fp+arg]; s_push(v);          break; // local variables
-				case VSET:  v=s_pop(); mem[fp+arg]=v;          break; // local variables
+				case STOR:   v=s_pop(); r_push(v);              break;
+				case RTOS:   v=r_pop(); s_push(v);              break;
+				case RADD:   rp+=arg;                           break; // local variables
+				case VGET:   v=mem[fp+arg]; s_push(v);          break; // local variables
+				case VSET:   v=s_pop(); mem[fp+arg]=v;          break; // local variables
 				// DATA STACK
-				case SWAP:  v=tos; tos=mem[sp]; mem[sp]=v; break;
-				case PUSH:  s_push(arg);                   break;
-				case DUP:   s_push(tos);                   break;
-				case DROP:  v=s_pop();                     break;
-				case OVER:  s_push(mem[sp]);               break;
-				case ROT:   v=mem[sp-1]; mem[sp-1]=mem[sp]; mem[sp]=tos; tos=v; break;
-				case UNROT: v=tos; tos=mem[sp]; mem[sp]=mem[sp-1]; mem[sp-1]=v; break;
+				case SWAP:   v=tos; tos=mem[sp]; mem[sp]=v; break;
+				case PUSH:   s_push(arg);                   break;
+				case DUP:    s_push(tos);                   break;
+				case DROP:   v=s_pop();                     break;
+				case OVER:   s_push(mem[sp]);               break;
+				case ROT:    v=mem[sp-1]; mem[sp-1]=mem[sp]; mem[sp]=tos; tos=v; break;
+				case UNROT:  v=tos; tos=mem[sp]; mem[sp]=mem[sp-1]; mem[sp-1]=v; break;
 				// ALU
-				case MUL:   v=s_pop(); tos *= v;           break;
-				case DIV:   v=s_pop(); tos /= v;           break;
-				case ADD:   v=s_pop(); tos += v;           break;
-				case SUB:   v=s_pop(); tos -= v;           break;
-				case AND:   v=s_pop(); tos &= v;           break;
-				case OR:    v=s_pop(); tos |= v;           break;
-				case XOR:   v=s_pop(); tos ^= v;           break;
-				case MOD:   v=s_pop(); tos %= v;           break; // NOT CORE
-				case SHL:   v=s_pop(); tos <<= v;          break; // NOT CORE
-				case SHR:   v=s_pop(); tos >>= v;          break; // NOT CORE
-				case USHR:  v=s_pop(); uv=tos; tos=uv>>v;  break; // NOT CORE
-				case ABS:   tos= tos<0 ? -tos:tos;         break; // NOT CORE
+				case MUL:    v=s_pop(); tos *= v;           break;
+				case DIV:    v=s_pop(); tos /= v;           break;
+				case ADD:    v=s_pop(); tos += v;           break;
+				case SUB:    v=s_pop(); tos -= v;           break;
+				case AND:    v=s_pop(); tos &= v;           break;
+				case OR:     v=s_pop(); tos |= v;           break;
+				case XOR:    v=s_pop(); tos ^= v;           break;
+				case MOD:    v=s_pop(); tos %= v;           break; // NOT CORE
+				case SHL:    v=s_pop(); tos <<= v;          break; // NOT CORE
+				case SHR:    v=s_pop(); tos >>= v;          break; // NOT CORE
+				case USHR:   v=s_pop(); uv=tos; tos=uv>>v;  break; // NOT CORE
+				case INVERT: tos= ~tos;                     break; // NOT CORE
+				case NEGATE: tos= -tos;                     break; // NOT CORE
+				case ABS:    tos= tos<0 ? -tos:tos;         break; // NOT CORE
 				// COMPARATORS - MAIN
-				case LT:    v=s_pop(); tos= tos<v  ? 1:0;  break; // NOT CORE
-				case LE:    v=s_pop(); tos= tos<=v ? 1:0;  break; // NOT CORE
-				case GT:    v=s_pop(); tos= tos>v  ? 1:0;  break; // NOT CORE
-				case GE:    v=s_pop(); tos= tos>=v ? 1:0;  break; // NOT CORE
-				case EQ:    v=s_pop(); tos= tos==v ? 1:0;  break; // NOT CORE
-				case NE:    v=s_pop(); tos= tos!=v ? 1:0;  break; // NOT CORE
+				case LT:     v=s_pop(); tos= tos<v  ? 1:0;  break; // NOT CORE
+				case LE:     v=s_pop(); tos= tos<=v ? 1:0;  break; // NOT CORE
+				case GT:     v=s_pop(); tos= tos>v  ? 1:0;  break; // NOT CORE
+				case GE:     v=s_pop(); tos= tos>=v ? 1:0;  break; // NOT CORE
+				case EQ:     v=s_pop(); tos= tos==v ? 1:0;  break; // NOT CORE
+				case NE:     v=s_pop(); tos= tos!=v ? 1:0;  break; // NOT CORE
 				// COMPARATORS - EXPERIMENTAL (NON DESTRUCTIVE)
-				case XLT:   s_push(mem[sp]<tos  ? 1:0);  break; // NOT CORE
-				case XGT:   s_push(mem[sp]>tos  ? 1:0);  break; // NOT CORE
-				case XLE:   s_push(mem[sp]<=tos ? 1:0);  break; // NOT CORE
-				case XGE:   s_push(mem[sp]>=tos ? 1:0);  break; // NOT CORE
-				case XEQ:   s_push(mem[sp]==tos ? 1:0);  break; // NOT CORE
-				case XNE:   s_push(mem[sp]!=tos ? 1:0);  break; // NOT CORE
+				case XLT:    s_push(mem[sp]<tos  ? 1:0);  break; // NOT CORE
+				case XGT:    s_push(mem[sp]>tos  ? 1:0);  break; // NOT CORE
+				case XLE:    s_push(mem[sp]<=tos ? 1:0);  break; // NOT CORE
+				case XGE:    s_push(mem[sp]>=tos ? 1:0);  break; // NOT CORE
+				case XEQ:    s_push(mem[sp]==tos ? 1:0);  break; // NOT CORE
+				case XNE:    s_push(mem[sp]!=tos ? 1:0);  break; // NOT CORE
 				// COMPARATORS - AUX
-				case NZ:    tos = tos!=0 ? 1:0;            break; // NOT CORE
-				case GTZ:   tos = tos>0  ? 1:0;            break; // NOT CORE
-				case EQZ:   tos = tos==0 ? 1:0;            break; // NOT CORE
-				case LTZ:   tos = tos<0  ? 1:0;            break; // NOT CORE
-				case MIN:   v=s_pop(); tos=tos<v ? tos:v;  break; // NOT CORE
-				case MAX:   v=s_pop(); tos=tos>v ? tos:v;  break; // NOT CORE
-				case PICK:  tos= tos ? mem[sp-1]:mem[sp]; sp-=2; break; // NOT CORE NEW
+				case NZ:     tos = tos!=0 ? 1:0;            break; // NOT CORE
+				case GTZ:    tos = tos>0  ? 1:0;            break; // NOT CORE
+				case EQZ:    tos = tos==0 ? 1:0;            break; // NOT CORE
+				case LTZ:    tos = tos<0  ? 1:0;            break; // NOT CORE
+				case MIN:    v=s_pop(); tos=tos<v ? tos:v;  break; // NOT CORE
+				case MAX:    v=s_pop(); tos=tos>v ? tos:v;  break; // NOT CORE
+				case PICK:   tos= tos ? mem[sp-1]:mem[sp]; sp-=2; break; // NOT CORE NEW
 				// MEMORY
-				case GET:   tos = mem[tos];                break;
-				case SET:   v=s_pop(); mem[v]=s_pop();     break;
-				case ALLOT: v=s_pop(); s_push(dp); dp+=v;  break;
+				case GET:    tos = mem[tos];                break;
+				case SET:    v=s_pop(); mem[v]=s_pop();     break;
+				case ALLOT:  v=s_pop(); s_push(dp); dp+=v;  break;
 				// DEBUG
 				case VMINFO:
 					printf("T:%d\tSP:%d\tRP:%d\tFP:%d\tIP:%d\tDP:%d\tSDMX:%d\tRDMX:%d\tDDMX:%d\tOLI:%d\tILC:%d\tdt:%d ms \n",tos,sp,rp,fp,ip,dp,sd_max,rd_max,dd_max,oli,ilc,ms_clock()-ts_vminfo);
