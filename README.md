@@ -144,8 +144,9 @@ TODO: decide about aliases: <= vs or-less vs le
 
 | asm    | effect     | morty   | info | 
 | ------ | ---------- | ------- | ---- |
-| rot    | (abc--bca) |         | ? not needed -> local variables |
-| over   | (ab--aba)  |         | ? not needed -> local variables |
+| rot    | (abc--bca) |         |  |
+| unrot  | (abc--cab) |         |  |
+| over   | (ab--aba)  |         |  |
 
 ### primitive output
 

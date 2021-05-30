@@ -124,7 +124,7 @@ OPS = [
 	'GET','SET','ALLOT',
 	'MOD','SHL','SHR','USHR',
 	'LE','LT','GE','GT','EQ','NE',
-	'ROT','OVER',
+	'ROT','OVER',#'UNROT', # rozwala
 	'VGET','VSET','RADD',
 	'EMIT','DOT','ECHO',
 	'IF','IFELSE','GOTO',

@@ -84,6 +84,9 @@ vm_state run(vm_state state) {
 			case PUSH:  s_push(arg);                   break;
 			case DUP:   s_push(tos);                   break;
 			case DROP:  v=s_pop();                     break;
+			case OVER:  s_push(mem[sp]);               break;
+			case ROT:   v=mem[sp-1]; mem[sp-1]=mem[sp]; mem[sp]=tos; tos=v; break;
+			case UNROT: v=tos; tos=mem[sp]; mem[sp]=mem[sp-1]; mem[sp-1]=v; break;
 			// ALU
 			case MUL:   v=s_pop(); tos *= v;           break;
 			case DIV:   v=s_pop(); tos /= v;           break;
