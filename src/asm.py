@@ -135,7 +135,6 @@ OPS = [
 OPCODE = {n.lower():i for i,n in enumerate(OPS)}
 OPCODE['vminfo'] = 255
 
-
 if __name__=="__main__":
 	parser = argparse.ArgumentParser(description='Compile MortyVM assembler code into binary cells')
 	parser.add_argument('-o',  metavar='path', type=str, help='output path')
