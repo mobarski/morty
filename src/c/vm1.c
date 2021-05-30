@@ -65,12 +65,14 @@ vm_state run(vm_state state) {
 			// BRANCHING
 			case CALL:   r_push(fp); r_push(ip); ip=arg; fp=rp; break; // TEST ME
 			case RET:    ip=mem[fp]; rp=fp-2; fp=mem[fp-1];     break; // TEST ME
-			case STOP:   goto stop;                             break;
 			case QCALL:  r_push(ip); ip=s_pop();                break;
 			case QRET:   ip = r_pop();                          break;
 			case JZ:     v=s_pop();  if (v==0) ip=arg;          break;
 			case IF:     v=s_pop(); v2=s_pop(); if(v2) { r_push(ip); ip=v; };       break; // TEST ME
 			case IFELSE: v=s_pop(); v2=s_pop(); v3=s_pop(); r_push(ip); ip=v3?v2:v; break; // TEST ME
+			case LAMBDA: s_push(ip); ip=arg;                    break; // TODO: RENAME
+			case GOTO:   ip=arg;                                break;
+			case STOP:   goto stop;                             break;
 			// RETURN STACK
 			case STOR:  v=s_pop(); r_push(v);              break;
 			case RTOS:  v=r_pop(); s_push(v);              break;

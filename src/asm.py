@@ -127,11 +127,12 @@ OPS = [
 	'ROT','OVER',
 	'VGET','VSET','RADD',
 	'EMIT','DOT','ECHO',
-	'IF','IFELSE',
+	'IF','IFELSE','GOTO',
+	'LAMBDA',
 	'VMINFO'
 ]
 OPCODE = {n.lower():i for i,n in enumerate(OPS)}
-OPCODE['vminfo'] = 777
+OPCODE['vminfo'] = 255
 
 
 if __name__=="__main__":
