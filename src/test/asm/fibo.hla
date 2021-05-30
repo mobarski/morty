@@ -11,25 +11,14 @@
 
 0 jz.@start
 
+
 fib: (n--f) stor
-	( vget.1  2   lt    0 jz.@]  [: 1 ret qret ]: push.@[ if  (160ms) 
-	( vget.1  2   lt  lambda.@]  [: 1 ret qret ]: if          (140ms)
-	vget.1  2   lt  jz.@]  [: 1 ret qret ]:                   (125ms)
+	( vget.1  2 lt   0 jz.@]  [: 1 ret qret ]: push.@[ if  ) (160ms) 
+	( vget.1  2   lt  lambda.@]  [: 1 ret qret ]: if       ) (140ms)
+	vget.1  2   lt  jz.@]  [: 1 ret qret ]:                  (125ms)
 	vget.1  2  sub  call.@fib
 	vget.1  1  sub  call.@fib add
 ret
-
-
-((
-fib: (n--f) stor
-	vget.1  2   lt  lambda.@]  [: 1 ret qret ]:
-	lambda.@]b b[:
-		vget.1  2  sub  call.@fib
-		vget.1  1  sub  call.@fib add
-	]b: ifelse
-	
-ret
-))
 
 start:
 
