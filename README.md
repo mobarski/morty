@@ -329,8 +329,12 @@ TODO
 | fputc  | (fa--)     |       |      |                            |
 | fgetc  | (f--)      |       |      |                            |
 | fseek  | (fa--)     |       |      |                            |
+| fopen  |            |       |      |                            |
+| fread  |            |       |      |                            |
+| fwrite |            |       |      |                            |
+| fclose |            |       |      |                            |
 
-TODO: mimic UNIX devices
+TODO: decide mimic UNIX devices OR provide device specific instructions
 OPS: read, write, seek, ioctl
 
 # Morty VM Assembler
