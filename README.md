@@ -187,6 +187,7 @@ Current:
 
 Other encoding schemes that will be tested:
 - instruction in 1 cell, opcode in 8 bits, argument in 24 bits
+- instruction in 1 cell, opcode in 6 bits, argument in 26 bits
 - bytecode, instruction in 1, 2 or 5 cells
 
 
@@ -212,20 +213,23 @@ Translation from the core set into extended set is done by peephole optimization
 
 ### stack manipulation
 
-| asm    | effect         | morty | core | info                                    | 
-| ------ | -------------- | ----- | ---- | --------------------------------------- |
-| push X | (--x)          | x     | yes  | push X onto the stack                   |  
-| stor   | (a--)(=a)      | >R    | yes  | push top item onto return stack         |
-| rtos   | (--a)(a=)      | R>    | yes  | pop top of return stack onto data stack |
-| dup    | (a--aa)        |       | yes  | duplicate top item                      |
-| drop   | (a--)          |       | yes  | drop top item                           |
-| swap   | (ab--ba)       |       | yes  | swap two top items                      |
-| over   | (ab--aba)      |       | yes  |                                         |
-| rot    | (abc--bca)     |       | yes  | rotate three items                      |
-| unrot  | (abc--cab)     |       | ???  | unrotate three items                    |
-|        |                |       |      |                                         |
-| 2swap  | (AaBb--BbAa)   |       |      | swap two pairs of items                 |
-| 2over  | (AaBb--AaBbAa) |       |      |                                         |
+| asm    | effect         | morty | core | info                                       | 
+| ------ | -------------- | ----- | ---- | ------------------------------------------ |
+| push X | (--x)          | x     | yes  | push X onto the stack                      |  
+| stor   | (a--)(=a)      | >R    | yes  | push top item onto return stack            |
+| rtos   | (--a)(a=)      | R>    | yes  | pop top of return stack onto data stack    |
+| dup    | (a--aa)        |       | yes  | duplicate top item                         |
+| drop   | (a--)          |       | yes  | drop top item                              |
+| swap   | (ab--ba)       |       | yes  | swap two top items                         |
+| over   | (ab--aba)      |       | yes  |                                            |
+| rot    | (abc--bca)     |       | yes  | rotate three items                         |
+| unrot  | (abc--cab)     |       | ???  | unrotate three items                       |
+|        |                |       |      |                                            |
+| unpack | (v--bcde)      |       |      | unpack bytes from one cell into 4 cells    ??? byte by byte ??? |
+| pack   | (abcd--v)      |       |      | pack lowest bytes from 4 cells into 1 cell ??? byte by byte ??? |
+|        |                |       |      |                                            |
+| 2swap  | (AaBb--BbAa)   |       |      | swap two pairs of items                    |
+| 2over  | (AaBb--AaBbAa) |       |      |                                            |
 
 
 ### memory access
