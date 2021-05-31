@@ -186,10 +186,10 @@ Current:
 - second cell is the argument
 
 Other encoding schemes that will be tested:
+- instruction in 1 (just op) or 2 cells (op + arg)
 - instruction in 1 cell, opcode in 8 bits, argument in 24 bits
 - instruction in 1 cell, opcode in 6 bits, argument in 26 bits
 - bytecode, instruction in 1, 2 or 5 cells
-
 
 ## Instruction Set
 
