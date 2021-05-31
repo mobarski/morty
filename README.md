@@ -310,7 +310,7 @@ Words are intended mainly for VMs without propper string support.
 |        |            |         |      |                        |
 | min    | (ab--x)    |         |      | x = a if a < b  else b |
 | max    | (ab--x)    |         |      | x = a if a > b  else b |
-| pick   | (abc--x)   |         | yes  | x = a if x != 0 else b |
+| pick   | (abc--x)   |         | yes  | x = a if c != 0 else b |
 
 
 TODO: decide if comparators are destructive or not or both versions are available
