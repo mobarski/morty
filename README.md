@@ -177,7 +177,20 @@ VM:
 - D - data pointer
 - MEM - main memory
 
-## Instructions
+## Instruction encoding
+
+Current:
+- each cell is 32 bit long
+- each instruction occupy 2 cells
+- first cell is the opcode
+- second cell is the argument
+
+Other encoding schemes that will be tested:
+- instruction in 1 cell, opcode in 8 bits, argument in 24 bits
+- bytecode, instruction in 1, 2 or 5 cells
+
+
+## Instruction Set
 
 Morty VM instructions are divided into core instructions and extensions.
 Only the core instruction set must be provided by the VM.
@@ -202,14 +215,14 @@ Translation from the core set into extended set is done by peephole optimization
 | asm    | effect         | morty | core | info                                    | 
 | ------ | -------------- | ----- | ---- | --------------------------------------- |
 | push X | (--x)          | x     | yes  | push X onto the stack                   |  
+| stor   | (a--)(=a)      | >R    | yes  | push top item onto return stack         |
+| rtos   | (--a)(a=)      | R>    | yes  | pop top of return stack onto data stack |
 | dup    | (a--aa)        |       | yes  | duplicate top item                      |
 | drop   | (a--)          |       | yes  | drop top item                           |
 | swap   | (ab--ba)       |       | yes  | swap two top items                      |
-| stor   | (a--)(=a)      | >R    | yes  | push top item onto return stack         |
-| rtos   | (--a)(a=)      | R>    | yes  | pop top of return stack onto data stack |
-| rot    | (abc--bca)     |       | yes  | rotate three items                      |
-| unrot  | (abc--cab)     |       | yes  | unrotate three items                    |
 | over   | (ab--aba)      |       | yes  |                                         |
+| rot    | (abc--bca)     |       | yes  | rotate three items                      |
+| unrot  | (abc--cab)     |       | ???  | unrotate three items                    |
 |        |                |       |      |                                         |
 | 2swap  | (AaBb--BbAa)   |       |      | swap two pairs of items                 |
 | 2over  | (AaBb--AaBbAa) |       |      |                                         |
@@ -221,7 +234,7 @@ Translation from the core set into extended set is done by peephole optimization
 | ------ | ---------- | ----- | ---- | ---- | 
 | get    | (a--b)     |       | yes  | get value from memory cell a     |
 | set    | (va--)     |       | yes  | set memory cell a to value v     |
-| allot  | (n--a)     |       | yes  | allot n cells in the "dictionary" and return address to the first allocated cell |
+| allot  | (n--a)     |       | ???  | allot n cells in the "dictionary" and return address to the first allocated cell |
 | geti X | (a--b)     | N/A   |      | get value from memory cell a+X   | 
 | seti X | (va--)     | N/A   |      | set memory cell a+X to value v   | 
 
@@ -253,7 +266,7 @@ Words are intended mainly for VMs without propper string support.
 | div    | (ab--c)    |       | yes  | c = a / b            |
 | muldiv | (abc--d)   |       |      | d = a * b / c        |
 | mod    | (ab--c)    |       |      | c = a % b            |
-| neg    | (a--b)     |       | ???  | b = -a               |
+| neg    | (a--b)     |       |      | b = -a               |
 | shl    | (ab--c)    |       |      | c = a<<b             |
 | shr    | (ab--c)    |       |      | c = a>>b             |
 | ushr   | (ab--c)    |       |      | unsigned shift right |
@@ -266,7 +279,7 @@ Words are intended mainly for VMs without propper string support.
 | and    | (ab--c)    |       | yes  | c = a & b                  |
 | or     | (ab--c)    |       | yes  | c = a \| b                 |
 | xor    | (ab--c)    |       | yes  | c = a ^ b                  |
-| inv    | (a--b)     |       | ???  | b = ~a  (binary inversion) |
+| inv    | (a--b)     |       |      | b = ~a  (binary inversion) |
 
 ### ALU - comparators
 
@@ -279,10 +292,10 @@ Words are intended mainly for VMs without propper string support.
 |        |            |         |      |                        |
 | eq     | (ab--x)    | ==      | yes  | x = 1 if a == b else 0 |
 | ne     | (ab--x)    | !=      | yes  | x = 1 if a != b else 0 |
-| le     | (ab--x)    | or-less | yes  | x = 1 if a <= b else 0 |
-| ge     | (ab--x)    | or-more | yes  | x = 1 if a >= b else 0 |
 | lt     | (ab--x)    | below   | yes  | x = 1 if a < b  else 0 |
 | gt     | (ab--x)    | above   | yes  | x = 1 if a > b  else 0 |
+| le     | (ab--x)    | or-less | ???  | x = 1 if a <= b else 0 |
+| ge     | (ab--x)    | or-more | ???  | x = 1 if a >= b else 0 |
 |        |            |         |      |                        |
 | xeq    | (ab--abx)  |         |      | x = 1 if a == b else 0 |
 | xne    | (ab--abx)  |         |      | x = 1 if a != b else 0 |
@@ -304,6 +317,21 @@ TODO: decide about aliases: <= vs or-less vs le
 | asm     | effect     | morty   | core | info | 
 | ------- | ---------- | ------- | ---- | ---- |
 | vminfo  | (--)       |         |      | print information about VM registers and show time in ms since last vminfo call or start of the program |
+
+
+### I/O - virtual devices
+
+TODO
+
+| asm    | effect     | morty | core | info                       | 
+| ------ | ---------- | ----- | ---- | -------------------------- | 
+| ioctl  | (fab--c)   |       |      |                            |
+| fputc  | (fa--)     |       |      |                            |
+| fgetc  | (f--)      |       |      |                            |
+| fseek  | (fa--)     |       |      |                            |
+
+TODO: mimic UNIX devices
+OPS: read, write, seek, ioctl
 
 # Morty VM Assembler
 
