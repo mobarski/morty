@@ -35,7 +35,8 @@ typedef struct {
 } vm_state;
 
 // VM RUN
-vm_state run(vm_state state) {
+vm_state
+run(vm_state state) {
 	
 	// VM REGISTERS
 	int  tos = state.tos;
@@ -79,13 +80,13 @@ vm_state run(vm_state state) {
 				case JZ:     v=s_pop();  if (v==0) ip=arg;          break;
 				case IF:     v=s_pop(); v2=s_pop(); if(v2) { r_push(ip); ip=v; };       break; // TEST ME
 				case IFELSE: v=s_pop(); v2=s_pop(); v3=s_pop(); r_push(ip); ip=v3?v2:v; break; // TEST ME
-				case LAMBDA: s_push(ip); ip=arg;                    break; // TODO: RENAME
+				case LAMBDA: s_push(ip); ip=arg;                    break; // TODO: RENAME -> STATIC ARRAY ???
 				case GOTO:   ip=arg;                                break;
 				case STOP:   goto stop;                             break;
 				// RETURN STACK
 				case STOR:   v=s_pop(); r_push(v);              break;
 				case RTOS:   v=r_pop(); s_push(v);              break;
-				case RADD:   rp+=arg;                           break; // local variables
+				case RADD:   rp+=arg;                           break; // local variables // REMOVE
 				case VGET:   v=mem[fp+arg]; s_push(v);          break; // local variables
 				case VSET:   v=s_pop(); mem[fp+arg]=v;          break; // local variables
 				// DATA STACK
@@ -188,7 +189,8 @@ typedef struct {
 } config;
 
 // VM BOOT
-vm_state boot(int *mem, int *code, int code_len, config cfg) {
+vm_state
+boot(int *mem, int *code, int code_len, config cfg) {
 	vm_state state;
 	
 	state.tos = 0;
@@ -209,7 +211,8 @@ vm_state boot(int *mem, int *code, int code_len, config cfg) {
 }
 
 
-int load_from_file(char *path, int *code, int max_len) {
+int
+load_from_file(char *path, int *code, int max_len) {
 	FILE *in;
 	int i; // cell position in the code
 	
@@ -235,7 +238,8 @@ int load_from_file(char *path, int *code, int max_len) {
 }
 
 
-int dump_mem(char *path, int *mem, int from, int ncells) {
+int
+dump_mem(char *path, int *mem, int from, int ncells) {
 	FILE *out = fopen(path,"w");
 	int i;
 	
@@ -260,7 +264,8 @@ int dump_mem(char *path, int *mem, int from, int ncells) {
 // ---[ CLI ]------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-int parse_args(int argc, char *argv[], char **env, config *cfg) {
+int
+parse_args(int argc, char *argv[], char **env, config *cfg) {
 	// PRINT USAGE
 	if (argc<=1) {
 		usage:
@@ -328,7 +333,8 @@ int parse_args(int argc, char *argv[], char **env, config *cfg) {
 	return 0;
 }
 
-int main(int argc, char *argv[], char **env) {
+int
+main(int argc, char *argv[], char **env) {
 	
 	vm_state initial;
 	vm_state final;
