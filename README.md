@@ -2,6 +2,20 @@
 
 TODO
 
+## Status
+
+This is pre-alpha work in progress!
+
+Status:
+- C version of the VM is fully functional.
+- The assembler is fully functional BUT error detection and error reporting is very primitive.
+- Work on the compiler is not yet started as the language is still in a very early phase.
+
+The system is now able to compile VM ASM and to execute it.
+It's ready for running experiments "how feature X should be compiled and how it affects the performance". 
+
+First benchmarks are looking good - VM achieves 0.7GHz on a 3.5GHz machine. 
+
 ## Idea
 
 Why:
@@ -18,12 +32,14 @@ Design principles:
 - small and easy to learn (like Go)
 - small and easy to implement (close to the stack machine like Forth)
 - easy to read (like Python, Logo or Basic; named arguments, dot properties, less symbols)
+- performance is important, but readability is even more important
 
 Target VM implementations:
-- C (most performant, easiest)
+- C (most performant, portable with recompilation)
 - JS (portable, GUI)
+- Python (portable)
 - MicroPython (portable - microcontrolers)
-- Go (performant backend)
+- Go (performant backend, portable with recompilation)
 
 ## Morty Philosophy
 
@@ -36,150 +52,27 @@ Target VM implementations:
 7. Now add parts that will make the system more friendly / usable / performant.
 8. Try to cover 80% of requirements with 20% of features.
 
-# VM Architecture
-
-VM:
-- F - frame pointer
-- I - instruction pointer
-- R - return stack pointer
-- S - (data) stack pointer
-- T - top of stack register
-- CODE - program memory
-- MEM - main memory for both stacks
-
-# VM Instructions
-
-## Core
-
-### branching
-
-| name    | effect     | morty     | info | 
-| ------- | ---------- | --------- | ---- |
-| jz    X | (v--)      | jz @label | set I to X (next instruction cell) if v==0 |
-| call  X | (--)(=fr)  | x         | call procedure at X (next instruction cell) |
-| ret     | (fr*=)     |           | return from procedure call |
-
-### stack manipulation
-
-| asm    | effect     | morty | info | 
-| ------ | ---------- | ----- | ---- 
-| push X | (--x)      | x     | push X (next instruction cell) onto the stack |  
-| dup    | (a--aa)    |       |  |
-| drop   | (a--)      |       |  |
-| swap   | (ab--ba)   |       |  |
-| stor   | (a--)(=a)  | >R    |  |
-| rtos   | (--a)(a=)  | R>    |  |
-
-### ALU - arithmetic
-
-| asm    | effect     | morty | info | 
-| ------ | ---------- | ----- | ---- 
-| add    | (ab--c)    |       |  |
-| sub    | (ab--c)    |       |  |
-| mul    | (ab--c)    |       |  |
-| div    | (ab--c)    |       |  |
-
-### ALU - logic
-
-| asm    | effect     | morty | info | 
-| ------ | ---------- | ----- | ---- 
-| and    | (ab--c)    |       |  |
-| or     | (ab--c)    |       |  |
-| xor    | (ab--c)    |       |  |
-| nz     | (a--b)     | bool  |  |
-
-### memory access
-
-| asm    | effect     | morty | info | 
-| ------ | ---------- | ----- | ---- 
-| get    | (a--b)     |       | aka @ |
-| set    | (va--)     |       | aka ! |
-| allot  | (n--a)     |       | allot n cells in the "dictionary" and return address to the first allocated cell |
-
-### lambda functions
-
-| asm    | effect     | morty   | info | 
-| ------ | ---------- | ------- | ---- |
-| qcall  | (a--)      | call    | quick call to address from the stack without changing the frame pointer |
-| qret   | (r=)       |         | quick return without changing the frame pointer |
-
-### local variables
-
-| name    | effect     | morty | info | 
-| ------- | ---------- | ----- | ---- |
-| vget  X | (--n)      | x     |  |
-| vset  X | (n--)      | :x    |  |
-
-### debugging
-
-| asm     | effect     | morty   | info | 
-| ------- | ---------- | ------- | ---- |
-| vminfo  | (--)       |         | print values of all VM registers and show time in ms since last vminfo call or start of the program |
-
-## Practical
-
-### ALU
-
-| asm    | effect     | morty   | info | 
-| ------ | ---------- | ------- | ---- |
-| mod    | (ab--c)    |         |  |
-| shl    | (ab--c)    |         | shift left |
-| shr    | (ab--c)    |         | shift right |
-| ushr   | (ab--c)    |         | unsigned shift right |
-
-### ALU - comparators
-
-| asm    | effect     | morty   | info   | 
-| ------ | ---------- | ------- | ------ |
-| eq     | (ab--c)    | ==      | a == b |
-| ne     | (ab--c)    | !=      | a != b |
-| le     | (ab--c)    | or-less | a <= b |
-| ge     | (ab--c)    | or-more | a >= b |
-| lt     | (ab--c)    | below   | a < b  |
-| gt     | (ab--c)    | above   | a > b  |
-
-TODO: decide if comparators are destructive or not or both versions are available
-TODO: decide about aliases: <= vs or-less vs le
-
-### stack manipulation
-
-| asm    | effect     | morty   | info | 
-| ------ | ---------- | ------- | ---- |
-| rot    | (abc--bca) |         |  |
-| unrot  | (abc--cab) |         |  |
-| over   | (ab--aba)  |         |  |
-
-### primitive output
-
-| asm    | effect     | morty   | info | 
-| ------ | ---------- | ------- | ---- |
-| emit   | (c--)      |         | print single character |
-| dot    | (n--)      |         | print number from top of the stack and one space |
-| echo   | (w--)      |         | print word from top of the stack |
-
-Word is a short string (0-4 characters) encoded as integer value.
-Words are intended mainly for VMs without propper string support.
-
-# Language
+# Morty Programming Language
 
 Morty language is similar to Morty VM instruction set.
 Almost all VM instructions can be used directly.
-Morty allows the usage of "jz" (jump if zero) for the same reasons "goto" is still in C and GO: it's needed for some special cases (state machines / nested loop escape).
+Morty allows the usage of "goto" for the same reasons it is still in C and GO: it's needed for some special cases (state machines / nested loop escape), but the jump can be made only inside the current procedure.
+
 
 ## Language Examples
 
 ```
+def total-energy (m v h -- e) :h :v :m
+    m v kinetic-energy   (ek)
+    m h potential-energy (ek ep) add
+end
+
 def kinetic_energy (m v -- e)
     dup (m v v) mul mul
 end
 
 def potential-energy (m h -- e)
     g (m h g) mul mul
-end
-
-def total-energy (m v h -- e) :h :v :m
-    m v kinetic-energy   (ek)
-    m h potential-energy (ek ep) add
 end
 ```
 
@@ -200,9 +93,7 @@ end
 ```
 
 Local variables are stored on the return stack.
-On function end or early return they will be automatically discarded - this is possible
-by the use of the F register which stores the "frame" of the return stack.
-On function call both F and I registers are stored on the return stack.
+On function end or early return they will be automatically discarded.
 
 ## Lambda functions
 
@@ -210,51 +101,18 @@ On function call both F and I registers are stored on the return stack.
 21 [ dup add ] call
 ```
 
-MortyVM ASM:
-```
-    push 21
-    push 0               (unconditional jump on [)
-    jz   @end_of_lambda  (unconditional jump on [)
-start_of_lambda:
-    dup  0
-    add  0
-    qret 0
-end_of_lambda:
-    push @start_of_lambda
-    qcall 0
-```
-
 Lambda functions are using the stack frame of the parent.
 They are not closures and should not be shared if they are using parent's local variables.
 
 ## Conditionals
+
+WARNING: this may change
 
 Conditionals are based on lambda functions.
 
 ```
 distance 10 or-less [ collision-warning ] if
 age 18 or-more [ show-content ] [ show-restriction ] if-else
-```
-
-MortyVM ASM
-```
-(distance example)
-    call @distance
-    push 10
-    le 0
-    push 0
-    jz @end-of-lambda
-start-of-lambda:
-    call @callision-warning
-    qret 0
-end-of-lambda:
-    push @start-of-lambda
-    swap 0                   (addr bool)
-    jz @else
-    dup   0                  (for drop after else)
-    qcall 0
-else:
-    drop 0
 ```
 
 ## Loops
@@ -264,10 +122,6 @@ TODO
 ## Structures
 
 TODO
-
-Struct definition cannot be longer than 1 line.
-This is on purpose to keep the structures simple.
-Field names are prefixed with a dot to make them easier to grep and highlight.
 
 ```
 struct point   .x .y   
@@ -281,52 +135,10 @@ def dist-to-circle (p c -- d) :c:circle :p:point
 end
 ```
 
-MortyVM ASM
-```
-dist-to-circle:
-    (init local variables)
-    stor 0  (1-circle)
-    stor 0  (2-point)
-    
-    (line1)
-    vget 2  (point)
-    push 0  (.x offset in point)
-    add 0   (.x + offset)
-    get 0   (.x value)
-    vget 1  (circle)
-    push 1  (.x offset in circle)
-    add 0
-    get 0  (.x value)
-    sub 0
-    dup 0
-    mul 0
-    
-    (line 2)
-    vget 2
-    push 1
-    add 0
-    get 0
-    vget 1
-    push 2
-    add 0
-    get 0
-    sub 0
-    dup 0
-    mul 0
-    
-    (line 3)
-    add 0
-    call @sqrt
-    
-    (line 4)
-    vget 1
-    push 0
-    add 0
-    get 0 (.r value)
-    sub 0
-    
-    ret 0
-```
+Struct definition cannot be longer than 1 line.
+This is on purpose to keep the structures simple.
+Field names are prefixed with a dot to make them easier to grep and highlight.
+
 
 ## Macros
 
@@ -352,7 +164,150 @@ TODO
 TODO
 
 
+# Morty Vitual Machine
 
+## VM Architecture
+
+VM:
+- F - frame pointer
+- I - instruction pointer
+- R - return stack pointer
+- S - (data) stack pointer
+- T - top of stack register
+- D - data pointer
+- MEM - main memory
+
+## Instructions
+
+Morty VM instructions are divided into core instructions and extensions.
+Only the core instruction set must be provided by the VM.
+The rest can be assembled by the compiler from the core instructions.
+If the extension instruction is available in the VM the compiler should use it for better performance.
+Translation from the extended set into the core set is done via simple expansion (ie "neg" -> "0 swap sub").
+Translation from the core set into extended set is done by peephole optimization (ie "0 swap sub" -> "neg").
+
+### branching
+
+| name    | effect     | morty     | core | info | 
+| ------- | ---------- | --------- | ---- | ---- |
+| jz    X | (v--)      | jz @label | yes  | set I to X (next instruction cell) if v==0                              |
+| call  X | (--)(=fr)  | x         | yes  | call procedure at X (next instruction cell)                             |
+| ret     | (fr*=)     |           | yes  | return from procedure call                                              |
+| qcall   | (a--)      | call      | yes  | quick call to address from the stack without changing the frame pointer |
+| qret    | (r=)       |           | yes  | quick return without changing the frame pointer                         |
+| goto  X | (--)       |           |      | set I to X (next instruction cell)                                      |
+
+### stack manipulation
+
+| asm    | effect         | morty | core | info                                    | 
+| ------ | -------------- | ----- | ---- | --------------------------------------- |
+| push X | (--x)          | x     | yes  | push X onto the stack                   |  
+| dup    | (a--aa)        |       | yes  | duplicate top item                      |
+| drop   | (a--)          |       | yes  | drop top item                           |
+| swap   | (ab--ba)       |       | yes  | swap two top items                      |
+| stor   | (a--)(=a)      | >R    | yes  | push top item onto return stack         |
+| rtos   | (--a)(a=)      | R>    | yes  | pop top of return stack onto data stack |
+| rot    | (abc--bca)     |       | yes  | rotate three items                      |
+| unrot  | (abc--cab)     |       | yes  | unrotate three items                    |
+| over   | (ab--aba)      |       | yes  |                                         |
+|        |                |       |      |                                         |
+| 2swap  | (AaBb--BbAa)   |       |      | swap two pairs of items                 |
+| 2over  | (AaBb--AaBbAa) |       |      |                                         |
+
+
+### memory access
+
+| asm    | effect     | morty | core | info | 
+| ------ | ---------- | ----- | ---- | ---- | 
+| get    | (a--b)     |       | yes  | get value from memory cell a     |
+| set    | (va--)     |       | yes  | set memory cell a to value v     |
+| allot  | (n--a)     |       | yes  | allot n cells in the "dictionary" and return address to the first allocated cell |
+| geti X | (a--b)     | N/A   |      | get value from memory cell a+X   | 
+| seti X | (va--)     | N/A   |      | set memory cell a+X to value v   | 
+
+### local variables
+
+| name    | effect     | morty | core | info                 | 
+| ------- | ---------- | ----- | ---- | -------------------- |
+| vget  X | (--n)      | x     | yes  | get local variable X |
+| vset  X | (n--)      | :x    | yes  | set local variable X |
+
+### primitive output
+
+| asm    | effect     | morty   | core | info                                             | 
+| ------ | ---------- | ------- | ---- | ------------------------------------------------ |
+| emit   | (c--)      |         |      | print single character                           |
+| dot    | (n--)      |         |      | print number from top of the stack and one space |
+| echo   | (w--)      |         |      | print word from top of the stack                 |
+
+Word is a short string (0-4 characters) encoded as an integer value.
+Words are intended mainly for VMs without propper string support.
+
+### ALU - arithmetic
+
+| asm    | effect     | morty | core | info                 | 
+| ------ | ---------- | ----- | ---- | -------------------- |
+| add    | (ab--c)    |       | yes  | c = a + b            |
+| sub    | (ab--c)    |       | yes  | c = a - b            |
+| mul    | (ab--c)    |       | yes  | c = a * b            |
+| div    | (ab--c)    |       | yes  | c = a / b            |
+| muldiv | (abc--d)   |       |      | d = a * b / c        |
+| mod    | (ab--c)    |       |      | c = a % b            |
+| neg    | (a--b)     |       | ???  | b = -a               |
+| shl    | (ab--c)    |       |      | c = a<<b             |
+| shr    | (ab--c)    |       |      | c = a>>b             |
+| ushr   | (ab--c)    |       |      | unsigned shift right |
+| abs    | (a--b)     |       |      | b = -a if a<0 else a |
+
+### ALU - logic
+
+| asm    | effect     | morty | core | info                       | 
+| ------ | ---------- | ----- | ---- | -------------------------- | 
+| and    | (ab--c)    |       | yes  | c = a & b                  |
+| or     | (ab--c)    |       | yes  | c = a \| b                 |
+| xor    | (ab--c)    |       | yes  | c = a ^ b                  |
+| inv    | (a--b)     |       | ???  | b = ~a  (binary inversion) |
+
+### ALU - comparators
+
+| asm    | effect     | morty   | core | info                   | 
+| ------ | ---------- | -----   | ---- | ---------------------- | 
+| nz     | (a--x)     | bool    |      | x = 1 if a!=0 else 0   |
+| eqz    | (a--x)     | 0=      |      | x = 1 if a==0 else 0   |
+| gtz    | (a--x)     | 0>      |      | x = 1 if a>0  else 0   |
+| ltz    | (a--x)     | 0<      |      | x = 1 if a<0  else 0   |
+|        |            |         |      |                        |
+| eq     | (ab--x)    | ==      | yes  | x = 1 if a == b else 0 |
+| ne     | (ab--x)    | !=      | yes  | x = 1 if a != b else 0 |
+| le     | (ab--x)    | or-less | yes  | x = 1 if a <= b else 0 |
+| ge     | (ab--x)    | or-more | yes  | x = 1 if a >= b else 0 |
+| lt     | (ab--x)    | below   | yes  | x = 1 if a < b  else 0 |
+| gt     | (ab--x)    | above   | yes  | x = 1 if a > b  else 0 |
+|        |            |         |      |                        |
+| xeq    | (ab--abx)  |         |      | x = 1 if a == b else 0 |
+| xne    | (ab--abx)  |         |      | x = 1 if a != b else 0 |
+| xle    | (ab--abx)  |         |      | x = 1 if a <= b else 0 |
+| xge    | (ab--abx)  |         |      | x = 1 if a >= b else 0 |
+| xlt    | (ab--abx)  |         |      | x = 1 if a < b  else 0 |
+| xgt    | (ab--abx)  |         |      | x = 1 if a > b  else 0 |
+|        |            |         |      |                        |
+| min    | (ab--x)    |         |      | x = a if a < b  else b |
+| max    | (ab--x)    |         |      | x = a if a > b  else b |
+| pick   | (abc--x)   |         | yes  | x = a if x != 0 else b |
+
+
+TODO: decide if comparators are destructive or not or both versions are available
+TODO: decide about aliases: <= vs or-less vs le
+
+### debugging
+
+| asm     | effect     | morty   | core | info | 
+| ------- | ---------- | ------- | ---- | ---- |
+| vminfo  | (--)       |         |      | print information about VM registers and show time in ms since last vminfo call or start of the program |
+
+# Morty VM Assembler
+
+TODO
 
 # References
 
@@ -371,5 +326,6 @@ TODO
 |       **Forth threading** | http://www.complang.tuwien.ac.at/forth/threading/              |
 |   **Forth threaded code** | http://www.complang.tuwien.ac.at/forth/threaded-code.html      |
 |          **Interpreters** | http://realityforge.org/code/virtual-machines/2011/05/19/interpreters.html |
+|    **Cozy design spaces** | https://www.lexaloffle.com/bbs/?tid=31634                      |
 
 [//]: # (online .md editor: https://markdown-editor.github.io/ )
