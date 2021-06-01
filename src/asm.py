@@ -65,12 +65,13 @@ def compile(tokens, op_code):
 		if c is not None:
 			cells += [c]
 		else:
-			if i%2==0:
+			try:
+				cells += [int(t)]
+			except:
 				N = 5
 				info = ' '.join([str(x) for x in tokens[i-N:i]]) + f" >>>{t}<<< " + ' '.join([str(x) for x in tokens[i+1:i+N+1]])
 				print(f"ERROR: invalid token '{t}' at position {i}:\n{info}\n")
 				raise Exception('invalid syntax')
-			cells += [int(t)]
 	return cells
 
 
@@ -80,9 +81,8 @@ def hlasm_to_asm(code):
 	Tranformations:
 		number   -> push number
 		'c'      -> push char
-		label:   -> label:
 		op.@xxx  -> op @xxx
-		op       -> op 0
+		other    -> other
 	"""
 	code = strip_comments(code)
 	
@@ -104,10 +104,8 @@ def hlasm_to_asm(code):
 				asm += [f'push {v}']
 			elif '.' in t:
 				asm += [t.replace('.',' ')]
-			elif ':' in t:
-				asm += [t]
 			else:
-				asm += [f'{t} 0']
+				asm += [t]
 		line_out = ' '*indent + '   '.join(asm)
 		out += [line_out]
 	return '\n'.join(out)

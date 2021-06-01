@@ -68,30 +68,30 @@ run(vm_state state) {
 	for(;;) { // outer loop
 		//for(int i=0; i<ilc; i++) { // inner loop // +10% time :/
 		for(;;) { // inner loop
-			int op  = mem[ip++];
-			int arg = mem[ip++];
+			int op = mem[ip++];
+			int arg;
 			int v,v2,v3;
 			switch(op) {
 				// BRANCHING
-				case CALL:   r_push(fp); r_push(ip); ip=arg; fp=rp; break; // TEST ME
+				case CALL:   arg=mem[ip++]; r_push(fp); r_push(ip); ip=arg; fp=rp; break; // TEST ME
+				case JZ:     arg=mem[ip++]; v=s_pop();  if (v==0) ip=arg;          break;
+				case LAMBDA: arg=mem[ip++]; s_push(ip); ip=arg;                    break; // TODO: RENAME -> STATIC ARRAY ???
+				case GOTO:   arg=mem[ip++]; ip=arg;                                break;
 				case RET:    ip=mem[fp]; rp=fp-2; fp=mem[fp-1];     break; // TEST ME
 				case QCALL:  r_push(ip); ip=s_pop();                break;
 				case QRET:   ip = r_pop();                          break;
-				case JZ:     v=s_pop();  if (v==0) ip=arg;          break;
 				case IF:     v=s_pop(); v2=s_pop(); if(v2) { r_push(ip); ip=v; };       break; // TEST ME
 				case IFELSE: v=s_pop(); v2=s_pop(); v3=s_pop(); r_push(ip); ip=v3?v2:v; break; // TEST ME
-				case LAMBDA: s_push(ip); ip=arg;                    break; // TODO: RENAME -> STATIC ARRAY ???
-				case GOTO:   ip=arg;                                break;
 				case STOP:   goto stop;                             break;
 				// RETURN STACK
-				case STOR:   v=s_pop(); r_push(v);              break;
-				case RTOS:   v=r_pop(); s_push(v);              break;
-				case RADD:   rp+=arg;                           break; // local variables // REMOVE
-				case VGET:   v=mem[fp+arg]; s_push(v);          break; // local variables
-				case VSET:   v=s_pop(); mem[fp+arg]=v;          break; // local variables
+				case STOR:   v=s_pop(); r_push(v);                    break;
+				case RTOS:   v=r_pop(); s_push(v);                    break;
+				case RADD:   arg=mem[ip++]; rp+=arg;                  break; // local variables // REMOVE
+				case VGET:   arg=mem[ip++]; v=mem[fp+arg]; s_push(v); break; // local variables
+				case VSET:   arg=mem[ip++]; v=s_pop(); mem[fp+arg]=v; break; // local variables
 				// DATA STACK
+				case PUSH:   arg=mem[ip++]; s_push(arg);    break;
 				case SWAP:   v=tos; tos=mem[sp]; mem[sp]=v; break;
-				case PUSH:   s_push(arg);                   break;
 				case DUP:    s_push(tos);                   break;
 				case DROP:   v=s_pop();                     break;
 				case OVER:   s_push(mem[sp]);               break;

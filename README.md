@@ -181,12 +181,9 @@ VM:
 
 Current:
 - each cell is 32 bit long
-- each instruction occupy 2 cells
-- first cell is the opcode
-- second cell is the argument
+- instructions occupy 1 cell (op without arg) or 2 cells (op + arg)
 
 Other encoding schemes that will be tested:
-- instruction in 1 (just op) or 2 cells (op + arg)
 - instruction in 1 cell, opcode in 8 bits, argument in 24 bits
 - instruction in 1 cell, opcode in 6 bits, argument in 26 bits
 - bytecode, instruction in 1, 2 or 5 cells
@@ -213,23 +210,23 @@ Translation from the core set into extended set is done by peephole optimization
 
 ### stack manipulation
 
-| asm    | effect         | morty | core | info                                       | 
-| ------ | -------------- | ----- | ---- | ------------------------------------------ |
-| push X | (--x)          | x     | yes  | push X onto the stack                      |  
-| stor   | (a--)(=a)      | >R    | yes  | push top item onto return stack            |
-| rtos   | (--a)(a=)      | R>    | yes  | pop top of return stack onto data stack    |
-| dup    | (a--aa)        |       | yes  | duplicate top item                         |
-| drop   | (a--)          |       | yes  | drop top item                              |
-| swap   | (ab--ba)       |       | yes  | swap two top items                         |
-| over   | (ab--aba)      |       | yes  |                                            |
-| rot    | (abc--bca)     |       | yes  | rotate three items                         |
-| unrot  | (abc--cab)     |       | ???  | unrotate three items                       |
-|        |                |       |      |                                            |
+| asm    | effect         | morty | core | info                                        | 
+| ------ | -------------- | ----- | ---- | ------------------------------------------- |
+| push X | (--x)          | x     | yes  | push X onto the stack                       |  
+| stor   | (a--)(=a)      | >R    | yes  | pop top of data stack onto the return stack |
+| rtos   | (--a)(a=)      | R>    | yes  | pop top of return stack onto data stack     |
+| dup    | (a--aa)        |       | yes  | duplicate top item                          |
+| drop   | (a--)          |       | yes  | drop top item                               |
+| swap   | (ab--ba)       |       | yes  | swap two top items                          |
+| over   | (ab--aba)      |       | yes  |                                             |
+| rot    | (abc--bca)     |       | yes  | rotate three items                          |
+| unrot  | (abc--cab)     |       | ???  | unrotate three items                        |
+|        |                |       |      |                                             |
 | unpack | (v--bcde)      |       |      | unpack bytes from one cell into 4 cells    ??? byte by byte ??? |
 | pack   | (abcd--v)      |       |      | pack lowest bytes from 4 cells into 1 cell ??? byte by byte ??? |
-|        |                |       |      |                                            |
-| 2swap  | (AaBb--BbAa)   |       |      | swap two pairs of items                    |
-| 2over  | (AaBb--AaBbAa) |       |      |                                            |
+|        |                |       |      |                                             |
+| 2swap  | (AaBb--BbAa)   |       |      | swap two pairs of items                     |
+| 2over  | (AaBb--AaBbAa) |       |      |                                             |
 
 
 ### memory access
@@ -242,12 +239,13 @@ Translation from the core set into extended set is done by peephole optimization
 | geti X | (a--b)     | N/A   |      | get value from memory cell a+X   | 
 | seti X | (va--)     | N/A   |      | set memory cell a+X to value v   | 
 
-### local variables
+### frame - local variables
 
-| name    | effect     | morty | core | info                 | 
-| ------- | ---------- | ----- | ---- | -------------------- |
-| vget  X | (--n)      | x     | yes  | get local variable X |
-| vset  X | (n--)      | :x    | yes  | set local variable X |
+| name    | effect     | morty | core | info                                   | 
+| ------- | ---------- | ----- | ---- | -------------------------------------- |
+| ftos    | (--a)      | <F    | yes  | push frame pointer onto the data stack | 
+| vget  X | (--n)      | x     |      | get local variable X                   |
+| vset  X | (n--)      | :x    |      | set local variable X                   |
 
 ### primitive output
 
@@ -257,7 +255,7 @@ Translation from the core set into extended set is done by peephole optimization
 | dot    | (n--)      |         |      | print number from top of the stack and one space |
 | echo   | (w--)      |         |      | print word from top of the stack                 |
 
-Word is a short string (0-4 characters) encoded as an integer value.
+Word is a short string (0-3 characters OR 0-4 ???) encoded as an integer value.
 Words are intended mainly for VMs without propper string support.
 
 ### ALU - arithmetic
@@ -271,9 +269,9 @@ Words are intended mainly for VMs without propper string support.
 | muldiv | (abc--d)   |       |      | d = a * b / c        |
 | mod    | (ab--c)    |       |      | c = a % b            |
 | neg    | (a--b)     |       |      | b = -a               |
-| shl    | (ab--c)    |       |      | c = a<<b             |
-| shr    | (ab--c)    |       |      | c = a>>b             |
-| ushr   | (ab--c)    |       |      | unsigned shift right |
+| shl    | (ab--c)    |       | ???  | c = a<<b             |
+| shr    | (ab--c)    |       | ???  | c = a>>b             |
+| ushr   | (ab--c)    |       | ???  | unsigned shift right |
 | abs    | (a--b)     |       |      | b = -a if a<0 else a |
 
 ### ALU - logic
@@ -298,8 +296,8 @@ Words are intended mainly for VMs without propper string support.
 | ne     | (ab--x)    | !=      | yes  | x = 1 if a != b else 0 |
 | lt     | (ab--x)    | below   | yes  | x = 1 if a < b  else 0 |
 | gt     | (ab--x)    | above   | yes  | x = 1 if a > b  else 0 |
-| le     | (ab--x)    | or-less | ???  | x = 1 if a <= b else 0 |
-| ge     | (ab--x)    | or-more | ???  | x = 1 if a >= b else 0 |
+| le     | (ab--x)    | or-less | ??   | x = 1 if a <= b else 0 |
+| ge     | (ab--x)    | or-more | ??   | x = 1 if a >= b else 0 |
 |        |            |         |      |                        |
 | xeq    | (ab--abx)  |         |      | x = 1 if a == b else 0 |
 | xne    | (ab--abx)  |         |      | x = 1 if a != b else 0 |
