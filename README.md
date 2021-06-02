@@ -325,19 +325,14 @@ TODO: decide about aliases: <= vs or-less vs le
 
 TODO
 
-| asm    | effect     | morty | core | info                       | 
-| ------ | ---------- | ----- | ---- | -------------------------- | 
-| ioctl  | (fab--c)   |       |      |                            |
-| fputc  | (fa--)     |       |      |                            |
-| fgetc  | (f--)      |       |      |                            |
-| fseek  | (fa--)     |       |      |                            |
-| fopen  |            |       |      |                            |
-| fread  |            |       |      |                            |
-| fwrite |            |       |      |                            |
-| fclose |            |       |      |                            |
+I/O is handled via vectored execution (similar to ioctl, fcntl).
 
-TODO: decide mimic UNIX devices OR provide device specific instructions
-OPS: read, write, seek, ioctl
+| asm    | effect     | morty | core | info                                              | 
+| ------ | ---------- | ----- | ---- | ------------------------------------------------- |
+| ioget  | (dk--v)    |       |      | get value (v) for the key (k) from the device (d) |
+| ioset  | (dkv--)    |       |      | set key (k) to value (v) on the device (d)        |
+
+TODO: set vs put
 
 # Morty VM Assembler
 
@@ -361,5 +356,6 @@ TODO
 |   **Forth threaded code** | http://www.complang.tuwien.ac.at/forth/threaded-code.html      |
 |          **Interpreters** | http://realityforge.org/code/virtual-machines/2011/05/19/interpreters.html |
 |    **Cozy design spaces** | https://www.lexaloffle.com/bbs/?tid=31634                      |
+|         **Another World** | https://fabiensanglard.net/another_world_polygons/             |
 
 [//]: # (online .md editor: https://markdown-editor.github.io/ )

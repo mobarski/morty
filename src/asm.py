@@ -133,6 +133,7 @@ OPS = [
 	'MIN','MAX','PICK',
 	'GTZ','EQZ','LTZ',
 	'TIMES','LOOP','RSUB','RGET',
+	'IOGET','IOSET',
 	'VMINFO'
 ]
 OPCODE = {n.lower():i for i,n in enumerate(OPS)}
