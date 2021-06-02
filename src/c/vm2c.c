@@ -83,16 +83,14 @@ run(vm_state state) {
 				case LAMBDA: s_push(ip); ip=arg;                    break; // TODO: RENAME -> STATIC ARRAY ???
 				case GOTO:   ip=arg;                                break;
 				case STOP:   goto stop;                             break;
-				//case LOOP:   if (mem[rp]>0) {ip=arg; mem[rp]-=1;} else {rp--;}; break;
-				case LOOP:   if (mem[rp]>0) {ip=arg; mem[rp]-=1;};  break; // for use with RSUB
+				case LOOP:   if (mem[rp]>0) {ip=arg; mem[rp]-=1;} else {rp-=2;};  break;
 				// RETURN STACK
 				case STOR:   v=s_pop(); r_push(v);              break;
 				case RTOS:   v=r_pop(); s_push(v);              break;
-				case RADD:   rp+=arg;                           break; // local variables // REMOVE
-				case RSUB:   rp-=arg;                           break;
+				case RADD:   rp+=arg;                           break; // REMOVE
+				case RSUB:   rp-=arg;                           break; // REMOVE
 				case VGET:   v=mem[fp+arg]; s_push(v);          break; // local variables
 				case VSET:   v=s_pop(); mem[fp+arg]=v;          break; // local variables
-				//case TIMES:  v=s_pop(); r_push(v-1);            break; // for use with no loop frame (just loop counter)
 				case TIMES:  v=s_pop(); r_push(arg); r_push(v-1); break; // with loop frame
 				// DATA STACK
 				case SWAP:   v=tos; tos=mem[sp]; mem[sp]=v; break;

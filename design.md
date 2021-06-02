@@ -66,4 +66,5 @@ The rules for performing "break" and "continue" must base on only one addres.
 Continue should be jump @addr and break jump @addr+2.
 
 ```
+(n) times.@]1 [1: (code) ]1: loop.@[1 rsub.2
 ```
