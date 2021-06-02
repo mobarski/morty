@@ -329,8 +329,8 @@ I/O is handled via vectored execution (similar to ioctl, fcntl).
 
 | asm    | effect     | morty | core | info                                              | 
 | ------ | ---------- | ----- | ---- | ------------------------------------------------- |
-| ioget  | (dk--v)    |       |      | get value (v) for the key (k) from the device (d) |
-| ioset  | (dkv--)    |       |      | set key (k) to value (v) on the device (d)        |
+| ioget  | (dk--v)    |       | ???  | get value (v) for the key (k) from the device (d) |
+| ioset  | (dkv--)    |       | ???  | set key (k) to value (v) on the device (d)        |
 
 TODO: name: set vs put
 TODO: name: io vs dev
