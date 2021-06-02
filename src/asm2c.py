@@ -132,7 +132,7 @@ OPS = [
 	'LAMBDA',
 	'MIN','MAX','PICK',
 	'GTZ','EQZ','LTZ',
-	'TIMES','LOOP','RSUB',
+	'TIMES','LOOP','RSUB','RGET',
 	'VMINFO'
 ]
 OPCODE = {n.lower():i for i,n in enumerate(OPS)}

@@ -54,6 +54,21 @@ loop [ ... 10 ge then [ break ] ... ]
 
 ```
 
+```
+5 times
+	i print
+loop
+
+0 10 do
+	i print
+loop
+
+0 10 2 for
+	i print
+loop
+
+```
+
 ## ASM
 
 The loop requires setup code, repetition code and cleanup code.
