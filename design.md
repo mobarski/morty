@@ -27,11 +27,16 @@ age 18 or-more then [ show-content ]
 
 # Loops
 
+## Lang
+
 Definite:
 ```
+
 5 times [ 1 add ]
 
 5 times [ 1 add ] loop
+
+5 times 1 add loop
 
 ```
 
@@ -49,6 +54,16 @@ loop [ ... 10 ge then [ break ] ... ]
 
 ```
 
+## ASM
+
+The loop requires setup code, repetition code and cleanup code.
+
+Setup code creates loop frame on the return stack.
+Cleanup code drops the loop frame from the return stack.
+Loop frame enables "break" and "continue" instructions.
+Loop frame should contain only one address so it can be created with one asm instruction.
+The rules for performing "break" and "continue" must base on only one addres.
+Continue should be jump @addr and break jump @addr+2.
 
 ```
 ```

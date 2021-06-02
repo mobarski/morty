@@ -16,6 +16,16 @@
 
 
 ((
+loop:
+	stor
+	0
+	vget.1 times.@]1 [1:
+		1 add
+	]1: loop.@[1 rsub.2
+ret
+))
+
+((
 loops: (28: 1904ms
 	stor
 	0
@@ -25,7 +35,7 @@ loops: (28: 1904ms
 				vget.1 (n) 1 sub stor [4:
 					vget.1 (n) 1 sub stor [5:
 						vget.1 (n) 1 sub stor [6:
-								1 add
+							1 add
 						loop.@[6
 					loop.@[5
 				loop.@[4
@@ -35,6 +45,7 @@ loops: (28: 1904ms
 ret
 ))
 
+((
 loops: (28: 1831ms
 	stor
 	0
@@ -44,7 +55,7 @@ loops: (28: 1831ms
 				vget.1 (n) times [4:
 					vget.1 (n) times [5:
 						vget.1 (n) times [6:
-								1 add
+							1 add
 						loop.@[6
 					loop.@[5
 				loop.@[4
@@ -52,7 +63,25 @@ loops: (28: 1831ms
 		loop.@[2
 	loop.@[1
 ret
+))
+
+loops: (28: 1880ms
+	stor
+	0
+	vget.1 (n) times.@]1 [1:
+		vget.1 (n) times.@]2 [2:
+			vget.1 (n) times.@]3 [3:
+				vget.1 (n) times.@]4 [4:
+					vget.1 (n) times.@]5 [5:
+						vget.1 (n) times.@]6 [6:
+							1 add
+						]6: loop.@[6 rsub.2
+					]5: loop.@[5 rsub.2
+				]4: loop.@[4 rsub.2
+			]3: loop.@[3 rsub.2
+		]2: loop.@[2 rsub.2
+	]1: loop.@[1 rsub.2
+ret
 
 start:
-	
 	28 call.@loops vminfo
