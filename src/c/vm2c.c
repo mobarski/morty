@@ -83,12 +83,14 @@ run(vm_state state) {
 				case LAMBDA: s_push(ip); ip=arg;                    break; // TODO: RENAME -> STATIC ARRAY ???
 				case GOTO:   ip=arg;                                break;
 				case STOP:   goto stop;                             break;
+				case LOOP:   if (mem[rp]>0) {ip=arg; mem[rp]-=1;} else {rp--;}; break;
 				// RETURN STACK
 				case STOR:   v=s_pop(); r_push(v);              break;
 				case RTOS:   v=r_pop(); s_push(v);              break;
 				case RADD:   rp+=arg;                           break; // local variables // REMOVE
 				case VGET:   v=mem[fp+arg]; s_push(v);          break; // local variables
 				case VSET:   v=s_pop(); mem[fp+arg]=v;          break; // local variables
+				case TIMES:  v=s_pop(); r_push(v-1);            break;
 				// DATA STACK
 				case SWAP:   v=tos; tos=mem[sp]; mem[sp]=v; break;
 				case PUSH:   s_push(arg);                   break;
@@ -152,7 +154,7 @@ run(vm_state state) {
 					break;
 			}
 			
-			//printf("T:%d\tSP:%d\tRP:%d\tFP:%d\tIP:%d\tDP:%d\tMEM[SP]:%d\tOP:%d\tdt:%d ms \n",tos,sp,rp,fp,ip,dp,mem[sp],op,ms_clock()-ts_vminfo); // XXX debug
+			//printf("T:%d\tR:%d\tSP:%d\tRP:%d\tFP:%d\tIP:%d\tDP:%d\tMEM[SP]:%d\tOP:%d\tdt:%d ms \n",tos,mem[rp],sp,rp,fp,ip,dp,mem[sp],op,ms_clock()-ts_vminfo); // XXX debug
 		}
 		oli++;
 		sd = sp-state.sp;

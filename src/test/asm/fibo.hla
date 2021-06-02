@@ -1,3 +1,7 @@
+((
+	based on http://dada.perl.it/shootout/fibo.html
+))
+
 ((	Morty:
 
 	def fib (n--f) :n

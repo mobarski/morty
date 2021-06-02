@@ -1,0 +1,58 @@
+((
+	based on http://dada.perl.it/shootout/nestedloop.html
+))
+
+((	Morty:
+
+	def loops (n--a) :x
+		0
+		x times x times x times x times x times x times
+			1 add
+		loop loop loop loop loop loop
+	ret
+))
+
+0 jz.@start
+
+
+((
+loops: (28: 1904ms
+	stor
+	0
+	vget.1 (n) 1 sub stor [1:
+		vget.1 (n) 1 sub stor [2:
+			vget.1 (n) 1 sub stor [3:
+				vget.1 (n) 1 sub stor [4:
+					vget.1 (n) 1 sub stor [5:
+						vget.1 (n) 1 sub stor [6:
+								1 add
+						loop.@[6
+					loop.@[5
+				loop.@[4
+			loop.@[3
+		loop.@[2
+	loop.@[1
+ret
+))
+
+loops: (28: 1831ms
+	stor
+	0
+	vget.1 (n) times [1:
+		vget.1 (n) times [2:
+			vget.1 (n) times [3:
+				vget.1 (n) times [4:
+					vget.1 (n) times [5:
+						vget.1 (n) times [6:
+								1 add
+						loop.@[6
+					loop.@[5
+				loop.@[4
+			loop.@[3
+		loop.@[2
+	loop.@[1
+ret
+
+start:
+	
+	28 call.@loops vminfo
