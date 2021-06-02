@@ -332,7 +332,8 @@ I/O is handled via vectored execution (similar to ioctl, fcntl).
 | ioget  | (dk--v)    |       |      | get value (v) for the key (k) from the device (d) |
 | ioset  | (dkv--)    |       |      | set key (k) to value (v) on the device (d)        |
 
-TODO: set vs put
+TODO: name: set vs put
+TODO: name: io vs dev
 
 # Morty VM Assembler
 
