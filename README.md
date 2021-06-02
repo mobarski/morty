@@ -262,53 +262,53 @@ Words are intended mainly for VMs without propper string support.
 
 | asm    | effect     | morty | core | info                 | 
 | ------ | ---------- | ----- | ---- | -------------------- |
-| add    | (ab--c)    |       | yes  | c = a + b            |
-| sub    | (ab--c)    |       | yes  | c = a - b            |
-| mul    | (ab--c)    |       | yes  | c = a * b            |
-| div    | (ab--c)    |       | yes  | c = a / b            |
-| muldiv | (abc--d)   |       |      | d = a * b / c        |
-| mod    | (ab--c)    |       |      | c = a % b            |
-| neg    | (a--b)     |       |      | b = -a               |
-| shl    | (ab--c)    |       | ???  | c = a<<b             |
-| shr    | (ab--c)    |       | ???  | c = a>>b             |
+| add    | (ab--c)    |       | yes  | a + b                |
+| sub    | (ab--c)    |       | yes  | a - b                |
+| mul    | (ab--c)    |       | ???  | a * b                |
+| div    | (ab--c)    |       | ???  | a / b                |
+| muldiv | (abc--d)   |       |      | a * b / c            |
+| mod    | (ab--c)    |       |      | a % b                |
+| neg    | (a--b)     |       |      | -a                   |
+| shl    | (ab--c)    |       | yes  | a << b               |
+| shr    | (ab--c)    |       | yes  | a >> b               |
 | ushr   | (ab--c)    |       | ???  | unsigned shift right |
-| abs    | (a--b)     |       |      | b = -a if a<0 else a |
+| abs    | (a--b)     |       |      | -a if a<0 else a     |
 
 ### ALU - logic
 
-| asm    | effect     | morty | core | info                       | 
-| ------ | ---------- | ----- | ---- | -------------------------- | 
-| and    | (ab--c)    |       | yes  | c = a & b                  |
-| or     | (ab--c)    |       | yes  | c = a \| b                 |
-| xor    | (ab--c)    |       | yes  | c = a ^ b                  |
-| inv    | (a--b)     |       |      | b = ~a  (binary inversion) |
+| asm    | effect     | morty | core | info                   | 
+| ------ | ---------- | ----- | ---- | ---------------------- | 
+| and    | (ab--c)    |       | yes  | a & b                  |
+| or     | (ab--c)    |       | yes  | a \| b                 |
+| xor    | (ab--c)    |       | yes  | a ^ b                  |
+| inv    | (a--b)     |       |      | ~a  (binary inversion) |
 
 ### ALU - comparators
 
-| asm    | effect     | morty   | core | info                   | 
-| ------ | ---------- | -----   | ---- | ---------------------- | 
-| nz     | (a--x)     | bool    |      | x = 1 if a!=0 else 0   |
-| eqz    | (a--x)     | 0=      |      | x = 1 if a==0 else 0   |
-| gtz    | (a--x)     | 0>      |      | x = 1 if a>0  else 0   |
-| ltz    | (a--x)     | 0<      |      | x = 1 if a<0  else 0   |
-|        |            |         |      |                        |
-| eq     | (ab--x)    | ==      | yes  | x = 1 if a == b else 0 |
-| ne     | (ab--x)    | !=      | yes  | x = 1 if a != b else 0 |
-| lt     | (ab--x)    | below   | yes  | x = 1 if a < b  else 0 |
-| gt     | (ab--x)    | above   | yes  | x = 1 if a > b  else 0 |
-| le     | (ab--x)    | or-less | ??   | x = 1 if a <= b else 0 |
-| ge     | (ab--x)    | or-more | ??   | x = 1 if a >= b else 0 |
-|        |            |         |      |                        |
-| xeq    | (ab--abx)  |         |      | x = 1 if a == b else 0 |
-| xne    | (ab--abx)  |         |      | x = 1 if a != b else 0 |
-| xle    | (ab--abx)  |         |      | x = 1 if a <= b else 0 |
-| xge    | (ab--abx)  |         |      | x = 1 if a >= b else 0 |
-| xlt    | (ab--abx)  |         |      | x = 1 if a < b  else 0 |
-| xgt    | (ab--abx)  |         |      | x = 1 if a > b  else 0 |
-|        |            |         |      |                        |
-| min    | (ab--x)    |         |      | x = a if a < b  else b |
-| max    | (ab--x)    |         |      | x = a if a > b  else b |
-| pick   | (abc--x)   |         | yes  | x = a if c != 0 else b |
+| asm    | effect     | morty   | core | info               | 
+| ------ | ---------- | -----   | ---- | ------------------ | 
+| nz     | (a--x)     | bool    |      | 1 if a!=0 else 0   |
+| eqz    | (a--x)     | 0=      |      | 1 if a==0 else 0   |
+| gtz    | (a--x)     | 0>      |      | 1 if a>0  else 0   |
+| ltz    | (a--x)     | 0<      |      | 1 if a<0  else 0   |
+|        |            |         |      |                    |
+| eq     | (ab--x)    | ==      | yes  | 1 if a == b else 0 |
+| ne     | (ab--x)    | !=      | yes  | 1 if a != b else 0 |
+| lt     | (ab--x)    | below   | yes  | 1 if a < b  else 0 |
+| gt     | (ab--x)    | above   | yes  | 1 if a > b  else 0 |
+| le     | (ab--x)    | or-less |      | 1 if a <= b else 0 |
+| ge     | (ab--x)    | or-more |      | 1 if a >= b else 0 |
+|        |            |         |      |                    |
+| xeq    | (ab--abx)  |         |      | 1 if a == b else 0 |
+| xne    | (ab--abx)  |         |      | 1 if a != b else 0 |
+| xle    | (ab--abx)  |         |      | 1 if a <= b else 0 |
+| xge    | (ab--abx)  |         |      | 1 if a >= b else 0 |
+| xlt    | (ab--abx)  |         |      | 1 if a < b  else 0 |
+| xgt    | (ab--abx)  |         |      | 1 if a > b  else 0 |
+|        |            |         |      |                    |
+| min    | (ab--x)    |         |      | a if a < b  else b |
+| max    | (ab--x)    |         |      | a if a > b  else b |
+| pick   | (abc--x)   |         | yes  | a if c != 0 else b |
 
 
 TODO: decide if comparators are destructive or not or both versions are available
