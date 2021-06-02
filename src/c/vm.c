@@ -30,7 +30,7 @@ typedef struct {
 	int rp;
 	int sp;
 	int tos;
-	int dp;
+	int hp;
 	int *mem;
 } vm_state;
 
@@ -44,7 +44,7 @@ run(vm_state state) {
 	int   sp = state.sp;
 	int   rp = state.rp;
 	int   fp = state.fp;
-	int   dp = state.dp; // for ALLOT
+	int   hp = state.hp;
 	int *mem = state.mem;
 	
 	// FINAL STATE
@@ -58,8 +58,8 @@ run(vm_state state) {
 	int sd_max=0; // max stack depth
 	int rd=0;     // return stack depth
 	int rd_max=0; // max return stack depth
-	int dd=0;     // data depth
-	int dd_max=0; // max data depth
+	int hd=0;     // heap depth
+	int hd_max=0; // max heap depth
 	int oli=0;     // outer loop iterations
 	int ilc=1000000; // inner loop cnt
 	
@@ -141,10 +141,10 @@ run(vm_state state) {
 				// MEMORY
 				case GET:    tos = mem[tos];                break;
 				case SET:    v=s_pop(); mem[v]=s_pop();     break;
-				case ALLOT:  v=s_pop(); s_push(dp); dp+=v;  break;
+				case ALLOT:  v=s_pop(); s_push(hp); hp+=v;  break;
 				// DEBUG
 				case VMINFO:
-					printf("T:%d\tSP:%d\tRP:%d\tFP:%d\tIP:%d\tDP:%d\tSDMX:%d\tRDMX:%d\tDDMX:%d\tOLI:%d\tILC:%d\tdt:%d ms \n",tos,sp,rp,fp,ip,dp,sd_max,rd_max,dd_max,oli,ilc,ms_clock()-ts_vminfo);
+					printf("T:%d\tSP:%d\tRP:%d\tFP:%d\tIP:%d\tDP:%d\tSDMX:%d\tRDMX:%d\tDDMX:%d\tOLI:%d\tILC:%d\tdt:%d ms \n",tos,sp,rp,fp,ip,hp,sd_max,rd_max,hd_max,oli,ilc,ms_clock()-ts_vminfo);
 					ts_vminfo = ms_clock();
 					break;
 				// PRIMITIVE OUTPUT
@@ -156,15 +156,15 @@ run(vm_state state) {
 					break;
 			}
 			
-			//printf("T:%d\tR:%d\tSP:%d\tRP:%d\tFP:%d\tIP:%d\tDP:%d\tMEM[SP]:%d\tOP:%d\tdt:%d ms \n",tos,mem[rp],sp,rp,fp,ip,dp,mem[sp],op,ms_clock()-ts_vminfo); // XXX debug
+			//printf("T:%d\tR:%d\tSP:%d\tRP:%d\tFP:%d\tIP:%d\tDP:%d\tMEM[SP]:%d\tOP:%d\tdt:%d ms \n",tos,mem[rp],sp,rp,fp,ip,hp,mem[sp],op,ms_clock()-ts_vminfo); // XXX debug
 		}
 		oli++;
 		sd = sp-state.sp;
 		rd = rp-state.rp;
-		dd = dp-state.dp;
+		hd = hp-state.hp;
 		sd_max = sd>sd_max ? sd:sd_max;
 		rd_max = rd>rd_max ? rd:rd_max;
-		dd_max = dd>dd_max ? dd:dd_max;
+		hd_max = hd>hd_max ? hd:hd_max;
 	}
 	fprintf(stderr,"WARNING: Iterations limit reached!\n");
 	
@@ -175,7 +175,7 @@ run(vm_state state) {
 	final.sp  = sp;
 	final.rp  = rp;
 	final.fp  = fp;
-	final.dp  = dp;
+	final.hp  = hp;
 	return final;
 }
 
@@ -207,7 +207,7 @@ boot(int *mem, int *code, int code_len, config cfg) {
 	
 	state.sp  = state.ip + code_len + 10; // 10 -> GAP between CODE and DATA STACK
 	state.rp  = state.sp + cfg.data_stack_size;
-	state.dp  = state.rp + cfg.return_stack_size;
+	state.hp  = state.rp + cfg.return_stack_size;
 	state.fp  = state.rp;
 	state.mem = mem;
 	

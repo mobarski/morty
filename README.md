@@ -174,7 +174,7 @@ VM:
 - R - return stack pointer
 - S - (data) stack pointer
 - T - top of stack register
-- D - data pointer
+- H - heap pointer
 - MEM - main memory
 
 ## Instruction encoding
@@ -235,7 +235,7 @@ Translation from the core set into extended set is done by peephole optimization
 | ------ | ---------- | ----- | ---- | ---- | 
 | get    | (a--b)     |       | yes  | get value from memory cell a     |
 | set    | (va--)     |       | yes  | set memory cell a to value v     |
-| allot  | (n--a)     |       | ???  | allot n cells in the "dictionary" and return address to the first allocated cell |
+| allot  | (n--a)     |       | ???  | allot n cells on the heap and return address to the first allocated cell |
 | geti X | (a--b)     | N/A   |      | get value from memory cell a+X   | 
 | seti X | (va--)     | N/A   |      | set memory cell a+X to value v   | 
 
