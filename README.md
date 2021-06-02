@@ -247,6 +247,8 @@ Translation from the core set into extended set is done by peephole optimization
 | vget  X | (--n)      | x     |      | get local variable X                   |
 | vset  X | (n--)      | :x    |      | set local variable X                   |
 
+TODO: ftos or no ftos BUT vget and vset in the core
+
 ### primitive output
 
 | asm    | effect     | morty   | core | info                                             | 
