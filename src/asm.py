@@ -46,8 +46,19 @@ def strip_labels(tokens):
 
 def apply_labels(tokens, labels):
 	out = []
+	stack = []
 	for t in tokens:
-		if t[0]=='@':
+		if t[:2]=='@<':
+			#pos = len(out)
+			#stack += [pos]
+			#out += [t]
+			pass # TODO
+		elif t[:2]=='@>':
+			#here = len(out)
+			#there = stack.pop()
+			#out[there].replace('@<',str(here))
+			pass # TODO
+		elif t[0]=='@':
 			name = t[1:]
 			out += [labels[name]]
 		elif t[:2] in ['@+','@-']:
