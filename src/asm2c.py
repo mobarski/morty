@@ -158,5 +158,6 @@ if __name__=="__main__":
 	cells = to_cells(code, OPCODE)
 	if args.d:
 		print(cells)
+		print(f"cells: {len(cells)}")
 	if args.o:
 		to_binary_file(args.o, code, OPCODE)
