@@ -280,7 +280,7 @@ Words are intended mainly for VMs without propper string support.
 | ------ | ---------- | ----- | ---- | ---------------------- | 
 | and    | (ab--c)    |       | yes  | a & b                  |
 | or     | (ab--c)    |       | yes  | a \| b                 |
-| xor    | (ab--c)    |       | yes  | a ^ b                  |
+| xor    | (ab--c)    |       | ???  | a ^ b                  |
 | inv    | (a--b)     |       |      | ~a  (binary inversion) |
 
 ### ALU - comparators
