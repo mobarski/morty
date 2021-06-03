@@ -95,11 +95,11 @@ def hlasm_to_asm(code):
 	"""Morty High Level Assebler
 	
 	Tranformations:
-		number   -> push number
-		'c'      -> push char
+		number   -> push.number
+		'c'      -> push.char_as_number
 		label:   -> label:
 		op.@xxx  -> op.@xxx
-		op       -> op 0
+		op       -> op.0
 	"""
 	code = strip_comments(code)
 	
@@ -142,7 +142,7 @@ OPS = [
 	'MOD','SHL','SHR','USHR','INVERT','NEGATE','ABS',
 	'LE','LT','GE','GT','EQ','NE',
 	'XLE','XLT','XGE','XGT','XEQ','XNE',
-	'ROT','OVER','UNROT', # rozwala
+	'ROT','OVER','UNROT',
 	'VGET','VSET','RADD',
 	'EMIT','DOT','ECHO',
 	'IF','IFELSE','GOTO',
