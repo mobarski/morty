@@ -283,7 +283,11 @@ Words are intended mainly for VMs without propper string support.
 | and    | (ab--c)    |       | yes  | a & b                  |
 | or     | (ab--c)    |       | yes  | a \| b                 |
 | xor    | (ab--c)    |       | ???  | a ^ b                  |
-| inv    | (a--b)     |       |      | ~a  (binary inversion) |
+| inv    | (a--b)     |       | ???  | ~a  (binary inversion) |
+
+TODO: xor vs inv in the core
+a^b -> ~(a&b)&(b|c)
+inv -> 0xFFFFFFFF xor
 
 ### ALU - comparators
 
