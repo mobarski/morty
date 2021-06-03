@@ -375,7 +375,7 @@ Character literals are converted into integer literals ("push.value").
 	inc:
 		1 add ret
 	start:
-		2 call.@inc
+		2 :inc
 	stop
 ```
 

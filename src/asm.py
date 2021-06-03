@@ -91,7 +91,7 @@ def compile(tokens, op_code):
 			cells += [int(t)]
 	return cells
 
-# TODO: short syntax for call.@name
+
 def hlasm_to_asm(code):
 	"""Morty High Level Assebler
 	
@@ -99,6 +99,7 @@ def hlasm_to_asm(code):
 		number   -> push.number
 		'c'      -> push.char_as_number
 		label:   -> label:
+		:label   -> call.@label
 		op.@xxx  -> op.@xxx
 		op       -> op.0
 	"""
@@ -122,8 +123,11 @@ def hlasm_to_asm(code):
 				asm += [f'push.{v}']
 			elif '.' in t:
 				asm += [t]
-			elif ':' in t:
+			elif t[-1]==':':
 				asm += [t]
+			elif t[0]==':':
+				v = t[1:]
+				asm += [f'call.@{v}']
 			else:
 				asm += [f'{t}.0']
 		line_out = ' '*indent + '   '.join(asm)

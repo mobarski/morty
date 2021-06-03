@@ -18,7 +18,7 @@ if 1:
 	inc:
 		1 add ret
 	start:
-		2 call.@inc
+		2 :inc
 	stop
 	"""
 	asm = hlasm_to_asm(hla)
