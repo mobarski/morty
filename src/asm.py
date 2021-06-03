@@ -8,8 +8,10 @@ import sys
 def to_cells(text, op_code):
 	text          = strip_comments(text)
 	tokens        = tokenize(text)
-	tokens,labels = strip_labels(tokens)
-	tokens        = apply_labels(tokens, labels)
+	tokens        = optimize(tokens, rules=[])
+	tokens        = split_tokens(tokens)
+	pos_by_label  = detect_labels(tokens)
+	tokens        = apply_labels(tokens, pos_by_label)
 	cells         = compile(tokens, op_code)
 	return cells
 
@@ -32,41 +34,48 @@ def strip_comments(text):
 def tokenize(text):
 	return re.split('\s+',text.strip())
 
-def strip_labels(tokens):
-	labels = {}
-	out = []
-	for t in tokens:
-		if t[-1]==':':
-			name = t[:-1]
-			labels[name] = len(out)
-		else:
-			out += [t]
-		
-	return out, labels
+def optimize(tokens,rules):
+	return tokens
 
-def apply_labels(tokens, labels):
+def split_tokens(tokens):
 	out = []
-	stack = []
 	for t in tokens:
-		if t[:2]=='@<':
-			#pos = len(out)
-			#stack += [pos]
-			#out += [t]
-			pass # TODO
-		elif t[:2]=='@>':
-			#here = len(out)
-			#there = stack.pop()
-			#out[there].replace('@<',str(here))
-			pass # TODO
-		elif t[0]=='@':
-			name = t[1:]
-			out += [labels[name]]
+		# TODO partition
+		# TODO error detection
+		# TODO vs float
+		for c in t.split('.'):
+			out += [c]
+	return out
+
+def detect_labels(tokens):
+	pos = 0
+	pos_by_label = {}
+	for i,t in enumerate(tokens):
+		if t[-1]==':':
+			label = t[:-1]
+			pos_by_label[label] = pos
+		else:
+			pos += 1
+	return pos_by_label
+
+def apply_labels(tokens, pos_by_label):
+	out = []
+	pos = 0
+	for t in tokens:
+		if t[0]=='@':
+			label = t[1:]
+			p = pos_by_label[label]
+			out += [str(p)]
+			pos += 1
 		elif t[:2] in ['@+','@-']:
-			out += [len(out) + int(t[1:])]
-		elif t[0]=="'":
-			out += [ord(t[1:-1])]
+			p = pos + int(arg[1:])
+			out += [str(p)]
+			pos += 1
+		elif t[-1]==":":
+			out += [t]
 		else:
 			out += [t]
+			pos += 1
 	return out
 
 def compile(tokens, op_code):
@@ -75,16 +84,13 @@ def compile(tokens, op_code):
 		c = op_code.get(t)
 		if c is not None:
 			cells += [c]
+		elif t[-1] == ':':
+			pass
 		else:
-			if i%2==0:
-				N = 5
-				info = ' '.join([str(x) for x in tokens[i-N:i]]) + f" >>>{t}<<< " + ' '.join([str(x) for x in tokens[i+1:i+N+1]])
-				print(f"ERROR: invalid token '{t}' at position {i}:\n{info}\n")
-				raise Exception('invalid syntax')
 			cells += [int(t)]
 	return cells
 
-
+# TODO: short syntax for call.@name
 def hlasm_to_asm(code):
 	"""Morty High Level Assebler
 	
@@ -92,7 +98,7 @@ def hlasm_to_asm(code):
 		number   -> push number
 		'c'      -> push char
 		label:   -> label:
-		op.@xxx  -> op @xxx
+		op.@xxx  -> op.@xxx
 		op       -> op 0
 	"""
 	code = strip_comments(code)
@@ -109,16 +115,16 @@ def hlasm_to_asm(code):
 			except:
 				v = None
 			if v is not None:
-				asm += [f'push {v}']
+				asm += [f'push.{v}']
 			elif t[0]=="'":
 				v = ord(t[1:2])
-				asm += [f'push {v}']
+				asm += [f'push.{v}']
 			elif '.' in t:
-				asm += [t.replace('.',' ')]
+				asm += [t]
 			elif ':' in t:
 				asm += [t]
 			else:
-				asm += [f'{t} 0']
+				asm += [f'{t}.0']
 		line_out = ' '*indent + '   '.join(asm)
 		out += [line_out]
 	return '\n'.join(out)
