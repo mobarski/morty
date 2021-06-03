@@ -344,7 +344,40 @@ TODO: api:  dk vs kd
 
 # Morty VM Assembler
 
+## Assembler
+
 TODO
+
+Instructions consist of operation (op) and argument (arg).
+All instruction must contain op and arg separated by the dot (.).
+Labels end with the colon (:).
+Label's addresses are referenced with the at (@) character.
+
+```
+	push.0 jz.@start
+	inc:
+		push.1 add.0 ret.0
+	start:
+		push.2 call.@inc
+	stop.0
+```
+
+## High-Level Assembler
+
+TODO
+
+Instructions with operations that always take 0 as the argument don't have to contain the argument (ie "add" instead of "add.0").
+All values are transformed into "push.value".
+Character literals are converted into integer literals ("push.value").
+
+```
+	0 jz.@start
+	inc:
+		1 add ret
+	start:
+		2 call.@inc
+	stop
+```
 
 # References
 

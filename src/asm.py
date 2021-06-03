@@ -3,6 +3,7 @@ from array import array
 import argparse
 import sys
 
+# TODO: comments as tokens similar to labels ??? NO -> optimization
 # TODO: map token to file @ line
 
 def to_cells(text, op_code):
