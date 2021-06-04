@@ -3,13 +3,16 @@ from array import array
 import argparse
 import sys
 
+import peephole
+
 # TODO: comments as tokens similar to labels ??? NO -> optimization
 # TODO: map token to file @ line
 
-def to_cells(text, op_code):
+def to_cells(text, op_code, do_optimize=False):
 	text          = strip_comments(text)
 	tokens        = tokenize(text)
-	tokens        = optimize(tokens, rules=[])
+	if do_optimize:
+		tokens    = optimize(tokens, peephole.rules)
 	tokens        = split_tokens(tokens)
 	pos_by_label  = detect_labels(tokens)
 	tokens        = apply_labels(tokens, pos_by_label)
@@ -34,9 +37,6 @@ def strip_comments(text):
 
 def tokenize(text):
 	return re.split('\s+',text.strip())
-
-def optimize(tokens,rules):
-	return tokens
 
 def split_tokens(tokens):
 	out = []
@@ -110,6 +110,29 @@ def compile(tokens, op_code):
 				N = 6
 				print('ERROR',i, tokens[max(0,i-N):i],t,tokens[i+1:i+1+N]) # TODO: error reporing
 	return cells
+
+
+def optimize(tokens,rules):
+	"one pass of the peephole optimizer"
+	out = []
+	total_match_cnt = 0
+	i = 0
+	while i<len(tokens):
+		for n,match_fun,replace_fun in rules:
+			if i+n>=len(tokens): continue
+			old_out = tokens[i:i+n]
+			match = match_fun(*old_out)
+			if match:
+				new_out = replace_fun(*old_out)
+				#print("OPTIMIZATION",old_out,"->",new_out) # XXX
+				out.extend(new_out)
+				i += n
+				total_match_cnt += 1
+				break
+		else:
+			out += [tokens[i]]
+			i += 1
+	return out
 
 
 def hlasm_to_asm(code):
@@ -187,6 +210,7 @@ if __name__=="__main__":
 	parser.add_argument('-i',  metavar='path', type=str, help='input path (default: stdin)')
 	parser.add_argument('-hl', action='store_true', help='treat input as high level assembler')
 	parser.add_argument('-d',  action='store_true', help='debug')
+	parser.add_argument('-O',  action='store_true', help='optimize')
 	args = parser.parse_args()
 
 	if args.i:

@@ -353,6 +353,11 @@ All instruction must contain op and arg separated by the dot (.).
 Labels end with the colon (:).
 Label's addresses are referenced with the at (@) character.
 
+TODO:
+- @[ ->
+- @] ->
+- ]: ->
+
 ```
 	push.0 jz.@start
 	inc:

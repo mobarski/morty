@@ -31,12 +31,12 @@ if 0:
 	cells = to_cells(asm, OPCODE)
 	print(cells)
 
-if 1:
+if 0:
 	asm = "push.0 jz.@[ push.1 add.0 ]: push.2"
 	cells = to_cells(asm, OPCODE)
 	print(cells)
 
-if 1:
+if 0:
 	asm = "push.0 jz.@[ push.1 jz.@[ push.3 add.0 ]: add.0 ]: push.2"
 	cells = to_cells(asm, OPCODE)
 	print(cells)
@@ -46,7 +46,7 @@ if 0:
 	cells = to_cells(asm, OPCODE)
 	print(cells)
 
-if 1:
+if 0:
 	asm = """
 		push.0   jz.@start
 		aaa:
@@ -73,3 +73,8 @@ if 1:
 	"""
 	cells = to_cells(asm, OPCODE)
 	print(cells)
+
+if 1:
+	asm = "push.1   push.2   add.0   jz.@[   push.1   ret.0   qret.0   ]:   push.3"
+	cells = to_cells(asm, OPCODE, do_optimize=True)
+	print(len(cells),cells)
