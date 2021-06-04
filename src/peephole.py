@@ -13,7 +13,7 @@ def match_push_push_alu(a,b,c):
 	if not b.startswith('push.'): return False
 	if '@' in a or '@' in b: return False
 	op = c.split('.')[0]
-	if op not in ['add','sub','shl','shr','and','or','xor','mul','div']: return False
+	if op not in ['add','sub','shl','shr','and','or','xor','mul','div','mod']: return False
 	try:
 		va = int(a.split('.')[1])
 	except:
@@ -32,6 +32,7 @@ def replace_push_push_alu(a,b,c):
 	elif op=='sub': v = va  - vb
 	elif op=='mul': v = va  * vb
 	elif op=='div': v = va // vb
+	elif op=='mod': v = va  % vb
 	elif op=='shl': v = va << vb
 	elif op=='shr': v = va >> vb
 	elif op=='and': v = va  & vb
