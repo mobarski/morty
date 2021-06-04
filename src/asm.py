@@ -11,7 +11,7 @@ import peephole
 def to_cells(text, op_code, do_optimize=False):
 	text          = strip_comments(text)
 	tokens        = tokenize(text)
-	if do_optimize:
+	if do_optimize: # TODO: multi-pass optimization
 		tokens    = optimize(tokens, peephole.rules)
 	tokens        = split_tokens(tokens)
 	pos_by_label  = detect_labels(tokens)
