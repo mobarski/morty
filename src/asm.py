@@ -74,7 +74,7 @@ def apply_labels(tokens, pos_by_label):
 			out[i] = str(pos-1)
 			out += [str(target+1)]
 			pos += 1
-		elif t=='@]:':
+		elif t==']:':
 			target,i = stack.pop()
 			out[i] = str(pos)
 			out += [t]
