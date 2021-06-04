@@ -88,5 +88,8 @@ Continue should be jump @addr and break jump @addr+2.
 ```
 (n) times.@] [: 1 add ]: loop.@[
 (n) times.@:< 1 add loop.@:>
+
+(n) times.@] [: 1 add ]: loop.@[
+(n) times.@]< [:> 1 add ]:> loop.@[<   (< pop) (> push)
 ```
 

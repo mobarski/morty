@@ -63,19 +63,20 @@ def apply_labels(tokens, pos_by_label):
 	out = []
 	stack = []
 	pos = 0
+	#print(tokens) # XXX
 	for t in tokens:
 		if t=='@[':
-			stack.append(pos)
+			stack.append((pos,len(out)))
 			out += [t]
 			pos += 1
 		elif t=='@]':
-			target = stack.pop()
-			out[target] = str(pos-1)
+			target,i = stack.pop()
+			out[i] = str(pos-1)
 			out += [str(target+1)]
 			pos += 1
 		elif t=='@]:':
-			target = stack.pop()
-			out[target] = str(pos)
+			target,i = stack.pop()
+			out[i] = str(pos)
 			out += [t]
 		elif t[0]=='@':
 			label = t[1:]
@@ -95,6 +96,7 @@ def apply_labels(tokens, pos_by_label):
 
 def compile(tokens, op_code):
 	cells = []
+	#print(tokens) # XXX
 	for i,t in enumerate(tokens):
 		c = op_code.get(t)
 		if c is not None:
@@ -102,7 +104,11 @@ def compile(tokens, op_code):
 		elif t[-1] == ':':
 			pass
 		else:
-			cells += [int(t)]
+			try:
+				cells += [int(t)]
+			except ValueError:
+				N = 6
+				print('ERROR',i, tokens[max(0,i-N):i],t,tokens[i+1:i+1+N]) # TODO: error reporing
 	return cells
 
 

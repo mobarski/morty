@@ -85,6 +85,7 @@ loops: (28: 1880ms
 ret
 ))
 
+((
 loops: (28: 1840ms
 	stor
 	0
@@ -101,6 +102,26 @@ loops: (28: 1840ms
 			]3: loop.@[3
 		]2: loop.@[2
 	]1: loop.@[1
+ret
+))
+
+
+loops: (28: ms
+	stor
+	0
+	vget.1 (n) times.@[
+		vget.1 (n) times.@[
+			vget.1 (n) times.@[
+				vget.1 (n) times.@[
+					vget.1 (n) times.@[
+						vget.1 (n) times.@[
+							1 add
+						loop.@]
+					loop.@]
+				loop.@]
+			loop.@]
+		loop.@]
+	loop.@]
 ret
 
 start:
