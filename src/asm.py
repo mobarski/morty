@@ -61,9 +61,23 @@ def detect_labels(tokens):
 
 def apply_labels(tokens, pos_by_label):
 	out = []
+	stack = []
 	pos = 0
 	for t in tokens:
-		if t[0]=='@':
+		if t=='@[':
+			stack.append(pos)
+			out += [t]
+			pos += 1
+		elif t=='@]':
+			target = stack.pop()
+			out[target] = str(pos-1)
+			out += [str(target+1)]
+			pos += 1
+		elif t=='@]:':
+			target = stack.pop()
+			out[target] = str(pos)
+			out += [t]
+		elif t[0]=='@':
 			label = t[1:]
 			p = pos_by_label[label]
 			out += [str(p)]
