@@ -26,12 +26,18 @@ TOTAL:   36 + 5? + 2(halt,nop)
 
 Language without "else" is also acceptable!
 
+Enclosing the block in [ & ] helps in code editors (highlight matching bracket).
+
 ```
 distance 10 or-less [ collision-warning ] if
 
 distance 10 or-less [ collision-warning ] then
 
 distance 10 or-less then collision-warning end-then
+
+distance 10 or-less then collision-warning end
+
+distance 10 or-less if collision-warning then
 
 distance 10 or-less then [ collision-warning ]
 
@@ -45,13 +51,87 @@ age 18 or-more if-else [ show-content ] [ show-restriction ]
 
 age 18 or-more then [ show-content ]
                else [ show-restriction ]
+```
 
+```
+( ala FORTH ) :age
+	age 18 or-more  if adult			else
+	age 13 or-more  if teen				else
+	age	 7 or-more  if gradeschooler	else
+	age	 4 or-more  if preschooler		else
+	age	 1 or-more  if toddler			else
+				   	   baby			
+	then then then then then then
+
+vget.1 push.18 gte.0 jz.@[  call.@adult        goto.@[2 ]:
+vget.1 push.13 gte.0 jz.@[  call.@teen         goto.@[2 ]:
+vget.1 push.7  gte.0 jz.@[  call.@gradschooler goto.@[2 ]:
+vget.1 push.4  gte.0 jz.@[  call.@prescholer   goto.@[2 ]:
+vget.1 push.1  gte.0 jz.@[  call.@toddler      goto.@[2 ]:
+                            call.@baby
+]2: ]2: ]2: ]2: ]2: ]2: 
+
+( case requires procedure )
+
+def age-range (n--) :age
+	age 18 or-more  then adult         ret  end-then
+	age 13 or-more  then teen          ret  end-then
+	age	 7 or-more  then gradeschooler ret  end-then
+	age	 4 or-more  then preschooler   ret  end-then
+	age	 1 or-more  then toddler       ret  end-then
+				   	     baby
+end
+
+def age-range (n--) :age
+	age 18 or-more  then[ adult         ret ]then
+	age 13 or-more  then[ teen          ret ]then
+	age	 7 or-more  then[ gradeschooler ret ]then
+	age	 4 or-more  then[ preschooler   ret ]then
+	age	 1 or-more  then[ toddler       ret ]then
+				   	      baby          ret
+end
+
+
+	age 18 or-more then [ adult         ] else
+	age 13 or-more then [ teen          ] else
+	age	 7 or-more then [ gradeschooler ] else
+	age	 4 or-more then [ preschooler   ] else
+	age	 1 or-more then [ toddler       ] else
+				   	    [ baby          ]
+( push end of case onto R ??? )
+
+
+def age-range (n--) :age
+	age 18 or-more  [ adult         ret ] then
+	age 13 or-more  [ teen          ret ] then
+	age	 7 or-more  [ gradeschooler ret ] then
+	age	 4 or-more  [ preschooler   ret ] then
+	age	 1 or-more  [ toddler       ret ] then
+				   	  baby          ret
+end
+
+cnd [a] [b] if-else
+if-else -> rot pick call
+
+( "then" chenges the bahaviour of the next [ and ] )
+	age 18 or-more  then [ adult ret ]
+	age 13 or-more  then [ teen  ret ]
+
+( "then[" chenges the bahaviour of the next ] ??? )
+	age 18 or-more  then[ adult ret ]
+	age 13 or-more  then[ teen  ret ]
+	var.1 push.13 gt.0 jz.@[ call.@teen  ret.0 ]:
+	
+	[ teen ret ]
+	push.0 jz.@[ call.@teen ret.0 push.@]
 
 ```
 
 # Loops
 
 ## Lang
+
+Enclosing the block in [ & ] helps in code editors (highlight matching bracket).
 
 Definite:
 ```

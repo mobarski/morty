@@ -288,7 +288,7 @@ mod -> (ab) over (aba) swap (aab) div (ac) over (aca) mul (ad) sub
 | shl    | (ab--c)    |       | yes  | a << b                 |
 | shr    | (ab--c)    |       | yes  | a >> b                 |
 
-TODO: xor vs inv in the core
+TODO: xor vs inv in the core -> xor
 a^b -> ~(a&b)&(b|c)
 inv -> 0xFFFFFFFF xor
 
