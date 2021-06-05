@@ -1,3 +1,27 @@
+# Core vs Extension
+
+The question is - should Morty aim for the "true" core or rather more practical one?
+
+True core is just being Turing-complete - it's too close to the eso-langs.
+
+The core should be based on practical minimalistic instruction sets: UXN, AnotherWorld VM, etc
+
+
+## Current core:
+
+branch:  5 + 2 for loops
+stack:   8
+mem:     2 + 1?
+frame:   2
+alu-ari: 5 + 1?
+alu-bit: 5 + 1?
+alu-cmp: 5 + 2?
+io:      2
+halt:    1
+nop:     1
+
+TOTAL:   36 + 5? + 2(halt,nop)
+
 # Conditionals
 
 Language without "else" is also acceptable!

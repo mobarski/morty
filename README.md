@@ -220,7 +220,7 @@ Translation from the core set into extended set is done by peephole optimization
 | swap   | (ab--ba)       |       | yes  | swap two top items                          |
 | over   | (ab--aba)      |       | yes  |                                             |
 | rot    | (abc--bca)     |       | yes  | rotate three items                          |
-| unrot  | (abc--cab)     |       | ???  | unrotate three items                        |
+| unrot  | (abc--cab)     |       |      | unrotate three items                        |
 |        |                |       |      |                                             |
 | unpack | (v--bcde)      |       |      | unpack bytes from one cell into 4 cells    ??? byte by byte ??? |
 | pack   | (abcd--v)      |       |      | pack lowest bytes from 4 cells into 1 cell ??? byte by byte ??? |
@@ -243,9 +243,9 @@ Translation from the core set into extended set is done by peephole optimization
 
 | name    | effect     | morty | core | info                                   | 
 | ------- | ---------- | ----- | ---- | -------------------------------------- |
-| ftos    | (--a)      | <F    | yes  | push frame pointer onto the data stack | 
-| vget  X | (--n)      | x     |      | get local variable X                   |
-| vset  X | (n--)      | :x    |      | set local variable X                   |
+| ftos    | (--a)      | <F    |      | push frame pointer onto the data stack | 
+| vget  X | (--n)      | x     | yes  | get local variable X                   |
+| vset  X | (n--)      | :x    | yes  | set local variable X                   |
 
 TODO: ftos or no ftos BUT vget and vset in the core
 
@@ -266,24 +266,27 @@ Words are intended mainly for VMs without propper string support.
 | ------ | ---------- | ----- | ---- | -------------------- |
 | add    | (ab--c)    |       | yes  | a + b                |
 | sub    | (ab--c)    |       | yes  | a - b                |
-| mul    | (ab--c)    |       | ???  | a * b                |
-| div    | (ab--c)    |       | ???  | a / b                |
+| mul    | (ab--c)    |       | yes  | a * b                |
+| div    | (ab--c)    |       | yes  | a / b                |
 | muldiv | (abc--d)   |       |      | a * b / c            |
-| mod    | (ab--c)    |       |      | a % b                |
-| neg    | (a--b)     |       |      | -a                   |
-| shl    | (ab--c)    |       | yes  | a << b               |
-| shr    | (ab--c)    |       | yes  | a >> b               |
-| ushr   | (ab--c)    |       | ???  | unsigned shift right |
+| mod    | (ab--c)    |       | yes  | a % b                |
+| neg    | (a--b)     |       | ???  | -a                   |
+| ushr   | (ab--c)    |       |      | unsigned shift right |
 | abs    | (a--b)     |       |      | -a if a<0 else a     |
 
-### ALU - logic
+neg -> 0 swap sub
+mod -> (ab) over (aba) swap (aab) div (ac) over (aca) mul (ad) sub
+
+### ALU - bits
 
 | asm    | effect     | morty | core | info                   | 
 | ------ | ---------- | ----- | ---- | ---------------------- | 
 | and    | (ab--c)    |       | yes  | a & b                  |
 | or     | (ab--c)    |       | yes  | a \| b                 |
-| xor    | (ab--c)    |       | ???  | a ^ b                  |
+| xor    | (ab--c)    |       | yes  | a ^ b                  |
 | inv    | (a--b)     |       | ???  | ~a  (binary inversion) |
+| shl    | (ab--c)    |       | yes  | a << b                 |
+| shr    | (ab--c)    |       | yes  | a >> b                 |
 
 TODO: xor vs inv in the core
 a^b -> ~(a&b)&(b|c)
@@ -302,8 +305,8 @@ inv -> 0xFFFFFFFF xor
 | ne     | (ab--x)    | !=      | yes  | 1 if a != b else 0 |
 | lt     | (ab--x)    | below   | yes  | 1 if a < b  else 0 |
 | gt     | (ab--x)    | above   | yes  | 1 if a > b  else 0 |
-| le     | (ab--x)    | or-less |      | 1 if a <= b else 0 |
-| ge     | (ab--x)    | or-more |      | 1 if a >= b else 0 |
+| le     | (ab--x)    | or-less | ???  | 1 if a <= b else 0 |
+| ge     | (ab--x)    | or-more | ???  | 1 if a >= b else 0 |
 |        |            |         |      |                    |
 | xeq    | (ab--abx)  |         |      | 1 if a == b else 0 |
 | xne    | (ab--abx)  |         |      | 1 if a != b else 0 |
@@ -317,6 +320,9 @@ inv -> 0xFFFFFFFF xor
 | pick   | (abc--x)   |         | yes  | a if c != 0 else b |
 
 
+le -> swap gt
+ge -> swap lt
+
 TODO: decide if comparators are destructive or not or both versions are available
 TODO: decide about aliases: <= vs or-less vs le
 
@@ -324,7 +330,7 @@ TODO: decide about aliases: <= vs or-less vs le
 
 | asm     | effect     | morty   | core | info | 
 | ------- | ---------- | ------- | ---- | ---- |
-| vminfo  | (--)       |         |      | print information about VM registers and show time in ms since last vminfo call or start of the program |
+| vminfo  | (--)       |         | ???  | print information about VM registers and show time in ms since last vminfo call or start of the program |
 
 
 ### I/O - virtual devices
@@ -335,8 +341,8 @@ I/O is handled via vectored execution (similar to ioctl, fcntl).
 
 | asm    | effect     | morty | core | info                                              | 
 | ------ | ---------- | ----- | ---- | ------------------------------------------------- |
-| ioget  | (dk--v)    |       | ???  | get value (v) for the key (k) from the device (d) |
-| ioset  | (vdk--)    |       | ???  | set key (k) to value (v) on the device (d)        |
+| ioget  | (dk--v)    |       | yes  | get value (v) for the key (k) from the device (d) |
+| ioset  | (vdk--)    |       | yes  | set key (k) to value (v) on the device (d)        |
 
 TODO: name: set vs put
 TODO: name: io vs dev
@@ -353,10 +359,10 @@ All instruction must contain op and arg separated by the dot (.).
 Labels end with the colon (:).
 Label's addresses are referenced with the at (@) character.
 
-TODO:
-- @[ ->
-- @] ->
-- ]: ->
+Stack based labels:
+- @[ -> push address on the stack, 
+- @] -> pop address from the stack, use it here, use current address there
+- ]: -> pop address from the stack, use current address there
 
 ```
 	push.0 jz.@start

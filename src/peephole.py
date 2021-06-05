@@ -42,7 +42,19 @@ def replace_push_push_alu(a,b,c):
 
 # -----------------------------------------------------------------------------
 
+def match_zero_compare(a,b):
+	if not a.startswith('push.0'): return False
+	if b not in ['eq.0','ne.0','gt.0','lt.0']: return False
+	return True
+
+def replace_zero_compare(a,b):
+	token = {'eq.0':'eqz.0', 'ne.0':'nz.0', 'lt.0':'ltz.0', 'gt.0':'gtz.0'}[b]
+	return [token]
+
+# -----------------------------------------------------------------------------
+
 rules = [
 	(2, match_ret_qret, replace_ret_qret),
 	(3, match_push_push_alu, replace_push_push_alu),
-]
+	(2, match_zero_compare, replace_zero_compare),
+]	
