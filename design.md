@@ -9,6 +9,7 @@ The core should be based on practical minimalistic instruction sets: UXN, Anothe
 
 ## Current core:
 
+```
 branch:  5 + 2 for loops  
 stack:   8  
 mem:     2 + 1?  
@@ -21,6 +22,7 @@ halt:    1
 nop:     1  
 
 TOTAL:   36 + 5? + 2(halt,nop)
+```
 
 # Conditionals
 
