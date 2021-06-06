@@ -44,12 +44,16 @@ It's hard with "lambda.@[" as there is no start of the block addr!
 ( exmaple from fibo.hla )
 2 lt [ 1 ret ] if
 
+( "]" is "qret.0 push.@]", so "if" must remove 2 previous tokens )
+push.2 lt.0 goto.@[ push.1 ret.0 qret.0 push.@] ( tokens before if )
+push.2 lt.0   jz.@[ push.1 ret.0 ]:             ( tokens after  if )
+push.2 lt.0 goto.@[ push.1 ret.0 /jz]:          ( new stack effect - replace )
+
+( "]" is "push.@]", so "if" must remove 1 previous tokens )
 push.2 lt.0 goto.@[ push.1 ret.0 push.@] ( tokens before if )
 push.2 lt.0   jz.@[ push.1 ret.0 ]:      ( tokens after  if )
 push.2 lt.0 goto.@[ push.1 ret.0 /jz]:   ( new stack effect - replace )
 ```
-
-Warning: this assumes that "]" is just "push.@]" and not "qret.0 push.@]"!
 
 ## Sandbox
 
