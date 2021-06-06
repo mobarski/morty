@@ -10,7 +10,7 @@ The core should be based on practical minimalistic instruction sets: UXN, Anothe
 ## Current core:
 
 ```
-branch:  5 + 2 for loops  
+branch:  6 + 2 for loops  
 stack:   8  
 mem:     2 + 1?  
 frame:   2  
@@ -21,7 +21,7 @@ io:      2
 halt:    1  
 nop:     1  
 
-TOTAL:   36 + 5? + 2(halt,nop)
+TOTAL:   37 + 5? + 2(halt,nop)
 ```
 
 # Conditionals
@@ -39,6 +39,19 @@ Lambda based "if" is acceptable but it has worse performance on the "fibo" bench
 
 Maybe it can be optimized by mutating the cell before the block by the "if" cell?
 It's hard with "lambda.@[" as there is no start of the block addr!
+
+```
+( exmaple from fibo.hla )
+2 lt [ 1 ret ] if
+
+push.2 lt.0 goto.@[ push.1 ret.0 push.@] ( tokens before if )
+push.2 lt.0   jz.@[ push.1 ret.0 ]:      ( tokens after  if )
+push.2 lt.0 goto.@[ push.1 ret.0 /jz]:   ( new stack effect - replace )
+```
+
+Warning: this assumes that "]" is just "push.@]" and not "qret.0 push.@]"!
+
+## Sandbox
 
 ```
 

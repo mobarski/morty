@@ -27,12 +27,13 @@ Target usage:
 - simple game/utility dev (demakes, fantasy consoles/computers)
 - education
 - robotics
+- simple backend services
 
 Design principles:
-- small and easy to learn (like Go)
-- small and easy to implement (close to the stack machine like Forth)
-- easy to read (like Python, Logo or Basic; named arguments, dot properties, less symbols)
-- performance is important, but readability is even more important
+- easy to implement (close to the stack machine like Forth)
+- performant
+- easy to learn (like Go)
+- easy to read (like Python or Logo; named arguments, dot properties, less symbols)
 
 Target VM implementations:
 - C (most performant, portable with recompilation)
@@ -206,7 +207,7 @@ Translation from the core set into extended set is done by peephole optimization
 | ret     | (fr*=)     |           | yes  | return from procedure call                                              |
 | qcall   | (a--)      | call      | yes  | quick call to address from the stack without changing the frame pointer |
 | qret    | (r=)       |           | yes  | quick return without changing the frame pointer                         |
-| goto  X | (--)       |           |      | set I to X (next instruction cell)                                      |
+| goto  X | (--)       |           | yes  | set I to X (next instruction cell)                                      |
 
 ### stack manipulation
 
