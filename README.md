@@ -390,6 +390,48 @@ Character literals are converted into integer literals ("push.value").
 	stop
 ```
 
+# Kanban
+
+```
+Active:
+- conditionals
+- loops
+
+Next:
+- text format for the compiled programs
+- global variables
+- static arrays
+- define and document file extensions
+
+To do:
+- strings
+- parametric cell size (16, 32, 64 bits)
+- tail call
+- dynamic statistics (op freq)
+- little vs big endian
+- ASM - token to line number (for error reporting)
+- iterators
+- cooperative multitasking
+- literate programming (compile from markdown)
+- multiprocessing
+- add Morty to linguist (https://github.com/github/linguist) so it can be detected by GitHub
+
+Done:
+- stack based label resolution
+- high-level assembler
+- vm cli
+- vm - load from binary file
+- primitive output
+- vm boot sequence
+- asm output to binary file
+- asm character literals
+- lang - structs
+- lang - macros
+```
+
+
+
+
 # References
 
 |                     Title | URL                                                            |

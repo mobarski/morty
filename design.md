@@ -30,6 +30,8 @@ Language without "else" is also acceptable!
 
 Enclosing the block in [ & ] helps in code editors (highlight matching bracket).
 
+For the simple "if" case the ASM should be just one "jump-zero" instruction.
+
 ```
 distance 10 or-less [ collision-warning ] if
 
