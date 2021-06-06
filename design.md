@@ -33,23 +33,31 @@ Enclosing the block in [ & ] helps in code editors (highlight matching bracket).
 For the simple "if" case the ASM should be just one "jump-zero" instruction.
 
 Lambda based "if" is acceptable but it has worse performance on the "fibo" benchmark:
-- 10% longer for "lambda" based
+- 10% longer for "lambda.@[ ... ]: " based
 - 28% longer for "0 jz.@[ ...  push.@]" based
 - 14% longer for "goto.@[ ...  push.@]" based
-Maybe it can be optimized by mutating the "lambda" cell by the "if" cell?
+
+Maybe it can be optimized by mutating the cell before the block by the "if" cell?
+It's hard with "lambda.@[" as there is no start of the block addr!
 
 ```
 
 distance 10 or-less then collision-warning end-then
 distance 10 or-less then collision-warning end
-distance 10 or-less if   collision-warning then
+distance 10 or-less if   collision-warning then       (Forth)
+distance 10 or-less if   collision-warning end
+distance 10 or-less if   collision-warning end-if
 
 ( with brackets )
 
-distance 10 or-less [ collision-warning ] if
+distance 10 or-less [ collision-warning ] if          (Factor)
 distance 10 or-less [ collision-warning ] then
 distance 10 or-less then [ collision-warning ]
 distance 10 or-less then [ collision-warning ] do
+
+( mixed )
+distance 10 or-less then[ collision-warning ]
+distance 10 or-less   if[ collision-warning ]
 ```
 
 ```
@@ -179,6 +187,34 @@ loop
     i print
 loop
 
+```
+
+Mako
+```
+loop
+	...
+while / until / again
+
+10 for
+	... ( supports i and j loop indices )
+next
+```
+
+Forth
+```
+limit index do
+	...
+loop / +loop
+
+begin
+	...
+f untill
+
+begin
+	...
+again
+
+begin xx f while yyy repeat
 ```
 
 ## ASM
