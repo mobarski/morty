@@ -80,9 +80,9 @@ run(vm_state state) {
 				case JZ:     v=s_pop();  if (v==0) ip=arg;          break;
 				case IF:     v=s_pop(); v2=s_pop(); if(v2) { r_push(ip); ip=v; };       break; // TEST ME
 				case IFELSE: v=s_pop(); v2=s_pop(); v3=s_pop(); r_push(ip); ip=v3?v2:v; break; // TEST ME
-				case LAMBDA: s_push(ip); ip=arg;                    break; // TODO: RENAME -> STATIC ARRAY ???
+				case LAMBDA: s_push(ip); ip=arg;                    break; // REMOVE
 				case GOTO:   ip=arg;                                break;
-				case STOP:   goto stop;                             break;
+				case STOP:   goto stop;                             break; // TODO RENAME: HALT
 				case LOOP:   if (mem[rp]>0) {ip=arg; mem[rp]-=1;} else {rp-=2;};  break;
 				// RETURN STACK
 				case STOR:   v=s_pop(); r_push(v);              break;
