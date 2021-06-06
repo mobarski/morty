@@ -25,6 +25,16 @@ def to_binary_file(filename, text, op_code):
 	open(filename,'wb').write(compiled)
 	return cells
 
+def to_text_file(filename, text, op_code):
+	cells = to_cells(code, op_code)
+	compiled = []
+	PER_LINE = 10 # TODO param
+	for i in range(0, len(cells), PER_LINE):
+		line = "\t".join([str(x) for x in cells[i:i+PER_LINE]])
+		compiled += [line]
+	open(filename,'w').write("\n".join(compiled))
+	return cells	
+
 # -----------------------------------------------------------------------------
 # -----------------------------------------------------------------------------
 # -----------------------------------------------------------------------------
@@ -210,6 +220,7 @@ if __name__=="__main__":
 	parser.add_argument('-i',  metavar='path', type=str, help='input path (default: stdin)')
 	parser.add_argument('-hl', action='store_true', help='treat input as high level assembler')
 	parser.add_argument('-d',  action='store_true', help='debug')
+	parser.add_argument('-t',  action='store_true', help='text output')
 	parser.add_argument('-O',  action='store_true', help='optimize')
 	args = parser.parse_args()
 
@@ -228,4 +239,7 @@ if __name__=="__main__":
 		print(cells)
 		print(f"cells: {len(cells)}")
 	if args.o:
-		to_binary_file(args.o, code, OPCODE)
+		if args.t:
+			to_text_file(args.o, code, OPCODE)
+		else:
+			to_binary_file(args.o, code, OPCODE)

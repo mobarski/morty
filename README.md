@@ -398,9 +398,10 @@ Active:
 - loops
 
 Next:
-- text format for the compiled programs
+- vm text-based compiled format
 - global variables
 - static arrays
+- capture variables in lambdas
 - define and document file extensions
 
 To do:
@@ -417,6 +418,7 @@ To do:
 - add Morty to linguist (https://github.com/github/linguist) so it can be detected by GitHub
 
 Done:
+- asm text-based compiled format
 - stack based label resolution
 - high-level assembler
 - vm cli
