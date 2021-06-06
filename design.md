@@ -55,13 +55,13 @@ age 18 or-more then [ show-content ]
 
 ```
 ( ala FORTH ) :age
-	age 18 or-more  if adult			else
-	age 13 or-more  if teen				else
-	age	 7 or-more  if gradeschooler	else
-	age	 4 or-more  if preschooler		else
-	age	 1 or-more  if toddler			else
-				   	   baby			
-	then then then then then then
+    age 18 or-more  if adult           else
+    age 13 or-more  if teen            else
+    age  7 or-more  if gradeschooler   else
+    age  4 or-more  if preschooler     else
+    age  1 or-more  if toddler         else
+                       baby            
+    then then then then then then
 
 vget.1 push.18 gte.0 jz.@[  call.@adult        goto.@[2 ]:
 vget.1 push.13 gte.0 jz.@[  call.@teen         goto.@[2 ]:
@@ -74,56 +74,56 @@ vget.1 push.1  gte.0 jz.@[  call.@toddler      goto.@[2 ]:
 ( case requires procedure )
 
 def age-range (n--) :age
-	age 18 or-more  then adult         ret  end-then
-	age 13 or-more  then teen          ret  end-then
-	age	 7 or-more  then gradeschooler ret  end-then
-	age	 4 or-more  then preschooler   ret  end-then
-	age	 1 or-more  then toddler       ret  end-then
-				   	     baby
+    age 18 or-more  then adult         ret  end-then
+    age 13 or-more  then teen          ret  end-then
+    age  7 or-more  then gradeschooler ret  end-then
+    age  4 or-more  then preschooler   ret  end-then
+    age  1 or-more  then toddler       ret  end-then
+                         baby
 end
 
 def age-range (n--) :age
-	age 18 or-more  then[ adult         ret ]then
-	age 13 or-more  then[ teen          ret ]then
-	age	 7 or-more  then[ gradeschooler ret ]then
-	age	 4 or-more  then[ preschooler   ret ]then
-	age	 1 or-more  then[ toddler       ret ]then
-				   	      baby          ret
+    age 18 or-more  then[ adult         ret ]then
+    age 13 or-more  then[ teen          ret ]then
+    age  7 or-more  then[ gradeschooler ret ]then
+    age  4 or-more  then[ preschooler   ret ]then
+    age  1 or-more  then[ toddler       ret ]then
+                          baby          ret
 end
 
 
-	age 18 or-more then [ adult         ] else
-	age 13 or-more then [ teen          ] else
-	age	 7 or-more then [ gradeschooler ] else
-	age	 4 or-more then [ preschooler   ] else
-	age	 1 or-more then [ toddler       ] else
-				   	    [ baby          ]
+    age 18 or-more then [ adult         ] else
+    age 13 or-more then [ teen          ] else
+    age  7 or-more then [ gradeschooler ] else
+    age  4 or-more then [ preschooler   ] else
+    age  1 or-more then [ toddler       ] else
+                        [ baby          ]
 ( push end of case onto R ??? )
 
 
 def age-range (n--) :age
-	age 18 or-more  [ adult         ret ] then
-	age 13 or-more  [ teen          ret ] then
-	age	 7 or-more  [ gradeschooler ret ] then
-	age	 4 or-more  [ preschooler   ret ] then
-	age	 1 or-more  [ toddler       ret ] then
-				   	  baby          ret
+    age 18 or-more  [ adult         ret ] then
+    age 13 or-more  [ teen          ret ] then
+    age  7 or-more  [ gradeschooler ret ] then
+    age  4 or-more  [ preschooler   ret ] then
+    age  1 or-more  [ toddler       ret ] then
+                      baby          ret
 end
 
 cnd [a] [b] if-else
 if-else -> rot pick call
 
 ( "then" chenges the bahaviour of the next [ and ] )
-	age 18 or-more  then [ adult ret ]
-	age 13 or-more  then [ teen  ret ]
+    age 18 or-more  then [ adult ret ]
+    age 13 or-more  then [ teen  ret ]
 
 ( "then[" chenges the bahaviour of the next ] ??? )
-	age 18 or-more  then[ adult ret ]
-	age 13 or-more  then[ teen  ret ]
-	var.1 push.13 gt.0 jz.@[ call.@teen  ret.0 ]:
-	
-	[ teen ret ]
-	push.0 jz.@[ call.@teen ret.0 push.@]
+    age 18 or-more  then[ adult ret ]
+    age 13 or-more  then[ teen  ret ]
+    var.1 push.13 gt.0 jz.@[ call.@teen  ret.0 ]:
+    
+    [ teen ret ]
+    push.0 jz.@[ call.@teen ret.0 push.@]
 
 ```
 
@@ -160,15 +160,15 @@ loop [ ... 10 ge then [ break ] ... ]
 
 ```
 5 times
-	i print
+    i print
 loop
 
 0 10 do
-	i print
+    i print
 loop
 
 0 10 2 for
-	i print
+    i print
 loop
 
 ```
@@ -186,14 +186,7 @@ Continue should be jump @addr and break jump @addr+2.
 
 ```
 (n) times.@]1 [1: (code) ]1: loop.@[1 rsub.2
-```
+(n) times.@[ 1 add loop.@]
 
-
-```
-(n) times.@] [: 1 add ]: loop.@[
-(n) times.@:< 1 add loop.@:>
-
-(n) times.@] [: 1 add ]: loop.@[
-(n) times.@]< [:> 1 add ]:> loop.@[<   (< pop) (> push)
 ```
 
