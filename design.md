@@ -1,3 +1,9 @@
+# Index
+
+- [core](#core-vs-extension)
+- [conditionals](#conditionals)
+- [loops](#loops)
+
 # Core vs Extension
 
 The question is - should Morty aim for the "true" core or rather more practical one?
