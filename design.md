@@ -173,7 +173,7 @@ if-else -> rot pick call
 Enclosing the block in [ & ] helps in code editors (highlight matching bracket).
 
 Definite:
-```
+```forth
 
 5 times [ 1 add ]
 
@@ -184,7 +184,7 @@ Definite:
 ```
 
 Indefinite:
-```
+```forth
 loop [ ... ]
 
 do [ ... ] loop
@@ -197,7 +197,7 @@ loop [ ... 10 ge then [ break ] ... ]
 
 ```
 
-```
+```forth
 5 times
     i print
 loop
@@ -213,7 +213,7 @@ loop
 ```
 
 Mako
-```
+```forth
 loop
 	...
 while / until / again
@@ -224,7 +224,7 @@ next
 ```
 
 Forth
-```
+```forth
 limit index do
 	...
 loop / +loop
