@@ -46,7 +46,7 @@ Lambda based "if" is acceptable but it has worse performance on the "fibo" bench
 Maybe it can be optimized by mutating the cell before the block by the "if" cell?
 It's hard with "lambda.@[" as there is no start of the block addr!
 
-```
+```forth
 ( exmaple from fibo.hla )
 2 lt [ 1 ret ] if
 
@@ -63,7 +63,7 @@ push.2 lt.0 goto.@[ push.1 ret.0 /jz]:   ( new stack effect - replace )
 
 ## Sandbox
 
-```
+```forth
 
 distance 10 or-less then collision-warning end-then
 distance 10 or-less then collision-warning end
@@ -83,7 +83,7 @@ distance 10 or-less then[ collision-warning ]
 distance 10 or-less   if[ collision-warning ]
 ```
 
-```
+```forth
 age 18 or-more [ show-content ] [ show-restriction ] if-else
 
 age 18 or-more if-else [ show-content ] [ show-restriction ] 
@@ -92,7 +92,7 @@ age 18 or-more then [ show-content ]
                else [ show-restriction ]
 ```
 
-```
+```forth
 ( ala FORTH ) :age
     age 18 or-more  if adult           else
     age 13 or-more  if teen            else
