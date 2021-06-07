@@ -83,7 +83,17 @@ run(vm_state state) {
 				case LAMBDA: s_push(ip); ip=arg;                    break; // REMOVE
 				case GOTO:   ip=arg;                                break;
 				case STOP:   goto stop;                             break; // TODO RENAME: HALT
+				// LOOPS
+				case TIMES:  v=s_pop(); r_push(arg); r_push(v-1); break; // with loop frame
 				case LOOP:   if (mem[rp]>0) {ip=arg; mem[rp]-=1;} else {rp-=2;};  break;
+				//case TIMES:  v=s_pop(); r_push(v-1); break; // no loop frame
+				//case LOOP:   if (mem[rp]>0) {ip=arg; mem[rp]-=1;} else {rp-=1;};  break;
+				//case TIMES:  v=s_pop(); r_push(arg); r_push(0); r_push(v-1); break; // with loop frame
+				//case LOOP:   if (mem[rp]>mem[rp-1]) {ip=arg; mem[rp]-=1;} else {rp-=3;};  break;
+				//case TIMES:  v=s_pop(); r_push(arg); r_push(1); r_push(0); r_push(v-1); break; // with loop frame
+				//case LOOP:   if (mem[rp]>mem[rp-1]) {ip=arg; mem[rp]-=mem[rp-2];} else {rp-=4;};  break;
+				//case TIMES:  v=s_pop(); r_push(arg); r_push(1); r_push(v-1); r_push(0); break; // with loop frame
+				//case LOOP:   if (mem[rp]<mem[rp-1]) {ip=arg; mem[rp]+=mem[rp-2];} else {rp-=4;};  break;
 				// RETURN STACK
 				case STOR:   v=s_pop(); r_push(v);              break;
 				case RTOS:   v=r_pop(); s_push(v);              break;
@@ -92,7 +102,6 @@ run(vm_state state) {
 				case RGET:   v=mem[rp-arg]; s_push(v);          break; // for loop variables
 				case VGET:   v=mem[fp+arg]; s_push(v);          break; // local variables
 				case VSET:   v=s_pop(); mem[fp+arg]=v;          break; // local variables
-				case TIMES:  v=s_pop(); r_push(arg); r_push(v-1); break; // with loop frame
 				// DATA STACK
 				case SWAP:   v=tos; tos=mem[sp]; mem[sp]=v; break;
 				case PUSH:   s_push(arg);                   break;

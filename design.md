@@ -168,6 +168,17 @@ if-else -> rot pick call
 
 # Loops
 
+## Performance
+
+Measured on loops.hla with n=28.
+
+| implementation            | times [ms]                         | mean | stdev |
+| ------------------------: | ---------------------------------- | ---- | ----- |
+|               frame + cnt | 1886,1895,1878,1890,1886,1900,1890 | 1889 |  7.04 |
+|            no frame + cnt | 1939,1927,1938,1934,1950,1948,1975 | 1944 | 15.61 |
+|         frame + from + to | 2010,2000,1995,2001,2083,2012,2045 | 2020 | 31.99 |
+| frame + from + to + delta | 1999,1987,1996,1994,2073,2000,2067 | 2016 | 36.78 |
+
 ## Lang
 
 Enclosing the block in [ & ] helps in code editors (highlight matching bracket).

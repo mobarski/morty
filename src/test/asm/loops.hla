@@ -106,7 +106,7 @@ ret
 ))
 
 
-loops: (28: ms
+loops: (28: 1886ms
 	stor
 	0
 	vget.1 (n) times.@[

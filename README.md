@@ -16,6 +16,14 @@ It's ready for running experiments "how feature X should be compiled and how it 
 
 First benchmarks are looking good - VM achieves 0.7GHz on a 3.5GHz machine. 
 
+## Index
+
+- [language](#morty-programming-language)
+- [vm](#morty-vitual-machine)
+- [assembler](#morty-vm-assembler)
+- [kanban](#kanban)
+- [references](#references)
+
 ## Idea
 
 Why:
@@ -62,7 +70,15 @@ Morty allows the usage of "goto" for the same reasons it is still in C and GO: i
 
 ## Language Examples
 
+```forth
+def fib (n--f) :n
+	n 2 lt [ 1 ret ] if
+	n 2 sub fib (f2)
+	n 1 sub fib (f2 f1) add (f)
+end
 ```
+
+```forth
 def total-energy (m v h -- e) :h :v :m
     m v kinetic-energy   (ek)
     m h potential-energy (ek ep) add
@@ -83,7 +99,7 @@ Morty allows capturing values into named local variables.
 To capture a value prefix target variable name with a colon (ie :my-var).
 Use the variable name to push its value onto the stack.
 
-```
+```forth
 ( y = a*x*x + b*x + c )
 
 def poly2 (x a b c -- y) :c :b :a :x (capture params)
