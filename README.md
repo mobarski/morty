@@ -141,7 +141,7 @@ Loops are counted up. In every loop "break" and "continue" can be used.
 Counted loops:
 ```forth
 ( loop 5 times from 0 to 4 )
-5 times do
+5 times
     i dot
 loop
 
