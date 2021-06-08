@@ -70,9 +70,9 @@ Morty allows the usage of "goto" for the same reasons it is still in C and GO: i
 
 ## Language Examples
 
-```forth
+```
 def fib (n--f) :n
-	n 2 lt if 1 ret then
+	n 2 lt [ 1 ret ] if
 	n 2 sub fib (f2)
 	n 1 sub fib (f2 f1) add (f)
 end
