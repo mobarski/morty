@@ -134,7 +134,26 @@ age 18 or-more [ show-content ] [ show-restriction ] if-else
 
 ## Loops
 
-TODO
+WARNING: this may change
+
+Loops are counted up. In every loop "break" and "continue" can be used.
+
+Counted loops:
+```forth
+( loop 5 times from 0 to 4 )
+5 times
+	i dot
+loop
+
+( loop from 2 to 10 with step 1 )
+10 2 1 for
+	i dot
+loop
+```
+
+Indefinite loops:
+```
+```
 
 ## Structures
 

@@ -181,7 +181,22 @@ Measured on loops.hla with n=28.
 
 ## Lang
 
-Enclosing the block in [ & ] helps in code editors (highlight matching bracket).
+Enclosing the block in [ & ] helps in code editors (matching bracket can be highlighted) and helps to distinguish loop start and end.
+A similar effect can be achieved with a proper indention and/or loop keywords highlighting.
+
+
+```forth
+( loop 5 times from 0 to 4 )
+5 times 
+	i dot
+loop
+
+( loop from 2 to 10 with step 1 )
+10 2 1 for
+	i dot
+loop
+```
+
 
 Definite:
 ```forth
