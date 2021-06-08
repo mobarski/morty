@@ -300,8 +300,9 @@ TODO: ftos or no ftos BUT vget and vset in the core
 | dot    | (n--)      |         |      | print number from top of the stack and one space |
 | echo   | (w--)      |         |      | print word from top of the stack                 |
 
-Word is a short string (0-3 characters OR 0-4 ???) encoded as an integer value.
+Word is a short text (0-6 characters) encoded as an integer value.
 Words are intended mainly for VMs without propper string support.
+Each letter in the word is encoded on 5 bits. Only uppercase letters are available, terminator and 5 selected characters (TBD).
 
 ### ALU - arithmetic
 
