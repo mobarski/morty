@@ -157,6 +157,9 @@ times -> "0 1 for"
 
 Indefinite loops:
 ```
+begin
+	( ... )
+again
 ```
 
 ## Structures
