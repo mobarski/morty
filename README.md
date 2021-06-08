@@ -156,9 +156,9 @@ times -> "0 1 for"
 
 
 Indefinite loops:
-```
+```forth
 begin
-	( ... )
+    ( do something )
 again
 ```
 
