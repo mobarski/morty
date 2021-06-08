@@ -184,6 +184,7 @@ Measured on loops.hla with n=28.
 Enclosing the block in [ & ] helps in code editors (matching bracket can be highlighted) and helps to distinguish loop start and end.
 A similar effect can be achieved with a proper indention and/or loop keywords highlighting.
 
+Block based loops require that loop setup and loop cleanup happens in the single keyword.
 
 ```forth
 5 times 

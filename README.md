@@ -136,7 +136,9 @@ age 18 or-more [ show-content ] [ show-restriction ] if-else
 
 WARNING: this may change
 
-Loops are counted up. In every loop "break" and "continue" can be used.
+Loops are counted up.  
+In every loop "break" and "continue" can be used.  
+Minimum number of loop executions is zero.  
 
 Counted loops:
 ```forth
