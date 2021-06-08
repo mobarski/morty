@@ -188,11 +188,11 @@ Block based loops require that loop setup and loop cleanup happens in the single
 
 ```forth
 5 times 
-	i dot
+    i dot
 loop
 
 10 2 1 for
-	i dot
+    i dot
 loop
 
 ( vs )
@@ -204,11 +204,11 @@ loop
 ( vs )
 
 5 [
-	i dot
+    i dot
 ] repeat
 
 10 2 1 [
-	i dot
+    i dot
 ] loop
 
 
