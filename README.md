@@ -145,7 +145,7 @@ Counted loops:
     i dot
 loop
 
-( loop from 2 to 10 with step 1 )
+( loop to 10 from 2 with step 1 )
 10 2 1 for
     i dot
 loop
