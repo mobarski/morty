@@ -66,6 +66,7 @@ push.2 lt.0 goto.@[ push.1 ret.0 /jz]:   ( new stack effect - replace )
 
 ( forth like if ... then )
 2 lt if 1 ret then
+2 lt then 1 ret do
 
 push.2 lt.0 jz.@[ push.1 ret.0 push.@]   ( no replacement required )
 ```
