@@ -186,15 +186,31 @@ A similar effect can be achieved with a proper indention and/or loop keywords hi
 
 
 ```forth
-( loop 5 times from 0 to 4 )
 5 times 
 	i dot
 loop
 
-( loop from 2 to 10 with step 1 )
 10 2 1 for
 	i dot
 loop
+
+( vs )
+
+5 [ i dot ] repeat
+
+10 2 1 [ i dot ] loop
+
+( vs )
+
+5 [
+	i dot
+] repeat
+
+10 2 1 [
+	i dot
+] loop
+
+
 ```
 
 
@@ -228,11 +244,11 @@ loop [ ... 10 ge then [ break ] ... ]
     i print
 loop
 
-0 10 do
+10 0 do
     i print
 loop
 
-0 10 2 for
+10 0 2 for
     i print
 loop
 
