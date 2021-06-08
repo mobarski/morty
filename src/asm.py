@@ -19,14 +19,14 @@ def to_cells(text, op_code, do_optimize=False):
 	cells         = compile(tokens, op_code)
 	return cells
 
-def to_binary_file(filename, text, op_code):
-	cells = to_cells(code, op_code)
+def to_binary_file(filename, text, op_code, do_optimize=False):
+	cells = to_cells(code, op_code, do_optimize)
 	compiled = array("i", cells).tobytes()
 	open(filename,'wb').write(compiled)
 	return cells
 
-def to_text_file(filename, text, op_code):
-	cells = to_cells(code, op_code)
+def to_text_file(filename, text, op_code, do_optimize=False):
+	cells = to_cells(code, op_code, do_optimize)
 	compiled = []
 	PER_LINE = 10 # TODO param
 	for i in range(0, len(cells), PER_LINE):
@@ -207,7 +207,9 @@ OPS = [
 	'LAMBDA',
 	'MIN','MAX','PICK',
 	'GTZ','EQZ','LTZ',
-	'TIMES','LOOP','RSUB','RGET',
+	'TIMES','LOOP','FOR','RSUB','RGET','BEGIN','BREAK','CONTINUE',
+	'ADDI','MULI',
+	'LEI','LTI','GEI','GTI','EQI','NEI',
 	'IOGET','IOSET',
 	'VMINFO'
 ]
@@ -234,12 +236,12 @@ if __name__=="__main__":
 		if args.d:
 			print(code)
 
-	cells = to_cells(code, OPCODE)
+	cells = to_cells(code, OPCODE, do_optimize=args.O)
 	if args.d:
 		print(cells)
 		print(f"cells: {len(cells)}")
 	if args.o:
 		if args.t:
-			to_text_file(args.o, code, OPCODE)
+			to_text_file(args.o, code, OPCODE, do_optimize=args.O)
 		else:
-			to_binary_file(args.o, code, OPCODE)
+			to_binary_file(args.o, code, OPCODE, do_optimize=args.O)

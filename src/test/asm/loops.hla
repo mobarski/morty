@@ -106,8 +106,10 @@ ret
 ))
 
 
-loops: (28: 1886ms
+((
+loops: (28: 2000ms  frame=addr,incr,to,from; loop increments / 1351ms with addi 
 	stor
+	0 stor
 	0
 	vget.1 (n) times.@[
 		vget.1 (n) times.@[
@@ -116,6 +118,31 @@ loops: (28: 1886ms
 					vget.1 (n) times.@[
 						vget.1 (n) times.@[
 							1 add
+							( rget.0 1 add vset.2 )
+							( rget.0 2 mul 1 add vset.2 )
+						loop.@]
+					loop.@]
+				loop.@]
+			loop.@]
+		loop.@]
+	loop.@]
+ret
+))
+
+
+loops: (28: 2455ms without addi, 1800ms with addi
+	stor
+	0 stor
+	0
+	vget.1 (n) 0 1 for.@[
+		vget.1 (n) 0 1 for.@[
+			vget.1 (n) 0 1 for.@[
+				vget.1 (n) 0 1 for.@[
+					vget.1 (n) 0 1 for.@[
+						vget.1 (n) 0 1 for.@[
+							( 1 add ( 1800 ms with addi )
+							rget.0 1 add vset.2 ( 3232ms with addi )
+							( rget.0 2 mul 1 add vset.2 ( 3812ms with muli addi )
 						loop.@]
 					loop.@]
 				loop.@]
@@ -126,3 +153,6 @@ ret
 
 start:
 	28 call.@loops vminfo
+
+
+( 3000ms vs 3200ms -> times+mul vs for )
