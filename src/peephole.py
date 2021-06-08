@@ -42,7 +42,6 @@ def replace_push_push_alu(a,b,c):
 
 # -----------------------------------------------------------------------------
 
-# TODO: comparators
 def match_push_alu(a,b):
 	if not a.startswith('push.'): return False
 	if b not in ['add.0','mul.0','eq.0','ne.0','lt.0','gt.0','le.0','ge.0']: return False

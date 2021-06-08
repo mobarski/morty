@@ -438,9 +438,7 @@ Character literals are converted into integer literals ("push.value").
 
 ```
 Active:
-- indefinitive loops
 - conditionals
-
 
 Next:
 - vm text-based compiled format
@@ -463,6 +461,7 @@ To do:
 - add Morty to linguist (https://github.com/github/linguist) so it can be detected by GitHub
 
 Done:
+- indefinitive loops
 - definitive loops
 - asm text-based compiled format
 - stack based label resolution
