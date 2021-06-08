@@ -78,8 +78,8 @@ run(vm_state state) {
 				case QCALL:  r_push(ip); ip=s_pop();                break;
 				case QRET:   ip = r_pop();                          break;
 				case JZ:     v=s_pop();  if (v==0) ip=arg;          break;
-				case IF:     v=s_pop(); v2=s_pop(); if(v2) { r_push(ip); ip=v; };       break; // TEST ME
-				case IFELSE: v=s_pop(); v2=s_pop(); v3=s_pop(); r_push(ip); ip=v3?v2:v; break; // TEST ME
+				case IF:     v=s_pop(); v2=s_pop(); if(v2) { r_push(ip); ip=v; };       break; // REMOVE
+				case IFELSE: v=s_pop(); v2=s_pop(); v3=s_pop(); r_push(ip); ip=v3?v2:v; break; // REMOVE
 				case LAMBDA: s_push(ip); ip=arg;                    break; // REMOVE
 				case GOTO:   ip=arg;                                break;
 				case STOP:   goto stop;                             break; // TODO RENAME: HALT
@@ -95,7 +95,7 @@ run(vm_state state) {
 				case TIMES:  v=s_pop(); r_push(arg); r_push(1); r_push(v-1); r_push(0); break; // with loop frame // TODO zero iterations
 				case FOR:    v=s_pop();v2=s_pop();v3=s_pop(); r_push(arg); r_push(v); r_push(v3); r_push(v2); break; // TODO zero iterations
 				case LOOP:   if (mem[rp]<mem[rp-1]) {ip=arg; mem[rp]+=mem[rp-2];} else {rp-=4;};  break;
-				case BEGIN:  r_push(arg); r_push(0); r_push(0); r_push(0); break;
+				case BEGIN:  r_push(arg); r_push(0); r_push(0); r_push(0); break; // REMOVE -> replace with for with step=0
 				case BREAK:    ip=mem[rp-3]+1; rp-=4;                      break;
 				case CONTINUE: ip=mem[rp-3];                               break;
 				// RETURN STACK
@@ -122,22 +122,22 @@ run(vm_state state) {
 				case AND:    v=s_pop(); tos &= v;           break;
 				case OR:     v=s_pop(); tos |= v;           break;
 				case XOR:    v=s_pop(); tos ^= v;           break;
-				case MOD:    v=s_pop(); tos %= v;           break; // NOT CORE
-				case SHL:    v=s_pop(); tos <<= v;          break; // NOT CORE
-				case SHR:    v=s_pop(); tos >>= v;          break; // NOT CORE
+				case MOD:    v=s_pop(); tos %= v;           break;
+				case SHL:    v=s_pop(); tos <<= v;          break;
+				case SHR:    v=s_pop(); tos >>= v;          break;
 				case USHR:   v=s_pop(); uv=tos; tos=uv>>v;  break; // NOT CORE
-				case INVERT: tos= ~tos;                     break; // NOT CORE
-				case NEGATE: tos= -tos;                     break; // NOT CORE
-				case ABS:    tos= tos<0 ? -tos:tos;         break; // NOT CORE
+				case INVERT: tos= ~tos;                     break; // NOT CORE ???
+				case NEGATE: tos= -tos;                     break; // NOT CORE ???
+				case ABS:    tos= tos<0 ? -tos:tos;         break; // NOT CORE ???
 				case ADDI:   tos += arg;                    break; // TURBO
 				case MULI:   tos *= arg;                    break; // TURBO
 				// COMPARATORS - MAIN
-				case LT:     v=s_pop(); tos= tos<v  ? 1:0;  break; // NOT CORE
-				case LE:     v=s_pop(); tos= tos<=v ? 1:0;  break; // NOT CORE
-				case GT:     v=s_pop(); tos= tos>v  ? 1:0;  break; // NOT CORE
-				case GE:     v=s_pop(); tos= tos>=v ? 1:0;  break; // NOT CORE
-				case EQ:     v=s_pop(); tos= tos==v ? 1:0;  break; // NOT CORE
-				case NE:     v=s_pop(); tos= tos!=v ? 1:0;  break; // NOT CORE
+				case LT:     v=s_pop(); tos= tos<v  ? 1:0;  break;
+				case LE:     v=s_pop(); tos= tos<=v ? 1:0;  break;
+				case GT:     v=s_pop(); tos= tos>v  ? 1:0;  break;
+				case GE:     v=s_pop(); tos= tos>=v ? 1:0;  break;
+				case EQ:     v=s_pop(); tos= tos==v ? 1:0;  break;
+				case NE:     v=s_pop(); tos= tos!=v ? 1:0;  break;
 				// COMPARATORS - IMMEDIATE
 				case LTI:    tos= tos<arg  ? 1:0;  break; // TURBO
 				case LEI:    tos= tos<=arg ? 1:0;  break; // TURBO
@@ -153,13 +153,13 @@ run(vm_state state) {
 				case XEQ:    s_push(mem[sp]==tos ? 1:0);  break; // NOT CORE
 				case XNE:    s_push(mem[sp]!=tos ? 1:0);  break; // NOT CORE
 				// COMPARATORS - AUX
-				case NZ:     tos = tos!=0 ? 1:0;            break; // NOT CORE REMOVE
-				case GTZ:    tos = tos>0  ? 1:0;            break; // NOT CORE REMOVE
-				case EQZ:    tos = tos==0 ? 1:0;            break; // NOT CORE REMOVE
-				case LTZ:    tos = tos<0  ? 1:0;            break; // NOT CORE REMOVE
-				case MIN:    v=s_pop(); tos=tos<v ? tos:v;  break; // NOT CORE
-				case MAX:    v=s_pop(); tos=tos>v ? tos:v;  break; // NOT CORE
-				case PICK:   tos= tos ? mem[sp-1]:mem[sp]; sp-=2; break; // NOT CORE NEW
+				case NZ:     tos = tos!=0 ? 1:0;            break; // REMOVE
+				case GTZ:    tos = tos>0  ? 1:0;            break; // REMOVE
+				case EQZ:    tos = tos==0 ? 1:0;            break; // REMOVE
+				case LTZ:    tos = tos<0  ? 1:0;            break; // REMOVE
+				case MIN:    v=s_pop(); tos=tos<v ? tos:v;  break;
+				case MAX:    v=s_pop(); tos=tos>v ? tos:v;  break;
+				case PICK:   tos= tos ? mem[sp-1]:mem[sp]; sp-=2; break;
 				// MEMORY
 				case GET:    tos = mem[tos];                break;
 				case SET:    v=s_pop(); mem[v]=s_pop();     break;
