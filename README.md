@@ -70,7 +70,7 @@ Morty allows the usage of "goto" for the same reasons it is still in C and GO: i
 
 ## Language Examples
 
-```forth
+```
 def fib (n--f) :n
 	n 2 lt [ 1 ret ] if
 	n 2 sub fib (f2)
@@ -78,7 +78,7 @@ def fib (n--f) :n
 end
 ```
 
-```forth
+```
 def total-energy (m v h -- e) :h :v :m
     m v kinetic-energy   (ek)
     m h potential-energy (ek ep) add
@@ -99,7 +99,7 @@ Morty allows capturing values into named local variables.
 To capture a value prefix target variable name with a colon (ie :my-var).
 Use the variable name to push its value onto the stack.
 
-```forth
+```
 ( y = a*x*x + b*x + c )
 
 def poly2 (x a b c -- y) :c :b :a :x (capture params)
@@ -141,13 +141,13 @@ Loops are counted up. In every loop "break" and "continue" can be used.
 Counted loops:
 ```forth
 ( loop 5 times from 0 to 4 )
-5 times
-	i dot
+5 times do
+    i dot
 loop
 
 ( loop from 2 to 10 with step 1 )
 10 2 1 for
-	i dot
+    i dot
 loop
 ```
 
