@@ -201,6 +201,10 @@ Block based loops require that loop setup and loop cleanup happens in the single
     i dot
 loop
 
+5 times 
+    i dot
+repeat
+
 10 2 1 for
     i dot
 loop
@@ -284,7 +288,7 @@ loop / +loop
 
 begin
 	...
-f untill
+f until
 
 begin
 	...
