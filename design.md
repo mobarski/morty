@@ -44,7 +44,10 @@ Lambda based "if" is acceptable but it has worse performance on the "fibo" bench
 - 14% longer for "goto.@[ ...  push.@]" based
 
 Maybe it can be optimized by mutating the cell before the block by the "if" cell?
-It's hard with "lambda.@[" as there is no start of the block addr!
+It's hard with "lambda.@[" as there is no start of the block addr! So "lambda.@[" was replaced with "goto.@[" and "push.@]".
+
+Forth like "if ... then" solution doesn't require code mutation - it can be compiled in one pass.
+
 
 ```forth
 ( exmaple from fibo.hla )
@@ -59,6 +62,12 @@ push.2 lt.0 goto.@[ push.1 ret.0 /jz]:          ( new stack effect - replace )
 push.2 lt.0 goto.@[ push.1 ret.0 push.@] ( tokens before if )
 push.2 lt.0   jz.@[ push.1 ret.0 ]:      ( tokens after  if )
 push.2 lt.0 goto.@[ push.1 ret.0 /jz]:   ( new stack effect - replace )
+
+
+( forth like if ... then )
+2 lt if 1 ret then
+
+push.2 lt.0 jz.@[ push.1 ret.0 push.@]   ( no replacement required )
 ```
 
 ## Sandbox
