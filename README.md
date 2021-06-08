@@ -150,6 +150,8 @@ loop
     i dot
 loop
 ```
+times -> "0 1 for"
+
 
 Indefinite loops:
 ```
