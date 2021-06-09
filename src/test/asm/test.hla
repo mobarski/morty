@@ -1,0 +1,4 @@
+	20 2 mul 
+	1 1 add add
+	vminfo
+	stop
