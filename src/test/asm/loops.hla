@@ -106,7 +106,6 @@ ret
 ))
 
 
-((
 loops: (28: 2000ms  frame=addr,incr,to,from; loop increments / 1351ms with addi 
 	stor
 	0 stor
@@ -127,9 +126,8 @@ loops: (28: 2000ms  frame=addr,incr,to,from; loop increments / 1351ms with addi
 		loop.@]
 	loop.@]
 ret
-))
 
-
+((
 loops: (28: 2455ms without addi, 1800ms with addi
 	stor
 	0 stor
@@ -150,6 +148,7 @@ loops: (28: 2455ms without addi, 1800ms with addi
 		loop.@]
 	loop.@]
 ret
+))
 
 start:
 	28 call.@loops vminfo
