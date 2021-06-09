@@ -441,13 +441,13 @@ Active:
 - conditionals
 
 Next:
-- vm text-based compiled format
+- vm text-based portable executable format
+- stand-alone executable
+
+To do:
 - global variables
 - static arrays
 - capture variables in lambdas
-- define and document file extensions
-
-To do:
 - strings
 - parametric cell size (16, 32, 64 bits)
 - tail call
@@ -461,6 +461,7 @@ To do:
 - add Morty to linguist (https://github.com/github/linguist) so it can be detected by GitHub
 
 Done:
+- define and document file extensions
 - indefinitive loops
 - definitive loops
 - asm text-based compiled format

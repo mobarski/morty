@@ -4,6 +4,7 @@
 - [conditionals](#conditionals)
 - [loops](#loops)
 - [threading](#threading)
+- [other](#other)
 
 # Core vs Extension
 
@@ -324,3 +325,17 @@ Token Threding was tested and was 25% slower.
 To benchmark new Threading Model following instructions must be implemented:
 - **loops.mrh**: push, stor, vget, times, add, loop, call, ret, vminfo, (addi)
 - **fibo.mrh**: stor, vget, push, lt, jz, ret, ((qret)), sub, call, add, vminfo, (lti), (reti), (subi), (subcall), (addret)
+
+# Other
+
+## File Extensions
+
+| extension | info                       |
+| --------- | -------------------------- |
+| .mra      | Morty assembly             |
+| .mrb      | Morty binary executable    |
+| .mrh      | Morty high-level assembly  |
+| .mro      | Morty optimized executable |
+| .mrp      | Morty portable executable  |
+| .mrt      | Morty source code          |
+
