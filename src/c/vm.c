@@ -155,6 +155,7 @@ load_from_file(char *path, int *code, int max_len) {
 }
 
 
+// TODO: text format
 int
 dump_mem(char *path, int *mem, int from, int ncells) {
 	FILE *out = fopen(path,"w");

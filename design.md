@@ -326,23 +326,10 @@ To benchmark new Threading Model following instructions must be implemented:
 - **loops.mrh**: push, stor, vget, times, add, loop, call, ret, vminfo, (addi)
 - **fibo.mrh**: stor, vget, push, lt, jz, ret, ((qret)), sub, call, add, vminfo, (lti), (reti), (subi), (subcall), (addret)
 
-# Other
-
-## File Extensions
-
-| extension | info                       |
-| --------- | -------------------------- |
-| .mra      | Morty assembly             |
-| .mrb      | Morty binary executable    |
-| .mrh      | Morty high-level assembly  |
-| .mro      | Morty optimized executable |
-| .mrp      | Morty portable executable  |
-| .mrt      | Morty source code          |
-
 ## Benchmark
 
-XG 6254 -> Intel Xeon Gold 6254 @ 3.10GHz
-I5 4590 -> Intel Core I5 4590 @ 3.30GHz
+XG 6254 -> Intel Xeon Gold 6254 @ 3.10GHz  
+I5 4590 -> Intel Core I5 4590 @ 3.30GHz  
 
 ### loops.hla n=28 for loop
 
@@ -383,3 +370,32 @@ I5 4590 -> Intel Core I5 4590 @ 3.30GHz
 | indirect -O | I5 4590 | 2300,2296,2289,2241,2293 | 2284 |    24 |
 | indirect    | I5 4590 | 2496,2456,2430,2415,2401 | 2440 |    38 |
 
+### array.hla n=100000
+
+| variant     | machine | times                    | mean | stdev |
+| ----------- | ------- | ------------------------ | ---- | ----- |
+| switch      | XG 6254 |                          |      |       |
+| switch -O   | XG 6254 |                          |      |       |
+| indirect -O | XG 6254 |                          |      |       |
+| indirect    | XG 6254 |                          |      |       |
+| switch      | I5 4590 | 1991,2174,2009,2109,2050 | 2067 |    75 |
+| switch -O   | I5 4590 | 1798,1939,1851,1886,1770 | 1849 |    68 |
+| indirect -O | I5 4590 | 1420,1416,1503,1411,1487 | 1447 |    44 |
+| indirect    | I5 4590 | 2156,2074,1996,1989,1997 | 2042 |    72 |
+
+
+
+
+
+# Other
+
+## File Extensions
+
+| extension | info                       |
+| --------- | -------------------------- |
+| .mra      | Morty assembly             |
+| .mrb      | Morty binary executable    |
+| .mrh      | Morty high-level assembly  |
+| .mro      | Morty optimized executable |
+| .mrp      | Morty portable executable  |
+| .mrt      | Morty source code          |

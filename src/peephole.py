@@ -54,8 +54,20 @@ def replace_push_alu(a,b):
 
 # -----------------------------------------------------------------------------
 
+def match_add_getset(a,b):
+	if a!='add.0': return False
+	if b not in ['get.0','set.0']: return False
+	return True
+
+def replace_add_getset(a,b):
+	op = b.split('.')[0]
+	return [f"add{op}.0"]
+
+# -----------------------------------------------------------------------------
+
 rules = [
 	(2, match_ret_qret, replace_ret_qret),
 	(3, match_push_push_alu, replace_push_push_alu),
 	(2, match_push_alu, replace_push_alu),
+	(2, match_add_getset, replace_add_getset),
 ]
