@@ -1,5 +1,6 @@
 op  = mem[ip++];
 arg = mem[ip++];
+
 switch(op) {
 	// BRANCHING
 	case CALL:   r_push(fp); r_push(ip); ip=arg; fp=rp; break; // TEST ME
