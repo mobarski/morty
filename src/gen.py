@@ -9,4 +9,6 @@ if 1:
 	out = ['0']*256
 	for op,code in OPCODE.items():
 		out[code] = f'&&OP_{op.upper()}'
-	print(",".join(out))
+	values = ",".join(out)
+	print("void* op_ptr[] = {",values,"};")
+	

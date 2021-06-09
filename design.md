@@ -339,3 +339,25 @@ To benchmark new Threading Model following instructions must be implemented:
 | .mrp      | Morty portable executable  |
 | .mrt      | Morty source code          |
 
+## Benchmark
+
+XG 6254 -> Intel Xeon Gold 6254 @ 3.10GHz
+
+### loops.hla n=28
+
+| variant     | machine | times                    | mean | stdev |
+| ----------- | ------- | ------------------------ | ---- | ----- |
+| switch      | XG 6254 | 3714,3711,3717,3765,3715 |      |       |
+| switch -O   | XG 6254 | 3056,3075,3108,3088,3077 |      |       |
+| indirect -O | XG 6254 | 2473,2470,2472,2473,2472 |      |       |
+| indirect    | XG 6254 | 2804,2912,2912,2946,2878 |      |       |
+
+### fibo.hla n=38
+
+| variant     | machine | times                    | mean | stdev |
+| ----------- | ------- | ------------------------ | ---- | ----- |
+| switch      | XG 6254 | 1901,1885,1924,1897,1896 |      |       |
+| switch -O   | XG 6254 | 1752,1753,1770,1725,1780 |      |       |
+| indirect -O | XG 6254 | 1923,1919,1923,1910,1969 |      |       |
+| indirect    | XG 6254 | 2056,2032,2048,2023,2035 |      |       |
+

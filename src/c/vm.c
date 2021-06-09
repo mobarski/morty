@@ -37,7 +37,7 @@ typedef struct {
 // VM RUN
 vm_state
 run(vm_state state) {
-	
+
 	// VM REGISTERS
 	int  tos = state.tos;
 	int   ip = state.ip;
@@ -69,6 +69,7 @@ run(vm_state state) {
 		//for(int i=0; i<ilc; i++) { // inner loop // +10% time :/
 		for(;;) { // inner loop
 			#include "vm_switch.c"
+			//include "vm_goto.c"
 		}
 		oli++;
 		sd = sp-state.sp;

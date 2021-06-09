@@ -106,6 +106,9 @@ switch(op) {
 		word_buf[0]=v; // TODO: propper byte-by-byte for LITTLE/BIG endian handling
 		printf("%s",(char*)(&word_buf));
 		break;
+	//
+	case IOGET: break; // TODO
+	case IOSET: break; // TODO
 }
 
 //printf("T:%d\tR:%d\tSP:%d\tRP:%d\tFP:%d\tIP:%d\tDP:%d\tMEM[SP]:%d\tOP:%d\tdt:%d ms \n",tos,mem[rp],sp,rp,fp,ip,hp,mem[sp],op,ms_clock()-ts_vminfo); // XXX debug

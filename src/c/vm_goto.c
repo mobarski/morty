@@ -1,6 +1,13 @@
+#define NEXT op=mem[ip++];arg=mem[ip++]; goto *op_ptr[op];
+#define JUMP NEXT
+
+void* op_ptr[] = { &&OP_STOP,&&OP_PUSH,&&OP_DUP,&&OP_DROP,&&OP_SWAP,&&OP_STOR,&&OP_RTOS,&&OP_ADD,&&OP_MUL,&&OP_DIV,&&OP_SUB,&&OP_AND,&&OP_OR,&&OP_XOR,&&OP_NZ,&&OP_CALL,&&OP_RET,&&OP_JZ,&&OP_QCALL,&&OP_QRET,&&OP_GET,&&OP_SET,&&OP_ALLOT,&&OP_MOD,&&OP_SHL,&&OP_SHR,&&OP_USHR,&&OP_INVERT,&&OP_NEGATE,&&OP_ABS,&&OP_LE,&&OP_LT,&&OP_GE,&&OP_GT,&&OP_EQ,&&OP_NE,&&OP_XLE,&&OP_XLT,&&OP_XGE,&&OP_XGT,&&OP_XEQ,&&OP_XNE,&&OP_ROT,&&OP_OVER,&&OP_UNROT,&&OP_VGET,&&OP_VSET,&&OP_RADD,&&OP_EMIT,&&OP_DOT,&&OP_ECHO,&&OP_IF,&&OP_IFELSE,&&OP_GOTO,&&OP_LAMBDA,&&OP_MIN,&&OP_MAX,&&OP_PICK,&&OP_GTZ,&&OP_EQZ,&&OP_LTZ,&&OP_TIMES,&&OP_LOOP,&&OP_FOR,&&OP_RSUB,&&OP_RGET,&&OP_BEGIN,&&OP_BREAK,&&OP_CONTINUE,&&OP_ADDI,&&OP_MULI,&&OP_LEI,&&OP_LTI,&&OP_GEI,&&OP_GTI,&&OP_EQI,&&OP_NEI,&&OP_IOGET,&&OP_IOSET,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,&&OP_VMINFO };
+
 int op;
 int arg;
 int v,v2,v3;
+
+NEXT;
 
 // BRANCHING
 OP_CALL:   r_push(fp); r_push(ip); ip=arg; fp=rp; JUMP; // TEST ME
@@ -98,5 +105,7 @@ OP_ECHO: v=s_pop(); word_buf[0]=0;
 	word_buf[0]=v; // TODO: propper byte-by-byte for LITTLE/BIG endian handling
 	printf("%s",(char*)(&word_buf));
 	NEXT;
-
+//
+OP_IOGET: NEXT;
+OP_IOSET: NEXT;
 //printf("T:%d\tR:%d\tSP:%d\tRP:%d\tFP:%d\tIP:%d\tDP:%d\tMEM[SP]:%d\tOP:%d\tdt:%d ms \n",tos,mem[rp],sp,rp,fp,ip,hp,mem[sp],op,ms_clock()-ts_vminfo); // XXX debug
