@@ -94,8 +94,11 @@ switch(op) {
 	case GET:    tos = mem[tos];                break;
 	case SET:    v=s_pop(); mem[v]=s_pop();     break;
 	case ALLOT:  v=s_pop(); s_push(hp); hp+=v;  break;
-	case ADDGET: v=s_pop(); tos+=v; tos=mem[tos];                break; // TURBO
-	case ADDSET: v=s_pop(); tos+=v; v2=s_pop(); mem[v2]=s_pop(); break; // TURBO
+	case ADDGET: v=s_pop(); tos+=v; tos=mem[tos];              break; // TURBO
+	case ADDSET: v=s_pop(); tos+=v; v=s_pop(); mem[v]=s_pop(); break; // TURBO
+	case IADDGET: v=mem[rp-arg]; s_push(v); v=s_pop(); tos+=v; tos=mem[tos];              break; // TURBO OPTIMIZE COMBO
+	case IADDSET: v=mem[rp-arg]; s_push(v); v=s_pop(); tos+=v; v=s_pop(); mem[v]=s_pop(); break; // TURBO OPTIMIZE COMBO
+
 	// DEBUG
 	case VMINFO:
 		fprintf(stderr,"T:%d\tSP:%d\tRP:%d\tFP:%d\tIP:%d\tHP:%d\tSDMX:%d\tRDMX:%d\tDDMX:%d\tOLI:%d\tILC:%d\tdt:%d ms \n",tos,sp,rp,fp,ip,hp,sd_max,rd_max,hd_max,oli,ilc,ms_clock()-ts_vminfo);

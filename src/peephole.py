@@ -65,9 +65,23 @@ def replace_add_getset(a,b):
 
 # -----------------------------------------------------------------------------
 
+def match_rget_add_getset(a,b,c):
+	if not a.startswith('rget.'): return False
+	if b!='add.0': return False
+	if c not in ['get.0','set.0']: return False
+	return True
+
+def replace_rget_add_getset(a,b,c):
+	arg = a.split('.')[1]
+	op = c.split('.')[0]
+	return [f"iadd{op}.{arg}"]
+
+# -----------------------------------------------------------------------------
+
 rules = [
 	(2, match_ret_qret, replace_ret_qret),
 	(3, match_push_push_alu, replace_push_push_alu),
 	(2, match_push_alu, replace_push_alu),
+	(3, match_rget_add_getset, replace_rget_add_getset),
 	(2, match_add_getset, replace_add_getset),
 ]

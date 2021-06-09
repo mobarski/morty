@@ -1,7 +1,7 @@
 #define NEXT op=mem[ip++];arg=mem[ip++]; goto *op_ptr[op];
 #define JUMP NEXT
 
-void* op_ptr[] = { &&OP_STOP,&&OP_PUSH,&&OP_DUP,&&OP_DROP,&&OP_SWAP,&&OP_STOR,&&OP_RTOS,&&OP_ADD,&&OP_MUL,&&OP_DIV,&&OP_SUB,&&OP_AND,&&OP_OR,&&OP_XOR,&&OP_NZ,&&OP_CALL,&&OP_RET,&&OP_JZ,&&OP_QCALL,&&OP_QRET,&&OP_GET,&&OP_SET,&&OP_ALLOT,&&OP_MOD,&&OP_SHL,&&OP_SHR,&&OP_USHR,&&OP_INVERT,&&OP_NEGATE,&&OP_ABS,&&OP_LE,&&OP_LT,&&OP_GE,&&OP_GT,&&OP_EQ,&&OP_NE,&&OP_XLE,&&OP_XLT,&&OP_XGE,&&OP_XGT,&&OP_XEQ,&&OP_XNE,&&OP_ROT,&&OP_OVER,&&OP_UNROT,&&OP_VGET,&&OP_VSET,&&OP_RADD,&&OP_EMIT,&&OP_DOT,&&OP_ECHO,&&OP_IF,&&OP_IFELSE,&&OP_GOTO,&&OP_LAMBDA,&&OP_MIN,&&OP_MAX,&&OP_PICK,&&OP_GTZ,&&OP_EQZ,&&OP_LTZ,&&OP_TIMES,&&OP_LOOP,&&OP_FOR,&&OP_RSUB,&&OP_RGET,&&OP_BEGIN,&&OP_BREAK,&&OP_CONTINUE,&&OP_ADDI,&&OP_MULI,&&OP_ADDGET,&&OP_ADDSET,&&OP_LEI,&&OP_LTI,&&OP_GEI,&&OP_GTI,&&OP_EQI,&&OP_NEI,&&OP_IOGET,&&OP_IOSET,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,&&OP_VMINFO };
+void* op_ptr[] = { &&OP_STOP,&&OP_PUSH,&&OP_DUP,&&OP_DROP,&&OP_SWAP,&&OP_STOR,&&OP_RTOS,&&OP_ADD,&&OP_MUL,&&OP_DIV,&&OP_SUB,&&OP_AND,&&OP_OR,&&OP_XOR,&&OP_NZ,&&OP_CALL,&&OP_RET,&&OP_JZ,&&OP_QCALL,&&OP_QRET,&&OP_GET,&&OP_SET,&&OP_ALLOT,&&OP_MOD,&&OP_SHL,&&OP_SHR,&&OP_USHR,&&OP_INVERT,&&OP_NEGATE,&&OP_ABS,&&OP_LE,&&OP_LT,&&OP_GE,&&OP_GT,&&OP_EQ,&&OP_NE,&&OP_XLE,&&OP_XLT,&&OP_XGE,&&OP_XGT,&&OP_XEQ,&&OP_XNE,&&OP_ROT,&&OP_OVER,&&OP_UNROT,&&OP_VGET,&&OP_VSET,&&OP_RADD,&&OP_EMIT,&&OP_DOT,&&OP_ECHO,&&OP_IF,&&OP_IFELSE,&&OP_GOTO,&&OP_LAMBDA,&&OP_MIN,&&OP_MAX,&&OP_PICK,&&OP_GTZ,&&OP_EQZ,&&OP_LTZ,&&OP_TIMES,&&OP_LOOP,&&OP_FOR,&&OP_RSUB,&&OP_RGET,&&OP_BEGIN,&&OP_BREAK,&&OP_CONTINUE,&&OP_ADDI,&&OP_MULI,&&OP_ADDGET,&&OP_ADDSET,&&OP_IADDGET,&&OP_IADDSET,&&OP_LEI,&&OP_LTI,&&OP_GEI,&&OP_GTI,&&OP_EQI,&&OP_NEI,&&OP_IOGET,&&OP_IOSET,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,&&OP_VMINFO };
 
 int op;
 int arg;
@@ -93,8 +93,10 @@ OP_PICK:   tos= tos ? mem[sp-1]:mem[sp]; sp-=2; NEXT;
 OP_GET:    tos = mem[tos];                NEXT;
 OP_SET:    v=s_pop(); mem[v]=s_pop();     NEXT;
 OP_ALLOT:  v=s_pop(); s_push(hp); hp+=v;  NEXT;
-OP_ADDGET: v=s_pop(); tos+=v; tos=mem[tos];                NEXT;
-OP_ADDSET: v=s_pop(); tos+=v; v2=s_pop(); mem[v2]=s_pop(); NEXT;
+OP_ADDGET: v=s_pop(); tos+=v; tos=mem[tos];              NEXT;
+OP_ADDSET: v=s_pop(); tos+=v; v=s_pop(); mem[v]=s_pop(); NEXT;
+OP_IADDGET: v=mem[rp-arg]; s_push(v); v=s_pop(); tos+=v; tos=mem[tos];              NEXT; // TURBO OPTIMIZE COMBO
+OP_IADDSET: v=mem[rp-arg]; s_push(v); v=s_pop(); tos+=v; v=s_pop(); mem[v]=s_pop(); NEXT; // TURBO OPTIMIZE COMBO
 // DEBUG
 OP_VMINFO:
 	printf("T:%d\tSP:%d\tRP:%d\tFP:%d\tIP:%d\tHP:%d\tSDMX:%d\tRDMX:%d\tDDMX:%d\tOLI:%d\tILC:%d\tdt:%d ms \n",tos,sp,rp,fp,ip,hp,sd_max,rd_max,hd_max,oli,ilc,ms_clock()-ts_vminfo);
