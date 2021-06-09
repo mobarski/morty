@@ -3,6 +3,7 @@
 - [core](#core-vs-extension)
 - [conditionals](#conditionals)
 - [loops](#loops)
+- [threading](#threading)
 
 # Core vs Extension
 
@@ -314,3 +315,12 @@ Continue should be jump @addr and break jump @addr+2.
 
 ```
 
+# Threading
+
+Current VM is implemented using Switch Threading.  
+Replicated Switch Threading was tested and was 25% slower.  
+Token Threding was tested and was 25% slower.
+
+To benchmark new Threading Model following instructions must be implemented:
+- **loops.mrh**: push, stor, vget, times, add, loop, call, ret, vminfo, (addi)
+- **fibo.mrh**: stor, vget, push, lt, jz, ret, ((qret)), sub, call, add, vminfo, (lti), (reti), (subi), (subcall), (addret)
