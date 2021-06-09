@@ -68,8 +68,8 @@ run(vm_state state) {
 	for(;;) { // outer loop
 		//for(int i=0; i<ilc; i++) { // inner loop // +10% time :/
 		for(;;) { // inner loop
-			//include "vm_switch.c"
-			#include "vm_goto.c"
+			#include "vm_switch.c"
+			//include "vm_goto.c"
 		}
 		oli++;
 		sd = sp-state.sp;
