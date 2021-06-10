@@ -35,6 +35,15 @@ def to_text_file(filename, text, op_code, do_optimize=False):
 	open(filename,'w').write("\n".join(compiled))
 	return cells	
 
+def to_direct_threading(text, op_code, do_optimize=False):
+	op_name = {v:name for name,v in op_code.items()}
+	cells = to_cells(code, op_code, do_optimize)
+	for i in range(0,len(cells),2):
+		op = cells[i]
+		arg = cells[i+1]
+		name = op_name[op].upper()
+		print(f"&&OP_{name},\t(void*) {arg},\t// ip={i}")
+
 # -----------------------------------------------------------------------------
 # -----------------------------------------------------------------------------
 # -----------------------------------------------------------------------------
@@ -240,6 +249,7 @@ if __name__=="__main__":
 	if args.d:
 		print(cells)
 		print(f"cells: {len(cells)}")
+		to_direct_threading(code, OPCODE, do_optimize=args.O) # XXX
 	if args.o:
 		if args.t:
 			to_text_file(args.o, code, OPCODE, do_optimize=args.O)
