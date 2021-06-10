@@ -1,7 +1,5 @@
 // Simple switch-based token-threaded MortyVM
 
-#define CELL_SIZE 4
-
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -24,14 +22,16 @@ long long ms_clock() {
 #define r_push(x) mem[++rp] = x
 #define r_pop()   mem[rp--]
 
+typedef int t_cell;
+
 typedef struct {
-	int fp;
-	int ip;
-	int rp;
-	int sp;
-	int tos;
-	int hp;
-	int *mem;
+	t_cell fp;
+	t_cell ip;
+	t_cell rp;
+	t_cell sp;
+	t_cell tos;
+	t_cell hp;
+	t_cell *mem;
 } vm_state;
 
 // VM RUN
@@ -39,13 +39,13 @@ vm_state
 run(vm_state state) {
 
 	// VM REGISTERS
-	int  tos = state.tos;
-	int   ip = state.ip;
-	int   sp = state.sp;
-	int   rp = state.rp;
-	int   fp = state.fp;
-	int   hp = state.hp;
-	int *mem = state.mem;
+	t_cell  tos = state.tos;
+	t_cell   ip = state.ip;
+	t_cell   sp = state.sp;
+	t_cell   rp = state.rp;
+	t_cell   fp = state.fp;
+	t_cell   hp = state.hp;
+	t_cell *mem = state.mem;
 	
 	// FINAL STATE
 	vm_state final;
@@ -107,7 +107,7 @@ typedef struct {
 
 // VM BOOT
 vm_state
-boot(int *mem, int *code, int code_len, config cfg) {
+boot(t_cell *mem, t_cell *code, int code_len, config cfg) {
 	vm_state state;
 	
 	state.tos = 0;
@@ -129,9 +129,10 @@ boot(int *mem, int *code, int code_len, config cfg) {
 
 
 int
-load_from_file(char *path, int *code, int max_len) {
+load_from_file(char *path, t_cell *code, int max_len) {
 	FILE *in;
 	int i; // cell position in the code
+	int FILE_CELL_SIZE = 4;
 	
 	in = fopen(path,"r");
 	if (!in) {
@@ -140,7 +141,7 @@ load_from_file(char *path, int *code, int max_len) {
 	}
 	
 	for (i=0; i<max_len; i++) {
-		int n = fread(&code[i],CELL_SIZE,1,in);
+		int n = fread(&code[i],FILE_CELL_SIZE,1,in);
 		if (n==0) {
 			break;
 		}
@@ -156,6 +157,7 @@ load_from_file(char *path, int *code, int max_len) {
 
 
 // TODO: text format
+/*
 int
 dump_mem(char *path, int *mem, int from, int ncells) {
 	FILE *out = fopen(path,"w");
@@ -177,6 +179,7 @@ dump_mem(char *path, int *mem, int from, int ncells) {
 	
 	return i; // written cells cnt
 }
+*/
 
 // ----------------------------------------------------------------------------
 // ---[ CLI ]------------------------------------------------------------------
@@ -258,8 +261,8 @@ main(int argc, char *argv[], char **env) {
 	vm_state final;
 	config cfg;
 	int code_len;
-	int *code;
-	int *mem;
+	t_cell *code;
+	t_cell *mem;
 
 	// DEFAULT CONFIGURATION
 	cfg.memory_size = 1024;
@@ -272,8 +275,8 @@ main(int argc, char *argv[], char **env) {
 	if (err) return err;
 	//printf("path:%s  ds:%d  rs:%d  mem:%d \n",cfg.path, cfg.data_stack_size, cfg.return_stack_size, cfg.memory_size); // DEBUG
 	
-	code = calloc(cfg.max_code_size, CELL_SIZE);
-	mem  = calloc(cfg.memory_size, CELL_SIZE);
+	code = calloc(cfg.max_code_size, sizeof(t_cell));
+	mem  = calloc(cfg.memory_size, sizeof(t_cell));
 	
 	// BOOT & RUN
 	//dump_mem("dump.mrt",code,0,40);

@@ -1,6 +1,6 @@
-int op  = mem[ip++];
-int arg = mem[ip++];
-int v,v2,v3;
+t_cell op  = mem[ip++];
+t_cell arg = mem[ip++];
+t_cell v,v2,v3;
 switch(op) {
 	// BRANCHING
 	case CALL:   r_push(fp); r_push(ip); ip=arg; fp=rp; break; // TEST ME

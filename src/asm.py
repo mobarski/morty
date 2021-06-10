@@ -249,7 +249,7 @@ if __name__=="__main__":
 	if args.d:
 		print(cells)
 		print(f"cells: {len(cells)}")
-		to_direct_threading(code, OPCODE, do_optimize=args.O) # XXX
+		#to_direct_threading(code, OPCODE, do_optimize=args.O) # XXX
 	if args.o:
 		if args.t:
 			to_text_file(args.o, code, OPCODE, do_optimize=args.O)
