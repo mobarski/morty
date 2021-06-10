@@ -49,6 +49,7 @@ Target VM implementations:
 - Python (portable)
 - MicroPython (portable - microcontrolers)
 - Go (performant backend, portable with recompilation)
+- Swift (iOS)
 
 ## Morty Philosophy
 
@@ -438,18 +439,21 @@ Character literals are converted into integer literals ("push.value").
 
 ```
 Active:
+- loop changes
 - conditionals
 
 Next:
 - vm text-based portable executable format
+- vm text-based mem dump
 - stand-alone executable
 
 To do:
+- separate stacks, code and mem
+- parametric cell size (16, 32, 64 bits)
 - global variables
 - static arrays
 - capture variables in lambdas
 - strings
-- parametric cell size (16, 32, 64 bits)
 - tail call
 - dynamic statistics (op freq)
 - little vs big endian
