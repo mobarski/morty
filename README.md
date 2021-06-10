@@ -439,7 +439,6 @@ Character literals are converted into integer literals ("push.value").
 
 ```
 Active:
-- sieve.hla
 - conditionals
 
 Next:
@@ -464,6 +463,7 @@ To do:
 - add Morty to linguist (https://github.com/github/linguist) so it can be detected by GitHub
 
 Done:
+- sieve.hla
 - parametric cell size (16, 32, 64 bits)
 - loop changes (NO - new word for counting down on existing loops)
 - define and document file extensions

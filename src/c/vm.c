@@ -55,10 +55,10 @@ run(vm_state state) {
 	int ts_vminfo = ms_clock();
 	int word_buf[2] = {0,0};
 	int sd=0;     // stack depth
-	int sd_max=0; // max stack depth
 	int rd=0;     // return stack depth
-	int rd_max=0; // max return stack depth
 	int hd=0;     // heap depth
+	int sd_max=0; // max stack depth
+	int rd_max=0; // max return stack depth
 	int hd_max=0; // max heap depth
 	int oli=0;     // outer loop iterations
 	int ilc=1000000; // inner loop cnt
@@ -70,6 +70,7 @@ run(vm_state state) {
 		for(;;) { // inner loop
 			#include "vm_switch.c"
 			//include "vm_goto.c"
+			//include "vm_repl_switch.c"
 		}
 		oli++;
 		sd = sp-state.sp;
