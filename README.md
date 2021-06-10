@@ -439,6 +439,7 @@ Character literals are converted into integer literals ("push.value").
 
 ```
 Active:
+- sieve.hla
 - loop changes
 - conditionals
 
