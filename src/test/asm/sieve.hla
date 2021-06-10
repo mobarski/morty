@@ -19,3 +19,27 @@
 	end
 ))
 
+goto.@start
+
+	sieve:
+		stor (1:n)
+		0 stor (2:flags)
+		0 stor (3:count)
+		8139 allot vset.2
+		vget.1 (n) times.@[
+			0 vset.3
+			8193 times.@[ 1 vget.2 rget.0 add set loop.@]
+			8193 2 1 for.@[
+				vget.2 rget.0 add get 0 gt jz.@[
+					8193 rget.0 2 mul rget.0 for.@[
+						0 vget.2 rget.0 add set
+					loop.@]
+					vget.3 1 add vset.3
+				]:
+			loop.@]
+		loop.@]
+		vget.3 dot
+	ret
+	
+start:
+	5000 call.@sieve vminfo
