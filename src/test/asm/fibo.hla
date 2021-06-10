@@ -13,6 +13,33 @@
 	32 fib vminfo
 ))
 
+((	C: idea for compilation
+	
+	void fib(int n, int *out) {
+		int s0,s1,s2;
+		s0 = n;
+		s1 = 2;
+		s0 = s0<s1 ? 1:0;
+		if (s0) {
+			s0 = 1;
+			out[0] = s0;
+			return;
+		}
+		s0 = n;
+		s1 = 2;
+		s0 = s0 - s1;
+		fib(s0,out);
+		s0 = out[0];
+		s1 = n;
+		s2 = 1;
+		s1 = s1 - s2;
+		fib(s1,out);
+		s1 = out[0];
+		s0 = s0 + s1;
+		out[0] = s0;
+	}
+))
+
 0 jz.@start
 
 
