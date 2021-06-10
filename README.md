@@ -504,5 +504,7 @@ Done:
 |    **Cozy design spaces** | https://www.lexaloffle.com/bbs/?tid=31634                      |
 |         **Another World** | https://fabiensanglard.net/another_world_polygons/             |
 |                  **Mako** | https://github.com/JohnEarnest/Mako                            |
+|            **Blacklight** | https://github.com/acook/blacklight/wiki                       |
+|                 **Quark** | https://github.com/henrystanley/Quark                          |
 
 [//]: # (online .md editor: https://markdown-editor.github.io/ )
