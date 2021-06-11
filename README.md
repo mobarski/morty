@@ -73,9 +73,9 @@ Morty allows the usage of "goto" for the same reasons it is still in C and GO: i
 
 ```
 def fib (n--f) :n
-	n 2 lt then 1 ret do
-	n 2 sub fib (f2)
-	n 1 sub fib (f2 f1) add (f)
+    n 2 lt then 1 ret do
+    n 2 sub fib (f2)
+    n 1 sub fib (f2 f1) add (f)
 end
 ```
 
@@ -143,7 +143,7 @@ Indefinite loops:
 ```forth
 begin
     beep
-	500 ms sleep
+    500 ms sleep
 again
 ```
 
@@ -407,12 +407,12 @@ Stack based labels:
 - ]: -> pop address from the stack, use current address there
 
 ```
-	push.0 jz.@start
-	inc:
-		push.1 add.0 ret.0
-	start:
-		push.2 call.@inc
-	stop.0
+    push.0 jz.@start
+    inc:
+        push.1 add.0 ret.0
+    start:
+        push.2 call.@inc
+    stop.0
 ```
 
 ## High-Level Assembler
@@ -424,12 +424,12 @@ All values are transformed into "push.value".
 Character literals are converted into integer literals ("push.value").
 
 ```
-	0 jz.@start
-	inc:
-		1 add ret
-	start:
-		2 :inc
-	stop
+    0 jz.@start
+    inc:
+        1 add ret
+    start:
+        2 :inc
+    stop
 ```
 
 # Kanban

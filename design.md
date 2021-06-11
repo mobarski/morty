@@ -92,17 +92,17 @@ distance 10 or-less then 10 times beep loop do
 distance 10 or-less if 10 times beep loop then
 distance 10 or-less if 10 times do beep loop then
 
-distance 10 or-less then [
-    10 times [
-        beep
-    ]
-]
-
 distance 10 or-less then 
     10 times
         beep
     loop
 do
+
+distance 10 or-less then [
+    10 times [
+        beep
+    ]
+]
 
 distance 10 or-less if
     10 times
@@ -317,26 +317,26 @@ loop
 Mako
 ```forth
 loop
-	...
+    ...
 while / until / again
 
 10 for
-	... ( supports i and j loop indices )
+    ... ( supports i and j loop indices )
 next
 ```
 
 Forth
 ```forth
 limit index do
-	...
+    ...
 loop / +loop
 
 begin
-	...
+    ...
 f until
 
 begin
-	...
+    ...
 again
 
 begin xx f while yyy repeat
