@@ -77,6 +77,9 @@ push.2 lt.0 jz.@[ push.1 ret.0 push.@]   ( no replacement required )
 
 ```forth
 
+distance 10 or-less then [ 10 times [ beep ] ]
+distance 10 or-less then 10 times beep loop do
+
 distance 10 or-less then collision-warning end-then
 distance 10 or-less then collision-warning end
 distance 10 or-less if   collision-warning then       (Forth)
