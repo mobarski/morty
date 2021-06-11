@@ -438,16 +438,17 @@ Character literals are converted into integer literals ("push.value").
 Active:
 
 Next:
+- vm cleanup, separate core from turbo
 - vm text-based mem dump
 - separate stacks, code and mem ?
 - stand-alone executable
 
 To do:
+- dynamic statistics (op freq)
 - global variables
 - static arrays
 - capture variables in lambdas
 - tail call
-- dynamic statistics (op freq)
 - little vs big endian
 - ASM - token to line number (for error reporting)
 - iterators

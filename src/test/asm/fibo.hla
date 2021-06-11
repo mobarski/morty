@@ -24,4 +24,4 @@ ret
 
 start:
 
-	38 call.@fib vminfo
+	(38) 4 call.@fib vminfo

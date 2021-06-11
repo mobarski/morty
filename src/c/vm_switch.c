@@ -1,6 +1,10 @@
 t_cell op  = mem[ip++];
 t_cell arg = mem[ip++];
 t_cell v,v2,v3;
+
+//printf("T:%d\tR:%d\tSP:%d\tRP:%d\tFP:%d\tIP:%d\tDP:%d\tMEM[SP]:%d\tOP:%d\tdt:%d ms \n",tos,mem[rp],sp,rp,fp,ip,hp,mem[sp],op,ms_clock()-ts_vminfo); // XXX debug
+//printf("T:%-6d SD:%-4d RD:%-4d IP:%-4d %-8s %-4d\n",tos,sp-state.sp,rp-state.rp,ip,OP_NAME[op],arg); // XXX debug
+
 switch(op) {
 	// BRANCHING
 	case CALL:   r_push(fp); r_push(ip); ip=arg; fp=rp; break; // TEST ME
@@ -118,5 +122,3 @@ switch(op) {
 	case IOGET: break; // TODO
 	case IOSET: break; // TODO
 }
-
-//printf("T:%d\tR:%d\tSP:%d\tRP:%d\tFP:%d\tIP:%d\tDP:%d\tMEM[SP]:%d\tOP:%d\tdt:%d ms \n",tos,mem[rp],sp,rp,fp,ip,hp,mem[sp],op,ms_clock()-ts_vminfo); // XXX debug

@@ -13,3 +13,10 @@ if 1:
 	values = ",".join(out)
 	print("void* op_ptr[] = {",values,"};")
 	
+# op_name
+if 1:
+	out = ['"?"']*256
+	for op,code in OPCODE.items():
+		out[code] = f'"{op}"'
+	values = ",".join(out)
+	print("char* OP_NAME[] = {",values,"};")
