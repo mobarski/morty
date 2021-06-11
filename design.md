@@ -324,8 +324,8 @@ To benchmark new Threading Model following instructions must be implemented:
 
 ## Benchmark
 
-XG 6254 -> Intel Xeon Gold 6254 @ 3.10GHz  
-I5 4590 -> Intel Core I5 4590 @ 3.30GHz  
+XG 6254 -> Intel Xeon Gold 6254 @ 3.10GHz  gcc 10.3.0
+I5 4590 -> Intel Core I5 4590 @ 3.30GHz    
 
 ### loops.hla n=28 for loop
 
