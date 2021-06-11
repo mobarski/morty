@@ -73,7 +73,7 @@ Morty allows the usage of "goto" for the same reasons it is still in C and GO: i
 
 ```
 def fib (n--f) :n
-	n 2 lt [ 1 ret ] if
+	n 2 lt then 1 ret do
 	n 2 sub fib (f2)
 	n 1 sub fib (f2 f1) add (f)
 end
@@ -113,33 +113,18 @@ end
 Local variables are stored on the return stack.
 On function end or early return they will be automatically discarded.
 
-## Lambda functions
-
-```
-21 [ dup add ] call
-```
-
-Lambda functions are using the stack frame of the parent.
-They are not closures and should not be shared if they are using parent's local variables.
-
 ## Conditionals
 
-WARNING: this may change
+There is only one form of conditional code execution in the form of "some-condition then ... do".
+The support for "else" or "case" might be added later.
 
-Conditionals are based on lambda functions.
-
-```
-distance 10 or-less [ collision-warning ] if
-age 18 or-more [ show-content ] [ show-restriction ] if-else
+```forth
+distance 10 or-less then collision-warning do
 ```
 
 ## Loops
 
-WARNING: this may change
-
-Loops are counted up.  
-In every loop "break" and "continue" can be used.  
-Minimum number of loop executions is zero.  
+The are two counted loop types and one indefinite type.
 
 Counted loops:
 ```forth
@@ -153,15 +138,18 @@ loop
     i dot
 loop
 ```
-times -> "0 1 for"
-
 
 Indefinite loops:
 ```forth
 begin
-    ( do something )
+    beep
+	500 ms sleep
 again
 ```
+
+Loops are counted up.  
+In every loop "break" and "continue" can be used.  
+Minimum number of loop executions is zero.  
 
 ## Structures
 
@@ -194,6 +182,15 @@ macro rot  >R swap <R swap
 
 Macros cannot be longer than 1 line.
 This is on purpose to keep the macros simple.
+
+## Lambda functions
+
+```
+21 [ dup add ] call
+```
+
+Lambda functions are using the stack frame of the parent.
+They are not closures and should not be shared if they are using parent's local variables.
 
 ## Global variables
 
@@ -279,7 +276,7 @@ Translation from the core set into extended set is done by peephole optimization
 | ------ | ---------- | ----- | ---- | ---- | 
 | get    | (a--b)     |       | yes  | get value from memory cell a     |
 | set    | (va--)     |       | yes  | set memory cell a to value v     |
-| allot  | (n--a)     |       | ???  | allot n cells on the heap and return address to the first allocated cell |
+| allot  | (n--a)     |       | yes  | allot n cells on the heap and return address to the first allocated cell |
 | geti X | (a--b)     | N/A   |      | get value from memory cell a+X   | 
 | seti X | (va--)     | N/A   |      | set memory cell a+X to value v   | 
 
@@ -315,9 +312,9 @@ Each letter in the word is encoded on 5 bits. Only uppercase letters are availab
 | div    | (ab--c)    |       | yes  | a / b                |
 | muldiv | (abc--d)   |       |      | a * b / c            |
 | mod    | (ab--c)    |       | yes  | a % b                |
-| neg    | (a--b)     |       | ???  | -a                   |
+| neg    | (a--b)     |       | yes  | -a                   |
 | ushr   | (ab--c)    |       |      | unsigned shift right |
-| abs    | (a--b)     |       |      | -a if a<0 else a     |
+| abs    | (a--b)     |       | yes  | -a if a<0 else a     |
 
 neg -> 0 swap sub
 mod -> (ab) over (aba) swap (aab) div (ac) over (aca) mul (ad) sub
@@ -329,7 +326,7 @@ mod -> (ab) over (aba) swap (aab) div (ac) over (aca) mul (ad) sub
 | and    | (ab--c)    |       | yes  | a & b                  |
 | or     | (ab--c)    |       | yes  | a \| b                 |
 | xor    | (ab--c)    |       | yes  | a ^ b                  |
-| inv    | (a--b)     |       | ???  | ~a  (binary inversion) |
+| inv    | (a--b)     |       | yes  | ~a  (binary inversion) |
 | shl    | (ab--c)    |       | yes  | a << b                 |
 | shr    | (ab--c)    |       | yes  | a >> b                 |
 
@@ -341,17 +338,17 @@ inv -> 0xFFFFFFFF xor
 
 | asm    | effect     | morty   | core | info               | 
 | ------ | ---------- | -----   | ---- | ------------------ | 
-| nz     | (a--x)     | bool    |      | 1 if a!=0 else 0   |
-| eqz    | (a--x)     | 0=      |      | 1 if a==0 else 0   |
-| gtz    | (a--x)     | 0>      |      | 1 if a>0  else 0   |
-| ltz    | (a--x)     | 0<      |      | 1 if a<0  else 0   |
+| nz     | (a--x)     | bool    | ???  | 1 if a!=0 else 0   |
+| eqz    | (a--x)     | 0=      | ???  | 1 if a==0 else 0   |
+| gtz    | (a--x)     | 0>      | ???  | 1 if a>0  else 0   |
+| ltz    | (a--x)     | 0<      | ???  | 1 if a<0  else 0   |
 |        |            |         |      |                    |
 | eq     | (ab--x)    | ==      | yes  | 1 if a == b else 0 |
 | ne     | (ab--x)    | !=      | yes  | 1 if a != b else 0 |
 | lt     | (ab--x)    | below   | yes  | 1 if a < b  else 0 |
 | gt     | (ab--x)    | above   | yes  | 1 if a > b  else 0 |
-| le     | (ab--x)    | or-less | ???  | 1 if a <= b else 0 |
-| ge     | (ab--x)    | or-more | ???  | 1 if a >= b else 0 |
+| le     | (ab--x)    | or-less | yes  | 1 if a <= b else 0 |
+| ge     | (ab--x)    | or-more | yes  | 1 if a >= b else 0 |
 |        |            |         |      |                    |
 | xeq    | (ab--abx)  |         |      | 1 if a == b else 0 |
 | xne    | (ab--abx)  |         |      | 1 if a != b else 0 |
@@ -360,8 +357,8 @@ inv -> 0xFFFFFFFF xor
 | xlt    | (ab--abx)  |         |      | 1 if a < b  else 0 |
 | xgt    | (ab--abx)  |         |      | 1 if a > b  else 0 |
 |        |            |         |      |                    |
-| min    | (ab--x)    |         |      | a if a < b  else b |
-| max    | (ab--x)    |         |      | a if a > b  else b |
+| min    | (ab--x)    |         | yes  | a if a < b  else b |
+| max    | (ab--x)    |         | yes  | a if a > b  else b |
 | pick   | (abc--x)   |         | yes  | a if c != 0 else b |
 
 
@@ -439,30 +436,31 @@ Character literals are converted into integer literals ("push.value").
 
 ```
 Active:
-- conditionals
 
 Next:
 - vm text-based portable executable format
 - vm text-based mem dump
+- separate stacks, code and mem ?
 - stand-alone executable
 
 To do:
-- separate stacks, code and mem
 - global variables
 - static arrays
 - capture variables in lambdas
-- strings
 - tail call
 - dynamic statistics (op freq)
 - little vs big endian
 - ASM - token to line number (for error reporting)
 - iterators
+- else, case
+- strings
 - cooperative multitasking
 - literate programming (compile from markdown)
 - multiprocessing
 - add Morty to linguist (https://github.com/github/linguist) so it can be detected by GitHub
 
 Done:
+- conditionals
 - replicated switch threading
 - sieve.hla
 - parametric cell size (16, 32, 64 bits)
