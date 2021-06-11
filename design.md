@@ -75,6 +75,8 @@ push.2 lt.0 jz.@[ push.1 ret.0 push.@]   ( no replacement required )
 
 ## Sandbox
 
+### New
+
 ```forth
 distance 10 or-less then [ 10 times [ beep ] ]
 distance 10 or-less then 10 times beep loop do
@@ -86,7 +88,6 @@ distance 10 or-less then [
         beep
     ]
 ]
-
 
 distance 10 or-less then 
     10 times
@@ -106,6 +107,8 @@ distance 10 or-less if
     loop
 then
 ```
+
+### Old
 
 ```forth
 distance 10 or-less then collision-warning end-then
