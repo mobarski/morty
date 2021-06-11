@@ -13,6 +13,7 @@ switch(op) {
 	case LAMBDA: s_push(ip); ip=arg;                    break; // REMOVE
 	case GOTO:   ip=arg;                                break;
 	case STOP:   goto stop;                             break; // TODO RENAME: HALT
+	case NOP:                                           break;
 	// LOOPS
 	//case TIMES:  v=s_pop(); r_push(arg); r_push(v-1); break; // with loop frame // TODO zero iterations
 	//case LOOP:   if (mem[rp]>0) {ip=arg; mem[rp]-=1;} else {rp-=2;};  break;
@@ -39,6 +40,7 @@ switch(op) {
 	// DATA STACK
 	case SWAP:   v=tos; tos=mem[sp]; mem[sp]=v; break;
 	case PUSH:   s_push(arg);                   break;
+	case PUSHA:  s_push(arg);                   break;
 	case DUP:    s_push(tos);                   break;
 	case DROP:   v=s_pop();                     break;
 	case OVER:   s_push(mem[sp]);               break;

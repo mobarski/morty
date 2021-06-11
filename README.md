@@ -438,7 +438,6 @@ Character literals are converted into integer literals ("push.value").
 Active:
 
 Next:
-- vm text-based portable executable format
 - vm text-based mem dump
 - separate stacks, code and mem ?
 - stand-alone executable
@@ -460,6 +459,7 @@ To do:
 - add Morty to linguist (https://github.com/github/linguist) so it can be detected by GitHub
 
 Done:
+- vm text-based portable executable format
 - conditionals
 - replicated switch threading
 - sieve.hla

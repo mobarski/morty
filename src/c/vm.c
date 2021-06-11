@@ -128,12 +128,10 @@ boot(t_cell *mem, t_cell *code, int code_len, config cfg) {
 	return state;
 }
 
-
 int
-load_from_file(char *path, t_cell *code, int max_len) {
+load_from_text_file(char *path, t_cell *code, int max_len) {
 	FILE *in;
 	int i; // cell position in the code
-	int FILE_CELL_SIZE = 4;
 	
 	in = fopen(path,"r");
 	if (!in) {
@@ -142,8 +140,8 @@ load_from_file(char *path, t_cell *code, int max_len) {
 	}
 	
 	for (i=0; i<max_len; i++) {
-		int n = fread(&code[i],FILE_CELL_SIZE,1,in);
-		if (n==0) {
+		int n = fscanf(in, "%d", &code[i]);
+		if ((n==0)||(n==EOF)) {
 			break;
 		}
 	}
@@ -155,7 +153,6 @@ load_from_file(char *path, t_cell *code, int max_len) {
 		
 	return i; // code_len
 }
-
 
 // TODO: text format
 /*
@@ -281,7 +278,7 @@ main(int argc, char *argv[], char **env) {
 	
 	// BOOT & RUN
 	//dump_mem("dump.mrt",code,0,40);
-	code_len = load_from_file(cfg.path, code, cfg.memory_size);
+	code_len = load_from_text_file(cfg.path, code, cfg.memory_size);
 	initial = boot(mem, code, code_len, cfg);
 	free(code);
 	final = run(initial);

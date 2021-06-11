@@ -1,5 +1,7 @@
 #define REPL_SWITCH_BODY { \
 case STOP: goto OP_STOP; \
+case NOP: goto OP_NOP; \
+case PUSHA: goto OP_PUSHA; \
 case PUSH: goto OP_PUSH; \
 case DUP: goto OP_DUP; \
 case DROP: goto OP_DROP; \
@@ -105,6 +107,7 @@ OP_IFELSE: v=s_pop(); v2=s_pop(); v3=s_pop(); r_push(ip); ip=v3?v2:v; JUMP; // R
 OP_LAMBDA: s_push(ip); ip=arg;                    JUMP; // REMOVE
 OP_GOTO:   ip=arg;                                JUMP;
 OP_STOP:   goto stop;                             JUMP; // TODO RENAME: HALT
+OP_NOP:                                           NEXT;
 // LOOPS
 OP_TIMES:  v=s_pop(); r_push(arg); r_push(1); r_push(v-1); r_push(0); NEXT; // with loop frame // TODO zero iterations
 OP_FOR:    v=s_pop();v2=s_pop();v3=s_pop(); r_push(arg); r_push(v); r_push(v3); r_push(v2); NEXT; // TODO zero iterations
@@ -123,6 +126,7 @@ OP_VSET:   v=s_pop(); mem[fp+arg]=v;          NEXT; // local variables
 // DATA STACK
 OP_SWAP:   v=tos; tos=mem[sp]; mem[sp]=v; NEXT;
 OP_PUSH:   s_push(arg);                   NEXT;
+OP_PUSHA:  s_push(arg);                   NEXT;
 OP_DUP:    s_push(tos);                   NEXT;
 OP_DROP:   v=s_pop();                     NEXT;
 OP_OVER:   s_push(mem[sp]);               NEXT;

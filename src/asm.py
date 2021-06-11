@@ -19,12 +19,6 @@ def to_cells(text, op_code, do_optimize=False):
 	cells         = compile(tokens, op_code)
 	return cells
 
-def to_binary_file(filename, text, op_code, do_optimize=False):
-	cells = to_cells(code, op_code, do_optimize)
-	compiled = array("i", cells).tobytes()
-	open(filename,'wb').write(compiled)
-	return cells
-
 def to_text_file(filename, text, op_code, do_optimize=False):
 	cells = to_cells(code, op_code, do_optimize)
 	compiled = []
@@ -200,6 +194,7 @@ def hlasm_to_asm(code):
 
 OPS = [
 	'STOP',
+	'NOP','PUSHA',
 	'PUSH','DUP','DROP','SWAP','STOR','RTOS',
 	'ADD','MUL','DIV','SUB',
 	'AND','OR','XOR','NZ',
@@ -231,7 +226,6 @@ if __name__=="__main__":
 	parser.add_argument('-i',  metavar='path', type=str, help='input path (default: stdin)')
 	parser.add_argument('-hl', action='store_true', help='treat input as high level assembler')
 	parser.add_argument('-d',  action='store_true', help='debug')
-	parser.add_argument('-t',  action='store_true', help='text output')
 	parser.add_argument('-O',  action='store_true', help='optimize')
 	args = parser.parse_args()
 
@@ -251,7 +245,4 @@ if __name__=="__main__":
 		print(f"cells: {len(cells)}")
 		#to_direct_threading(code, OPCODE, do_optimize=args.O) # XXX
 	if args.o:
-		if args.t:
-			to_text_file(args.o, code, OPCODE, do_optimize=args.O)
-		else:
-			to_binary_file(args.o, code, OPCODE, do_optimize=args.O)
+		to_text_file(args.o, code, OPCODE, do_optimize=args.O)
