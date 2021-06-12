@@ -1,4 +1,5 @@
-// Simple switch-based token-threaded MortyVM
+//define DEBUG_FREQ
+//define DEBUG_TRACE
 
 #include <stdio.h>
 #include <string.h>
@@ -32,7 +33,24 @@ typedef struct {
 	t_cell tos;
 	t_cell hp;
 	t_cell *mem;
+	long long op_cnt;
+	long long op_freq[256];
 } vm_state;
+
+void
+show_op_freq(vm_state *vm) {
+	#ifdef DEBUG_FREQ
+		printf("\nOP FREQ:\n\n");
+		for (int i=0; i<256; i++) {
+			if (vm->op_freq[i] > 0) {
+				//printf("  %-8s %d\n", OP_NAME[i], vm->op_freq[i]);
+				printf("  %12d %-8s\n", vm->op_freq[i], OP_NAME[i]);
+			}
+		}
+		//printf("\n  TOTAL    %d\n", vm->op_cnt);
+		printf("\n  %12d TOTAL\n", vm->op_cnt);
+	#endif
+}
 
 // VM RUN
 vm_state
@@ -48,7 +66,7 @@ run(vm_state state) {
 	t_cell *mem = state.mem;
 	
 	// FINAL STATE
-	vm_state final;
+	vm_state final = {0};
 
 	// AUX VARS
 	unsigned int uv=0; // for USHR
@@ -62,6 +80,11 @@ run(vm_state state) {
 	int hd_max=0; // max heap depth
 	int oli=0;     // outer loop iterations
 	int ilc=1000000; // inner loop cnt
+	
+	#ifdef DEBUG_FREQ
+		// long long op_freq[256] = {0};
+		//long long op_cnt = 0;
+	#endif
 	
 	// TODO: propper main loop
 	// MAIN LOOP
@@ -83,6 +106,7 @@ run(vm_state state) {
 	fprintf(stderr,"WARNING: Iterations limit reached!\n");
 	
 	stop:
+	show_op_freq(&final);
 	// RETURN FINAL VM STATE
 	final.tos = tos;
 	final.ip  = ip;
@@ -92,7 +116,6 @@ run(vm_state state) {
 	final.hp  = hp;
 	return final;
 }
-
 
 // ----------------------------------------------------------------------------
 // ---[ BOOT ]-----------------------------------------------------------------

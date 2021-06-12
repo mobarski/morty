@@ -2,8 +2,14 @@ t_cell op  = mem[ip++];
 t_cell arg = mem[ip++];
 t_cell v,v2,v3;
 
-//printf("T:%d\tR:%d\tSP:%d\tRP:%d\tFP:%d\tIP:%d\tDP:%d\tMEM[SP]:%d\tOP:%d\tdt:%d ms \n",tos,mem[rp],sp,rp,fp,ip,hp,mem[sp],op,ms_clock()-ts_vminfo); // XXX debug
-//printf("T:%-6d SD:%-4d RD:%-4d IP:%-4d %-8s %-4d\n",tos,sp-state.sp,rp-state.rp,ip,OP_NAME[op],arg); // XXX debug
+#ifdef DEBUG_FREQ
+	final.op_freq[op] += 1;
+	final.op_cnt += 1;
+#endif
+#ifdef DEBUG_TRACE
+	printf("T:%-6d SD:%-4d RD:%-4d IP:%-4d %-8s %-4d\n",tos,sp-state.sp,rp-state.rp,ip,OP_NAME[op],arg); // XXX debug
+	//printf("T:%d\tR:%d\tSP:%d\tRP:%d\tFP:%d\tIP:%d\tDP:%d\tMEM[SP]:%d\tOP:%d\tdt:%d ms \n",tos,mem[rp],sp,rp,fp,ip,hp,mem[sp],op,ms_clock()-ts_vminfo); // XXX debug
+#endif
 
 switch(op) {
 	// BRANCHING
