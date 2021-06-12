@@ -416,20 +416,24 @@ Active:
 
 Next:
 - vm cleanup, separate core from turbo
+- primitive output
 - separate stacks, code and mem ?
 - stand-alone executable
 
 To do:
+- capture variables in lambdas
 - global variables
 - static arrays
-- capture variables in lambdas
 - tail call
-- little vs big endian
+- quote / unquote 
+- array operations (ala numpy / APL) ?
+- transpilation to C
 - ASM - token to line number (for error reporting)
 - iterators
 - else, case
 - strings
 - cooperative multitasking
+- little vs big endian
 - literate programming (compile from markdown)
 - multiprocessing
 - add Morty to linguist (https://github.com/github/linguist) so it can be detected by GitHub
@@ -482,5 +486,6 @@ Done:
 |                  **Mako** | https://github.com/JohnEarnest/Mako                            |
 |            **Blacklight** | https://github.com/acook/blacklight/wiki                       |
 |                 **Quark** | https://github.com/henrystanley/Quark                          |
+|     **Array programming** | https://en.wikipedia.org/wiki/Array_programming                |
 
 [//]: # (online .md editor: https://markdown-editor.github.io/ )
