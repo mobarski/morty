@@ -412,11 +412,11 @@ Character literals are converted into integer literals ("push.value").
 
 ```
 Active:
+- primitive output
 - vm text-based mem dump
 
 Next:
-- vm cleanup, separate core from turbo
-- primitive output
+- vm cleanup, separate core from (trubo) extension
 - separate stacks, code and mem ?
 - stand-alone executable
 
