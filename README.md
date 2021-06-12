@@ -243,32 +243,25 @@ Translation from the core set into extended set is done by peephole optimization
 | name    | effect     | morty     | core | info | 
 | ------- | ---------- | --------- | ---- | ---- |
 | jz    X | (v--)      | jz @label | yes  | set I to X (next instruction cell) if v==0                              |
+| goto  X | (--)       |           | yes  | set I to X (next instruction cell)                                      |
 | call  X | (--)(=fr)  | x         | yes  | call procedure at X (next instruction cell)                             |
 | ret     | (fr*=)     |           | yes  | return from procedure call                                              |
-| qcall   | (a--)      | call      | yes  | quick call to address from the stack without changing the frame pointer |
-| qret    | (r=)       |           | yes  | quick return without changing the frame pointer                         |
-| goto  X | (--)       |           | yes  | set I to X (next instruction cell)                                      |
+| qcall   | (a--)      | call      | ???  | quick call to address from the stack without changing the frame pointer |
+| qret    | (r=)       |           | ???  | quick return without changing the frame pointer                         |
 
 ### stack manipulation
 
-| asm    | effect         | morty | core | info                                        | 
-| ------ | -------------- | ----- | ---- | ------------------------------------------- |
-| push X | (--x)          | x     | yes  | push X onto the stack                       |  
-| stor   | (a--)(=a)      | >R    | yes  | pop top of data stack onto the return stack |
-| rtos   | (--a)(a=)      | R>    | yes  | pop top of return stack onto data stack     |
-| dup    | (a--aa)        |       | yes  | duplicate top item                          |
-| drop   | (a--)          |       | yes  | drop top item                               |
-| swap   | (ab--ba)       |       | yes  | swap two top items                          |
-| over   | (ab--aba)      |       | yes  |                                             |
-| rot    | (abc--bca)     |       | yes  | rotate three items                          |
-| unrot  | (abc--cab)     |       |      | unrotate three items                        |
-|        |                |       |      |                                             |
-| unpack | (v--bcde)      |       |      | unpack bytes from one cell into 4 cells    ??? byte by byte ??? |
-| pack   | (abcd--v)      |       |      | pack lowest bytes from 4 cells into 1 cell ??? byte by byte ??? |
-|        |                |       |      |                                             |
-| 2swap  | (AaBb--BbAa)   |       |      | swap two pairs of items                     |
-| 2over  | (AaBb--AaBbAa) |       |      |                                             |
-
+| asm     | effect         | morty | core | info                                        | 
+| ------- | -------------- | ----- | ---- | ------------------------------------------- |
+| push X  | (--x)          | x     | yes  | push X onto the stack                       |  
+| pusha X | (--x)          | x     | yes  | push X onto the stack (X is cell address)   |  
+| stor    | (a--)(=a)      | >R    | yes  | pop top of data stack onto the return stack |
+| rtos    | (--a)(a=)      | R>    | yes  | pop top of return stack onto data stack     |
+| dup     | (a--aa)        |       | yes  | duplicate top item                          |
+| drop    | (a--)          |       | yes  | drop top item                               |
+| swap    | (ab--ba)       |       | yes  | swap two top items                          |
+| over    | (ab--aba)      |       | yes  |                                             |
+| rot     | (abc--bca)     |       | yes  | rotate three items                          |
 
 ### memory access
 
@@ -302,6 +295,28 @@ Word is a short text (0-6 characters) encoded as an integer value.
 Words are intended mainly for VMs without propper string support.
 Each letter in the word is encoded on 5 bits. Only uppercase letters are available, terminator and 5 selected characters (TBD).
 
+### debugging
+
+| asm     | effect     | morty   | core | info | 
+| ------- | ---------- | ------- | ---- | ---- |
+| vminfo  | (--)       |         | ???  | print information about VM registers and show time in ms since last vminfo call or start of the program |
+
+
+### I/O - virtual devices
+
+TODO
+
+I/O is handled via vectored execution (similar to ioctl, fcntl).
+
+| asm    | effect     | morty | core | info                                              | 
+| ------ | ---------- | ----- | ---- | ------------------------------------------------- |
+| ioget  | (dk--v)    |       | yes  | get value (v) for the key (k) from the device (d) |
+| ioset  | (vdk--)    |       | yes  | set key (k) to value (v) on the device (d)        |
+
+TODO: name: set vs put
+TODO: name: io vs dev
+TODO: api:  dk vs kd
+
 ### ALU - arithmetic
 
 | asm    | effect     | morty | core | info                 | 
@@ -316,9 +331,6 @@ Each letter in the word is encoded on 5 bits. Only uppercase letters are availab
 | ushr   | (ab--c)    |       |      | unsigned shift right |
 | abs    | (a--b)     |       | yes  | -a if a<0 else a     |
 
-neg -> 0 swap sub
-mod -> (ab) over (aba) swap (aab) div (ac) over (aca) mul (ad) sub
-
 ### ALU - bits
 
 | asm    | effect     | morty | core | info                   | 
@@ -329,10 +341,6 @@ mod -> (ab) over (aba) swap (aab) div (ac) over (aca) mul (ad) sub
 | inv    | (a--b)     |       | yes  | ~a  (binary inversion) |
 | shl    | (ab--c)    |       | yes  | a << b                 |
 | shr    | (ab--c)    |       | yes  | a >> b                 |
-
-TODO: xor vs inv in the core -> xor
-a^b -> ~(a&b)&(b|c)
-inv -> 0xFFFFFFFF xor
 
 ### ALU - comparators
 
@@ -360,35 +368,6 @@ inv -> 0xFFFFFFFF xor
 | min    | (ab--x)    |         | yes  | a if a < b  else b |
 | max    | (ab--x)    |         | yes  | a if a > b  else b |
 | pick   | (abc--x)   |         | yes  | a if c != 0 else b |
-
-
-le -> swap gt
-ge -> swap lt
-
-TODO: decide if comparators are destructive or not or both versions are available
-TODO: decide about aliases: <= vs or-less vs le
-
-### debugging
-
-| asm     | effect     | morty   | core | info | 
-| ------- | ---------- | ------- | ---- | ---- |
-| vminfo  | (--)       |         | ???  | print information about VM registers and show time in ms since last vminfo call or start of the program |
-
-
-### I/O - virtual devices
-
-TODO
-
-I/O is handled via vectored execution (similar to ioctl, fcntl).
-
-| asm    | effect     | morty | core | info                                              | 
-| ------ | ---------- | ----- | ---- | ------------------------------------------------- |
-| ioget  | (dk--v)    |       | yes  | get value (v) for the key (k) from the device (d) |
-| ioset  | (vdk--)    |       | yes  | set key (k) to value (v) on the device (d)        |
-
-TODO: name: set vs put
-TODO: name: io vs dev
-TODO: api:  dk vs kd
 
 # Morty VM Assembler
 
@@ -436,12 +415,12 @@ Character literals are converted into integer literals ("push.value").
 
 ```
 Active:
+- dynamic statistics (op freq, cycle cnt)
 
 Next:
 - vm cleanup, separate core from turbo
 - vm text-based mem dump
 - separate stacks, code and mem ?
-- dynamic statistics (op freq, cycle cnt)
 - stand-alone executable
 
 To do:
