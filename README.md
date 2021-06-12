@@ -242,9 +242,9 @@ Translation from the core set into extended set is done by peephole optimization
 
 | name    | effect     | morty     | core | info | 
 | ------- | ---------- | --------- | ---- | ---- |
-| jz.X    | (v--)      | jz @label | yes  | set I to X (next instruction cell) if v==0                              |
-| goto.X  | (--)       |           | yes  | set I to X (next instruction cell)                                      |
-| call.X  | (--)(=fr)  | x         | yes  | call procedure at X (next instruction cell)                             |
+| jz X    | (v--)      | jz @label | yes  | set I to X (next instruction cell) if v==0                              |
+| goto X  | (--)       |           | yes  | set I to X (next instruction cell)                                      |
+| call X  | (--)(=fr)  | x         | yes  | call procedure at X (next instruction cell)                             |
 | ret     | (fr*=)     |           | yes  | return from procedure call                                              |
 | qcall   | (a--)      | call      | ???  | quick call to address from the stack without changing the frame pointer |
 | qret    | (r=)       |           | ???  | quick return without changing the frame pointer                         |
@@ -253,8 +253,8 @@ Translation from the core set into extended set is done by peephole optimization
 
 | asm     | effect         | morty | core | info                                        | 
 | ------- | -------------- | ----- | ---- | ------------------------------------------- |
-| push.X  | (--x)          | x     | yes  | push X onto the stack                       |  
-| pusha.X | (--x)          | x     | yes  | push X onto the stack (X is cell address)   |  
+| push X  | (--x)          | x     | yes  | push X onto the stack                       |  
+| pusha X | (--x)          | x     | yes  | push X onto the stack (X is cell address)   |  
 | stor    | (a--)(=a)      | >R    | yes  | pop top of data stack onto the return stack |
 | rtos    | (--a)(a=)      | R>    | yes  | pop top of return stack onto data stack     |
 | dup     | (a--aa)        |       | yes  | duplicate top item                          |
@@ -270,16 +270,16 @@ Translation from the core set into extended set is done by peephole optimization
 | get    | (a--b)     |       | yes  | get value from memory cell a     |
 | set    | (va--)     |       | yes  | set memory cell a to value v     |
 | allot  | (n--a)     |       | yes  | allot n cells on the heap and return address to the first allocated cell |
-| geti.X | (a--b)     | N/A   |      | get value from memory cell a+X   | 
-| seti.X | (va--)     | N/A   |      | set memory cell a+X to value v   | 
+| geti X | (a--b)     | N/A   |      | get value from memory cell a+X   | 
+| seti X | (va--)     | N/A   |      | set memory cell a+X to value v   | 
 
 ### frame - local variables
 
 | name   | effect     | morty | core | info                                   | 
 | ------ | ---------- | ----- | ---- | -------------------------------------- |
 | ftos   | (--a)      | <F    |      | push frame pointer onto the data stack | 
-| vget.X | (--n)      | x     | yes  | get local variable X                   |
-| vset.X | (n--)      | :x    | yes  | set local variable X                   |
+| vget X | (--n)      | x     | yes  | get local variable X                   |
+| vset X | (n--)      | :x    | yes  | set local variable X                   |
 
 TODO: ftos or no ftos BUT vget and vset in the core
 
