@@ -257,6 +257,7 @@ Translation from the core set into extended set is done by peephole optimization
 | pusha X | (--x)          | x     | yes  | push X onto the stack (X is cell address)   |  
 | stor    | (a--)(=a)      | >R    | yes  | pop top of data stack onto the return stack |
 | rtos    | (--a)(a=)      | R>    | yes  | pop top of return stack onto data stack     |
+| rget X  | (--a)          |       | yes  | get loop variable X                         |
 | dup     | (a--aa)        |       | yes  | duplicate top item                          |
 | drop    | (a--)          |       | yes  | drop top item                               |
 | swap    | (ab--ba)       |       | yes  | swap two top items                          |
@@ -277,17 +278,14 @@ Translation from the core set into extended set is done by peephole optimization
 
 | name   | effect     | morty | core | info                                   | 
 | ------ | ---------- | ----- | ---- | -------------------------------------- |
-| ftos   | (--a)      | <F    |      | push frame pointer onto the data stack | 
 | vget X | (--n)      | x     | yes  | get local variable X                   |
 | vset X | (n--)      | :x    | yes  | set local variable X                   |
-
-TODO: ftos or no ftos BUT vget and vset in the core
 
 ### primitive output
 
 | asm    | effect     | morty   | core | info                                             | 
 | ------ | ---------- | ------- | ---- | ------------------------------------------------ |
-| emit   | (c--)      |         |      | print single character                           |
+| emit   | (c--)      |         | ???  | print single character                           |
 | dot    | (n--)      |         |      | print number from top of the stack and one space |
 | echo   | (w--)      |         |      | print word from top of the stack                 |
 
@@ -303,8 +301,6 @@ Each letter in the word is encoded on 5 bits. Only uppercase letters are availab
 
 
 ### I/O - virtual devices
-
-TODO
 
 I/O is handled via vectored execution (similar to ioctl, fcntl).
 
@@ -325,10 +321,10 @@ TODO: api:  dk vs kd
 | sub    | (ab--c)    |       | yes  | a - b                |
 | mul    | (ab--c)    |       | yes  | a * b                |
 | div    | (ab--c)    |       | yes  | a / b                |
-| muldiv | (abc--d)   |       |      | a * b / c            |
+| muldiv | (abc--d)   |       | ???  | a * b / c            |
+| mulshr | (abc--d)   |       | ???  | a * b >> d           |
 | mod    | (ab--c)    |       | yes  | a % b                |
 | neg    | (a--b)     |       | yes  | -a                   |
-| ushr   | (ab--c)    |       |      | unsigned shift right |
 | abs    | (a--b)     |       | yes  | -a if a<0 else a     |
 
 ### ALU - bits
@@ -341,6 +337,7 @@ TODO: api:  dk vs kd
 | inv    | (a--b)     |       | yes  | ~a  (binary inversion) |
 | shl    | (ab--c)    |       | yes  | a << b                 |
 | shr    | (ab--c)    |       | yes  | a >> b                 |
+| ushr   | (ab--c)    |       |      | unsigned shift right |
 
 ### ALU - comparators
 
