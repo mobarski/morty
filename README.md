@@ -14,7 +14,7 @@ Status:
 The system is now able to compile VM ASM and to execute it.
 It's ready for running experiments "how feature X should be compiled and how it affects the performance". 
 
-First benchmarks are looking good - VM achieves 0.7GHz on a 3.5GHz machine. 
+First [benchmarks](benchmark.md) are looking good - VM achieves 0.7GHz on a 3.5GHz machine. 
 
 ## Index
 
@@ -441,10 +441,10 @@ Next:
 - vm cleanup, separate core from turbo
 - vm text-based mem dump
 - separate stacks, code and mem ?
+- dynamic statistics (op freq, cycle cnt)
 - stand-alone executable
 
 To do:
-- dynamic statistics (op freq)
 - global variables
 - static arrays
 - capture variables in lambdas
