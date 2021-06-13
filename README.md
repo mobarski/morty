@@ -414,7 +414,7 @@ Character literals are converted into integer literals ("push.value").
 
 ```
 Active:
-- vm cleanup, separate core from (trubo) extension
+- vm cleanup, separate core from (turbo) extension
 
 Next:
 - separate stacks, code and mem ?
