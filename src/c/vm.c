@@ -52,6 +52,18 @@ show_op_freq(vm_state *vm) {
 	#endif
 }
 
+void
+print_word(int x) {
+	char alpha[] = " ABCDEFGHIJKLMNOPQRSTUVWXYZ01234";
+	for (int i=0;i<6;i++) {
+		int v = x & (32-1);
+		printf("x:%d i:%d v:%d\n",x,i,v);
+		if (v==0) break;
+		printf("%c",alpha[v]);
+		x >>= 5;
+	}
+}
+
 // VM RUN
 vm_state
 run(vm_state state) {

@@ -120,10 +120,7 @@ switch(op) {
 	// PRIMITIVE OUTPUT
 	case EMIT: v=s_pop(); printf("%c",v);  break;
 	case DOT:  v=s_pop(); printf("%d ",v); break;
-	case ECHO: v=s_pop(); word_buf[0]=0;
-		word_buf[0]=v; // TODO: propper byte-by-byte for LITTLE/BIG endian handling
-		printf("%s",(char*)(&word_buf));
-		break;
+	case ECHO: v=s_pop(); print_word(v);   break;
 	//
 	case IOGET: break; // TODO
 	case IOSET: break; // TODO

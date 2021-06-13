@@ -107,10 +107,7 @@ OP_VMINFO:
 // PRIMITIVE OUTPUT
 OP_EMIT: v=s_pop(); printf("%c",v);  NEXT;
 OP_DOT:  v=s_pop(); printf("%d ",v); NEXT;
-OP_ECHO: v=s_pop(); word_buf[0]=0;
-	word_buf[0]=v; // TODO: propper byte-by-byte for LITTLE/BIG endian handling
-	printf("%s",(char*)(&word_buf));
-	NEXT;
+OP_ECHO: v=s_pop(); print_word(v);   NEXT;
 //
 OP_IOGET: NEXT;
 OP_IOSET: NEXT;
