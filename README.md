@@ -126,7 +126,7 @@ distance 10 or-less then collision-warning do
 
 ## Loops
 
-The are two counted loop types and one indefinite type.
+There are two counted loop types and one indefinite type.
 
 Counted loops:
 ```forth
