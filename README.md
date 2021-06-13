@@ -414,21 +414,22 @@ Character literals are converted into integer literals ("push.value").
 
 ```
 Active:
-- primitive output
-- vm text-based mem dump
+- vm cleanup, separate core from (trubo) extension
 
 Next:
-- vm cleanup, separate core from (trubo) extension
 - separate stacks, code and mem ?
+- encode word in ASM
 - stand-alone executable
 
 To do:
-- capture variables in lambdas
+- capture variables in lambdas (lambdas will use call frames)
 - global variables
 - static arrays
-- tail call
+- tail call optimization
+- special stack shuffling syntax -> ie abcd|cadb or |cabd // ab|aba or |aba
+- vm text-based mem dump
 - quote / unquote 
-- array operations (ala numpy / APL) ?
+- array operations (similar to numpy / APL) ?
 - transpilation to C
 - ASM - token to line number (for error reporting)
 - iterators
@@ -441,6 +442,7 @@ To do:
 - add Morty to linguist (https://github.com/github/linguist) so it can be detected by GitHub
 
 Done:
+- primitive output
 - dynamic statistics (op freq) -> 25% performance penalty
 - vm text-based portable executable format
 - conditionals
