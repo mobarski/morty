@@ -14,7 +14,7 @@ Status:
 The system is now able to compile VM ASM and to execute it.
 It's ready for running experiments "how feature X should be compiled and how it affects the performance". 
 
-First [benchmarks](benchmark.md) are looking good - VM achieves 0.7GHz on a 3.5GHz machine. 
+First [benchmarks](benchmark.md) are looking good - VM requires ~5 CPU instructions per VM instruction.
 
 ## Index
 
@@ -66,8 +66,10 @@ Target VM implementations:
 
 Morty language is similar to Morty VM instruction set.
 Almost all VM instructions can be used directly.
-Morty allows the usage of "goto" for the same reasons it is still in C and GO: it's needed for some special cases (state machines / nested loop escape), but the jump can be made only inside the current procedure.
 
+In addition the language provides some high-level mechanisms:
+- named local variables
+- 
 
 ## Language Examples
 

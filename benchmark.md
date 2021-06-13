@@ -16,6 +16,9 @@ I5 4590 -> Intel Core I5 4590 @ 3.30GHz    gcc 10.3.0
 | indirect -O | I5 4590 | 2688,2633,2651,2634,2640 | 2649 |    73 |
 | indirect    | I5 4590 | 3397,3367,3351,3278,3351 | 3349 |    44 |
 
+n=28    -> 1499214288 VM cycles  
+n=28 -O -> 1017323984 VM cycles  
+
 ### loops.hla n=28 times loop
 
 | variant     | machine | times                    | mean | stdev |
@@ -42,6 +45,9 @@ I5 4590 -> Intel Core I5 4590 @ 3.30GHz    gcc 10.3.0
 | indirect -O | I5 4590 | 2300,2296,2289,2241,2293 | 2284 |    24 |
 | indirect    | I5 4590 | 2496,2456,2430,2415,2401 | 2440 |    38 |
 
+n=38    -> 1391411682 VM cycles  
+n=38 -O -> 1264919711 VM cycles  
+
 ### array.hla n=100000
 
 | variant     | machine | times                    | mean | stdev |
@@ -54,6 +60,9 @@ I5 4590 -> Intel Core I5 4590 @ 3.30GHz    gcc 10.3.0
 | switch -O   | I5 4590 | 1251,1207,1192,1191,1258 | 1220 |    32 |
 | indirect -O | I5 4590 | 1101,1181,1098,1092,1152 | 1125 |    40 |
 | indirect    | I5 4590 | 2156,2074,1996,1989,1997 | 2042 |    72 |
+
+n=100k    -> 1400803027 VM cycles
+n=100k -O ->  800503026 VM cycles  
 
 ### array.hla n=100000 no iaddget, no iaddset
 
@@ -79,9 +88,13 @@ I5 4590 -> Intel Core I5 4590 @ 3.30GHz    gcc 10.3.0
 | gcc -O3     | I5 4590 | 83,83,83,85,85           |   84 |     1 |
 
 
+n=5k    -> 1216455018 VM cycles
+n=5k -O ->  804185018 VM cycles
+
 ### DEBUG_FREQ
 
 | variant    | machine | times                    | mean | stdev |
 | ---------- | ------- | ------------------------ | ---- | ----- |
 | debug_freq | I5 4590 | 2499,2454,2509,2386,2508 | 2471 |    53 |
 | no debug   | I5 4590 | 1899,1953,1895,1934,1943 | 1925 |    26 |
+
