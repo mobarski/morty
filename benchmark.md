@@ -65,7 +65,7 @@ n=38 -O -> 1264919711 VM cycles
 | indirect -O | I5 4590 | 1101,1181,1098,1092,1152 | 1125 |    40 |
 | indirect    | I5 4590 | 2156,2074,1996,1989,1997 | 2042 |    72 |
 
-n=100k    -> 1400803027 VM cycles
+n=100k    -> 1400803027 VM cycles  
 n=100k -O ->  800503026 VM cycles  
 
 ### array.hla n=100000 no iaddget, no iaddset
