@@ -385,7 +385,7 @@ Stack based labels:
 - ]: -> pop address from the stack, use current address there
 
 ```
-    push.0 jz.@start
+    goto.@start
     inc:
         push.1 add.0 ret.0
     start:
@@ -402,7 +402,7 @@ All values are transformed into "push.value".
 Character literals are converted into integer literals ("push.value").
 
 ```
-    0 jz.@start
+    goto.@start
     inc:
         1 add ret
     start:
