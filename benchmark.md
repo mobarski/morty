@@ -16,8 +16,8 @@ I5 4590 -> Intel Core I5 4590 @ 3.30GHz    gcc 10.3.0
 | indirect -O | I5 4590 | 2688,2633,2651,2634,2640 | 2649 |    73 |
 | indirect    | I5 4590 | 3397,3367,3351,3278,3351 | 3349 |    44 |
 
-n=28    -> 1499214288 VM cycles  
-n=28 -O -> 1017323984 VM cycles  
+n=28    -> 3080335064 VM cycles  
+n=28 -O -> 2485511743 VM cycles  
 
 ### loops.hla n=28 times loop
 
@@ -31,6 +31,10 @@ n=28 -O -> 1017323984 VM cycles
 | switch -O   | I5 4590 | 1465,1445,1421,1419,1463 | 1443 |    22 |
 | indirect -O | I5 4590 | 1460,1402,1363,1359,1371 | 1391 |    42 |
 | indirect    | I5 4590 | 1595,1630,1596,1619,1594 | 1607 |    17 |
+
+n=28    -> 1499214288 VM cycles  
+n=28 -O -> 1017323984 VM cycles  
+
 
 ### fibo.hla n=38
 
@@ -88,8 +92,8 @@ n=100k -O ->  800503026 VM cycles
 | gcc -O3     | I5 4590 | 83,83,83,85,85           |   84 |     1 |
 
 
-n=5k    -> 1216455018 VM cycles
-n=5k -O ->  804185018 VM cycles
+n=5k    -> 1216455018 VM cycles  
+n=5k -O ->  804185018 VM cycles  
 
 ### DEBUG_FREQ
 

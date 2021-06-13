@@ -44,11 +44,11 @@ show_op_freq(vm_state *vm) {
 		for (int i=0; i<256; i++) {
 			if (vm->op_freq[i] > 0) {
 				//printf("  %-8s %d\n", OP_NAME[i], vm->op_freq[i]);
-				printf("  %12d %0.3f %-8s\n", vm->op_freq[i], 1.0*vm->op_freq[i]/vm->op_cnt, OP_NAME[i]);
+				printf("  %12lld %0.3f %-8s\n", vm->op_freq[i], 1.0*vm->op_freq[i]/vm->op_cnt, OP_NAME[i]);
 			}
 		}
 		//printf("\n  TOTAL    %d\n", vm->op_cnt);
-		printf("\n  %12d TOTAL\n", vm->op_cnt);
+		printf("\n  %12lld TOTAL\n", vm->op_cnt);
 	#endif
 }
 
