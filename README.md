@@ -69,7 +69,7 @@ Almost all VM instructions can be used directly.
 
 In addition the language provides some high-level mechanisms:
 - named local variables
-- 
+- data structures
 
 ## Language Examples
 
