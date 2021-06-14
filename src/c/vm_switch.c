@@ -19,7 +19,7 @@ switch(op) {
 	case QRET:   ip = r_pop();                          break;
 	case JZ:     v=s_pop();  if (v==0) ip=arg;          break;
 	case GOTO:   ip=arg;                                break;
-	case STOP:   goto stop;                             break; // TODO RENAME: HALT
+	case HALT:   goto halt;                             break;
 	case NOP:                                           break;
 	// LOOPS
 	case TIMES:  v=s_pop(); r_push(arg); r_push(1); r_push(v-1); r_push(0); break; // with loop frame // TODO zero iterations

@@ -193,7 +193,7 @@ def hlasm_to_asm(code):
 # -----------------------------------------------------------------------------
 
 OPS = [
-	'STOP',
+	'HALT',
 	'NOP','PUSHA',
 	'PUSH','DUP','DROP','SWAP','STOR','RTOS',
 	'ADD','MUL','DIV','SUB',

@@ -390,7 +390,7 @@ Stack based labels:
         push.1 add.0 ret.0
     start:
         push.2 call.@inc
-    stop.0
+    halt.0
 ```
 
 ## High-Level Assembler

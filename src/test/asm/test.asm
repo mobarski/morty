@@ -6,4 +6,4 @@
 	add 0
 	add 0
 	vminfo 0
-	stop 0
+	halt 0

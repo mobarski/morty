@@ -91,12 +91,7 @@ run(vm_state state) {
 	int hd_max=0; // max heap depth
 	int oli=0;     // outer loop iterations
 	int ilc=1000000; // inner loop cnt
-	
-	#ifdef DEBUG_FREQ
-		// long long op_freq[256] = {0};
-		//long long op_cnt = 0;
-	#endif
-	
+		
 	// TODO: propper main loop
 	// MAIN LOOP
 	for(;;) { // outer loop
@@ -106,6 +101,7 @@ run(vm_state state) {
 			//include "vm_goto.c"
 			//include "vm_repl_switch.c"
 		}
+		// DEAD CODE BELOW !!!
 		oli++;
 		sd = sp-state.sp;
 		rd = rp-state.rp;
@@ -116,7 +112,7 @@ run(vm_state state) {
 	}
 	fprintf(stderr,"WARNING: Iterations limit reached!\n");
 	
-	stop:
+halt:
 	show_op_freq(&final);
 	// RETURN FINAL VM STATE
 	final.tos = tos;
