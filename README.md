@@ -224,9 +224,12 @@ VM:
 
 Current:
 - each cell is 32 bit long
-- instructions occupy 1 cell (op without arg) or 2 cells (op + arg)
+- instruction always occupy 2 cells:
+  - op code
+  - argument (zero for op codes that don't take arguments)
 
 Other encoding schemes that will be tested:
+- instructions occupy 1 cell (op without arg) or 2 cells (op + arg)
 - instruction in 1 cell, opcode in 8 bits, argument in 24 bits
 - instruction in 1 cell, opcode in 6 bits, argument in 26 bits
 - bytecode, instruction in 1, 2 or 5 cells
@@ -420,6 +423,7 @@ Active:
 - static arrays
 
 Next:
+- docs: split core instructions / turbo extension
 - stand-alone executable
 - encode word in ASM
 
