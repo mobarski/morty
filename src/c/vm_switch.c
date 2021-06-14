@@ -18,32 +18,19 @@ switch(op) {
 	case QCALL:  r_push(ip); ip=s_pop();                break;
 	case QRET:   ip = r_pop();                          break;
 	case JZ:     v=s_pop();  if (v==0) ip=arg;          break;
-	case IF:     v=s_pop(); v2=s_pop(); if(v2) { r_push(ip); ip=v; };       break; // REMOVE
-	case IFELSE: v=s_pop(); v2=s_pop(); v3=s_pop(); r_push(ip); ip=v3?v2:v; break; // REMOVE
-	case LAMBDA: s_push(ip); ip=arg;                    break; // REMOVE
 	case GOTO:   ip=arg;                                break;
 	case STOP:   goto stop;                             break; // TODO RENAME: HALT
 	case NOP:                                           break;
 	// LOOPS
-	//case TIMES:  v=s_pop(); r_push(arg); r_push(v-1); break; // with loop frame // TODO zero iterations
-	//case LOOP:   if (mem[rp]>0) {ip=arg; mem[rp]-=1;} else {rp-=2;};  break;
-	//case TIMES:  v=s_pop(); r_push(v-1); break; // no loop frame
-	//case LOOP:   if (mem[rp]>0) {ip=arg; mem[rp]-=1;} else {rp-=1;};  break;
-	//case TIMES:  v=s_pop(); r_push(arg); r_push(0); r_push(v-1); break; // with loop frame
-	//case LOOP:   if (mem[rp]>mem[rp-1]) {ip=arg; mem[rp]-=1;} else {rp-=3;};  break;
-	//case TIMES:  v=s_pop(); r_push(arg); r_push(1); r_push(0); r_push(v-1); break; // with loop frame
-	//case LOOP:   if (mem[rp]>mem[rp-1]) {ip=arg; mem[rp]-=mem[rp-2];} else {rp-=4;};  break;
 	case TIMES:  v=s_pop(); r_push(arg); r_push(1); r_push(v-1); r_push(0); break; // with loop frame // TODO zero iterations
 	case FOR:    v=s_pop();v2=s_pop();v3=s_pop(); r_push(arg); r_push(v); r_push(v3); r_push(v2); break; // TODO zero iterations
 	case LOOP:   if (mem[rp]<mem[rp-1]) {ip=arg; mem[rp]+=mem[rp-2];} else {rp-=4;};  break;
-	case BEGIN:  r_push(arg); r_push(0); r_push(0); r_push(0); break; // REMOVE -> replace with for with step=0
+	case BEGIN:  r_push(arg); r_push(0); r_push(0); r_push(0); break; // REMOVE? -> replace with for with step=0
 	case BREAK:    ip=mem[rp-3]+2; rp-=4;                      break;
 	case CONTINUE: ip=mem[rp-3];                               break;
 	// RETURN STACK
 	case STOR:   v=s_pop(); r_push(v);              break;
 	case RTOS:   v=r_pop(); s_push(v);              break;
-	case RADD:   rp+=arg;                           break; // REMOVE
-	case RSUB:   rp-=arg;                           break; // REMOVE
 	case RGET:   v=mem[rp-arg]; s_push(v);          break; // for loop variables
 	case VGET:   v=mem[fp+arg]; s_push(v);          break; // local variables
 	case VSET:   v=s_pop(); mem[fp+arg]=v;          break; // local variables
@@ -70,9 +57,7 @@ switch(op) {
 	case INVERT: tos= ~tos;                     break; 
 	case NEGATE: tos= -tos;                     break; 
 	case ABS:    tos= tos<0 ? -tos:tos;         break;
-	case USHR:   v=s_pop(); uv=tos; tos=uv>>v;  break; // NOT CORE
-	case ADDI:   tos += arg;                    break; // TURBO
-	case MULI:   tos *= arg;                    break; // TURBO
+	case USHR:   v=s_pop(); uv=tos; tos=uv>>v;  break; // NOT CORE ? -> for hash?
 	// COMPARATORS - MAIN
 	case LT:     v=s_pop(); tos= tos<v  ? 1:0;  break;
 	case LE:     v=s_pop(); tos= tos<=v ? 1:0;  break;
@@ -80,36 +65,14 @@ switch(op) {
 	case GE:     v=s_pop(); tos= tos>=v ? 1:0;  break;
 	case EQ:     v=s_pop(); tos= tos==v ? 1:0;  break;
 	case NE:     v=s_pop(); tos= tos!=v ? 1:0;  break;
-	// COMPARATORS - IMMEDIATE
-	case LTI:    tos= tos<arg  ? 1:0;  break; // TURBO
-	case LEI:    tos= tos<=arg ? 1:0;  break; // TURBO
-	case GTI:    tos= tos>arg  ? 1:0;  break; // TURBO
-	case GEI:    tos= tos>=arg ? 1:0;  break; // TURBO
-	case EQI:    tos= tos==arg ? 1:0;  break; // TURBO
-	case NEI:    tos= tos!=arg ? 1:0;  break; // TURBO				
-	// COMPARATORS - EXPERIMENTAL (NON DESTRUCTIVE)
-	case XLT:    s_push(mem[sp]<tos  ? 1:0);  break; // NOT CORE
-	case XGT:    s_push(mem[sp]>tos  ? 1:0);  break; // NOT CORE
-	case XLE:    s_push(mem[sp]<=tos ? 1:0);  break; // NOT CORE
-	case XGE:    s_push(mem[sp]>=tos ? 1:0);  break; // NOT CORE
-	case XEQ:    s_push(mem[sp]==tos ? 1:0);  break; // NOT CORE
-	case XNE:    s_push(mem[sp]!=tos ? 1:0);  break; // NOT CORE
 	// COMPARATORS - AUX
-	case NZ:     tos = tos!=0 ? 1:0;            break; // REMOVE
-	case GTZ:    tos = tos>0  ? 1:0;            break; // REMOVE
-	case EQZ:    tos = tos==0 ? 1:0;            break; // REMOVE
-	case LTZ:    tos = tos<0  ? 1:0;            break; // REMOVE
-	case MIN:    v=s_pop(); tos=tos<v ? tos:v;  break;
-	case MAX:    v=s_pop(); tos=tos>v ? tos:v;  break;
+	case MIN:    v=s_pop(); tos=tos<v ? tos:v;        break;
+	case MAX:    v=s_pop(); tos=tos>v ? tos:v;        break;
 	case PICK:   tos= tos ? mem[sp-1]:mem[sp]; sp-=2; break;
 	// MEMORY
 	case GET:    tos = mem[tos];                break;
 	case SET:    v=s_pop(); mem[v]=s_pop();     break;
 	case ALLOT:  v=s_pop(); s_push(hp); hp+=v;  break;
-	case ADDGET: v=s_pop(); tos+=v; tos=mem[tos];              break; // TURBO
-	case ADDSET: v=s_pop(); tos+=v; v=s_pop(); mem[v]=s_pop(); break; // TURBO
-	case IADDGET: v=mem[rp-arg]; s_push(v); v=s_pop(); tos+=v; tos=mem[tos];              break; // TURBO OPTIMIZE COMBO
-	case IADDSET: v=mem[rp-arg]; s_push(v); v=s_pop(); tos+=v; v=s_pop(); mem[v]=s_pop(); break; // TURBO OPTIMIZE COMBO
 
 	// DEBUG
 	case VMINFO:
@@ -124,4 +87,34 @@ switch(op) {
 	//
 	case IOGET: break; // TODO
 	case IOSET: break; // TODO
+	
+	// === TURBO EXTENSION ====================================================
+	
+	// ALU
+	case ADDI:   tos += arg;                    break;
+	case MULI:   tos *= arg;                    break;
+	// MEMORY
+	case ADDGET: v=s_pop(); tos+=v; tos=mem[tos];              break;
+	case ADDSET: v=s_pop(); tos+=v; v=s_pop(); mem[v]=s_pop(); break;
+	case IADDGET: v=mem[rp-arg]; s_push(v); v=s_pop(); tos+=v; tos=mem[tos];              break; // OPTIMIZE COMBO
+	case IADDSET: v=mem[rp-arg]; s_push(v); v=s_pop(); tos+=v; v=s_pop(); mem[v]=s_pop(); break; // OPTIMIZE COMBO	
+	// COMPARATORS - IMMEDIATE
+	case LTI:    tos= tos<arg  ? 1:0;  break;
+	case LEI:    tos= tos<=arg ? 1:0;  break;
+	case GTI:    tos= tos>arg  ? 1:0;  break;
+	case GEI:    tos= tos>=arg ? 1:0;  break;
+	case EQI:    tos= tos==arg ? 1:0;  break;
+	case NEI:    tos= tos!=arg ? 1:0;  break;
+	// COMPARATORS - EXPERIMENTAL (NON DESTRUCTIVE)
+	case XLT:    s_push(mem[sp]<tos  ? 1:0);  break;
+	case XGT:    s_push(mem[sp]>tos  ? 1:0);  break;
+	case XLE:    s_push(mem[sp]<=tos ? 1:0);  break;
+	case XGE:    s_push(mem[sp]>=tos ? 1:0);  break;
+	case XEQ:    s_push(mem[sp]==tos ? 1:0);  break;
+	case XNE:    s_push(mem[sp]!=tos ? 1:0);  break;
+	// COMPARATORS - ZERO -> REMOVE vs IMMEDIATE
+	case NZ:     tos = tos!=0 ? 1:0;          break;
+	case GTZ:    tos = tos>0  ? 1:0;          break;
+	case EQZ:    tos = tos==0 ? 1:0;          break;
+	case LTZ:    tos = tos<0  ? 1:0;          break;
 }
