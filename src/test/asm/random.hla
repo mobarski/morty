@@ -20,11 +20,11 @@ ret
 
 main:
 	(n) times.@[
-		100 call.@gen-random drop
+		100 :gen-random drop
 	loop.@]
-	100 call.@gen-random dot
+	100 :gen-random dot
 ret
 
 start:
 	
-	70_000_000 call.@main vminfo
+	70_000_000 :main vminfo
