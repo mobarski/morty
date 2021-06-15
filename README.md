@@ -421,10 +421,10 @@ Character literals are converted into integer literals ("push.value").
 ```
 Active:
 - fix random.hla -O (muli, divi, modi)
+- docs: all vm instructions (including turbo mode)
 
 Next:
 - stand-alone executable
-- docs: split core instructions / turbo extension
 - fix globals_cnt
 
 To do:
