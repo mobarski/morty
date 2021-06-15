@@ -222,6 +222,7 @@ VM:
 - S - (data) stack pointer
 - T - top of stack register
 - H - heap pointer
+- G - globals pointer
 - MEM - main memory
 
 ## Instruction encoding
@@ -280,15 +281,13 @@ Translation from the core set into extended set is done by peephole optimization
 | get    | (a--b)     |       | yes  | get value from memory cell a     |
 | set    | (va--)     |       | yes  | set memory cell a to value v     |
 | allot  | (n--a)     |       | yes  | allot n cells on the heap and return address to the first allocated cell |
+| vget X | (--n)      | x     | yes  | get local variable X             |
+| vset X | (n--)      | :x    | yes  | set local variable X             |
+| gget X | (--n)      | x     | yes  | get global variable X            |
+| gset X | (n--)      | ???   | yes  | set global variable X            |
+| rget X | (--n)      |       | yes  | get loop variable X              |
 | geti X | (a--b)     | N/A   |      | get value from memory cell a+X   | 
 | seti X | (va--)     | N/A   |      | set memory cell a+X to value v   | 
-
-### frame - local variables
-
-| name   | effect     | morty | core | info                                   | 
-| ------ | ---------- | ----- | ---- | -------------------------------------- |
-| vget X | (--n)      | x     | yes  | get local variable X                   |
-| vset X | (n--)      | :x    | yes  | set local variable X                   |
 
 ### primitive output
 
@@ -421,7 +420,7 @@ Character literals are converted into integer literals ("push.value").
 
 ```
 Active:
-- global references -> globals frame
+- global references -> globals pointer
 
 Next:
 - docs: split core instructions / turbo extension

@@ -31,7 +31,7 @@ switch(op) {
 	// RETURN STACK
 	case STOR:   v=s_pop(); r_push(v);              break;
 	case RTOS:   v=r_pop(); s_push(v);              break;
-	case RGET:   v=mem[rp-arg]; s_push(v);          break; // for loop variables
+	case RGET:   v=mem[rp-arg]; s_push(v);          break; // loop variables
 	case VGET:   v=mem[fp+arg]; s_push(v);          break; // local variables
 	case VSET:   v=s_pop(); mem[fp+arg]=v;          break; // local variables
 	// DATA STACK
@@ -72,6 +72,8 @@ switch(op) {
 	// MEMORY
 	case GET:    tos = mem[tos];                break;
 	case SET:    v=s_pop(); mem[v]=s_pop();     break;
+	case GGET:   v=mem[gp+arg]; s_push(mem[v]); break; // global variables
+	case GSET:   v=s_pop(); mem[mem[gp+arg]]=v; break; // global variables
 	case ALLOT:  v=s_pop(); s_push(hp); hp+=v;  break;
 
 	// DEBUG

@@ -208,7 +208,7 @@ OPS = [
 	'LE','LT','GE','GT','EQ','NE',
 	'XLE','XLT','XGE','XGT','XEQ','XNE',
 	'ROT','OVER','UNROT',
-	'VGET','VSET','RADD',
+	'VGET','VSET','RADD','GGET','GSET',
 	'EMIT','DOT','ECHO',
 	'IF','IFELSE','GOTO',
 	'LAMBDA',

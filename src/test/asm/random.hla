@@ -1,0 +1,35 @@
+((
+	http://dada.perl.it/shootout/random.html
+
+
+IM = 139968
+IA = 3877
+IC = 29573
+
+LAST = 42
+def gen_random(max):
+    global LAST
+    LAST = (LAST * IA + IC) % IM
+    return( (max * LAST) / IM )
+
+))
+
+goto.@start
+
+goto.@[ #42 pusha.@] gset.0
+
+gen-random: (max--n)
+	gget.0 3877 mul 29573 add 139968 mod gset.0
+	(max) gget.0 mul 139968 div
+ret
+
+main:
+	(n) times.@[
+		100 call.@gen-random drop
+	loop.@]
+	100 call.@gen-random dot
+ret
+
+start:
+	
+	70_000_000 call.@main vminfo

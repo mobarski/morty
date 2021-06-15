@@ -32,6 +32,7 @@ typedef struct {
 	t_cell sp;
 	t_cell tos;
 	t_cell hp;
+	t_cell gp;
 	t_cell *mem;
 	long long op_cnt;
 	long long op_freq[256];
@@ -74,6 +75,7 @@ run(vm_state state) {
 	t_cell   rp = state.rp;
 	t_cell   fp = state.fp;
 	t_cell   hp = state.hp;
+	t_cell   gp = state.gp;
 	t_cell *mem = state.mem;
 	
 	// FINAL STATE
@@ -121,6 +123,7 @@ halt:
 	final.rp  = rp;
 	final.fp  = fp;
 	final.hp  = hp;
+	final.gp  = gp;
 	return final;
 }
 
@@ -134,26 +137,29 @@ typedef struct {
 	int return_stack_size;
 	int memory_size;
 	int max_code_size;
+	int globals_cnt;
 } config;
 
 // VM BOOT
 vm_state
 boot(t_cell *mem, t_cell *code, int code_len, config cfg) {
 	vm_state state;
+	int i;
 	
 	state.tos = 0;
 	state.ip  = 0;
+	state.mem = mem;
 	
-	for (int i=0; i<code_len; i++) {
+	for (i=0; i<code_len; i++) {
 		mem[state.ip+i] = code[i];
 		//printf("BOOT: mem[%02d] -> %d\n", state.ip+i, code[i]); // XXX debug
 	}
-	
-	state.sp  = state.ip + code_len + 10; // 10 -> GAP between CODE and DATA STACK
-	state.rp  = state.sp + cfg.data_stack_size;
-	state.hp  = state.rp + cfg.return_stack_size;
-	state.fp  = state.rp;
-	state.mem = mem;
+	i = state.ip + code_len + 10; // GAP between CODE and DATA STACK
+	state.sp = i; i += cfg.data_stack_size;
+	state.fp = i;
+	state.rp = i; i += cfg.return_stack_size;
+	state.gp = i; i += cfg.globals_cnt;
+	state.hp = i;
 	
 	return state;
 }
@@ -297,6 +303,7 @@ main(int argc, char *argv[], char **env) {
 	cfg.max_code_size = 512;
 	cfg.data_stack_size = 64;
 	cfg.return_stack_size = 32;
+	cfg.globals_cnt = 32; // TODO: from code
 	cfg.path = "input.mrt";
 
 	int err = parse_args(argc, argv, env, &cfg);
