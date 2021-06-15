@@ -1,16 +1,11 @@
 ((
 	http://dada.perl.it/shootout/random.html
 
-
-IM = 139968
-IA = 3877
-IC = 29573
-
-LAST = 42
-def gen_random(max):
-    global LAST
-    LAST = (LAST * IA + IC) % IM
-    return( (max * LAST) / IM )
+	{ 42 } $LAST
+	def gen-random (max--n)
+		LAST 3877 mul 29573 add 139968 mod $LAST
+		(max) LAST mul 139968 div (n)
+	end
 
 ))
 
