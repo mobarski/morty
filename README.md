@@ -420,16 +420,17 @@ Character literals are converted into integer literals ("push.value").
 
 ```
 Active:
-- global references -> globals pointer
+- fix random.hla -O (muli, divi, modi)
 
 Next:
-- docs: split core instructions / turbo extension
 - stand-alone executable
-- encode word in ASM
+- docs: split core instructions / turbo extension
+- fix globals_cnt
 
 To do:
 - separate stacks, code and mem ?
 - constants
+- encode word in ASM
 - capture variables in lambdas (lambdas will use call frames)
 - tail call optimization
 - special stack shuffling syntax -> ie abcd|cadb or |cabd // ab|aba or |aba
@@ -448,6 +449,7 @@ To do:
 - add Morty to linguist (https://github.com/github/linguist) so it can be detected by GitHub
 
 Done:
+- global references -> globals pointer
 - static arrays
 - vm cleanup, separate core from (turbo) extension
 - primitive output
