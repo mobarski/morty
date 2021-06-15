@@ -19,6 +19,7 @@ First [benchmarks](benchmark.md) are looking good - VM requires ~5 CPU instructi
 ## Index
 
 - [language](#morty-programming-language)
+- [compiler](#morty-compiler)
 - [vm](#morty-vitual-machine)
 - [assembler](#morty-vm-assembler)
 - [kanban](#kanban)
@@ -206,6 +207,9 @@ TODO
 
 TODO
 
+# Morty Compiler
+
+TODO
 
 # Morty Vitual Machine
 
@@ -417,10 +421,8 @@ Character literals are converted into integer literals ("push.value").
 
 ```
 Active:
-- elf like sections in portable cell code
-- global variables
+- global references -> globals frame
 - constants
-- static arrays
 
 Next:
 - docs: split core instructions / turbo extension
@@ -447,6 +449,7 @@ To do:
 - add Morty to linguist (https://github.com/github/linguist) so it can be detected by GitHub
 
 Done:
+- static arrays
 - vm cleanup, separate core from (turbo) extension
 - primitive output
 - dynamic statistics (op freq) -> 25% performance penalty

@@ -158,6 +158,7 @@ def hlasm_to_asm(code):
 		:label   -> call.@label
 		op.@xxx  -> op.@xxx
 		op       -> op.0
+		#number  -> number
 	"""
 	code = strip_comments(code)
 	
@@ -184,6 +185,8 @@ def hlasm_to_asm(code):
 			elif t[0]==':':
 				v = t[1:]
 				asm += [f'call.@{v}']
+			elif t[0]=='#':
+				asm += [t[1:]]
 			else:
 				asm += [f'{t}.0']
 		line_out = ' '*indent + '   '.join(asm)
