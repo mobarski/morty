@@ -422,7 +422,6 @@ Character literals are converted into integer literals ("push.value").
 ```
 Active:
 - global references -> globals frame
-- constants
 
 Next:
 - docs: split core instructions / turbo extension
@@ -431,6 +430,7 @@ Next:
 
 To do:
 - separate stacks, code and mem ?
+- constants
 - capture variables in lambdas (lambdas will use call frames)
 - tail call optimization
 - special stack shuffling syntax -> ie abcd|cadb or |cabd // ab|aba or |aba
