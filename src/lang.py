@@ -1,5 +1,6 @@
 import re
 import argparse
+from asm import OPCODE
 
 def to_asm(text):
 	text = strip_comments(text)
@@ -20,7 +21,7 @@ def strip_comments(text):
 def tokenize(text):
 	return re.findall('[^ \t\r\n]+|\n',text.strip())
 
-ops = ['add','mul','div','sub','dot','lt','vminfo','ret','stor'] # TODO: from asm.py
+ops = OPCODE.keys()
 def compile(tokens):
 	out = []
 	functions = []
