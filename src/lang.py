@@ -1,11 +1,12 @@
 import re
+import argparse
 
-def to_hla(text):
+def to_asm(text):
 	text = strip_comments(text)
 	tokens = tokenize(text)
 	ops = compile(tokens)
-	hla = ' '.join([op['hla'] for op in ops])
-	return hla
+	asm = ' '.join([op['asm'] for op in ops])
+	return asm
 
 # ------------------------------------------------------------------------------
 
@@ -19,7 +20,7 @@ def strip_comments(text):
 def tokenize(text):
 	return re.findall('[^ \t\r\n]+|\n',text.strip())
 
-ops = ['add','mul','div','sub','dot','lt'] # TODO: from asm.py
+ops = ['add','mul','div','sub','dot','lt','vminfo','ret','stor'] # TODO: from asm.py
 def compile(tokens):
 	out = []
 	functions = []
@@ -29,45 +30,58 @@ def compile(tokens):
 		t = tokens[i]
 		i += 1
 		if t=='\n':
-			out += [dict(hla='\n')]
+			out += [dict(asm='\n')]
 		elif t=='def':
 			name = tokens[i]
 			functions += [name]
-			out += [dict(hla=f'goto.@[ {name}:')]
+			out += [dict(asm=f'goto.@[ {name}:')]
 			i += 1
 		elif t=='end':
 			local = []
-			out += [dict(hla='ret ]:')]
+			out += [dict(asm='ret.0 ]:')]
 		elif t=='times':
-			out += [dict(hla='times.@[')]
+			out += [dict(asm='times.@[')]
 		elif t=='loop':
-			out += [dict(hla='loop.@]')]
+			out += [dict(asm='loop.@]')]
 		elif t=='then':
-			out += [dict(hla='jz.@[')]
+			out += [dict(asm='jz.@[')]
 		elif t=='do':
-			out += [dict(hla=']:')]
+			out += [dict(asm=']:')]
 		elif t[0]==':':
 			# TODO: reserve frame cells right after "def"
 			name = t[1:]
 			if name not in local:
 				local += [name]
-			fi = 1+local.index(name)
-			out += [dict(hla=f'vset.{fi}')]
+				out += [dict(asm=f'stor.0')]
+			else:
+				fi = 1+local.index(name)
+				out += [dict(asm=f'vset.{fi}')]
 		elif t in local:
 			fi = 1+local.index(t)
-			out += [dict(hla=f'vget.{fi}')]
+			out += [dict(asm=f'vget.{fi}')]
 		elif t in functions:
-			out += [dict(hla=f':{t}')]
+			out += [dict(asm=f'call.@{t}')]
 		elif t in ops:
-			out += [dict(hla=t)]
+			out += [dict(asm=f'{t}.0')]
+		elif is_int(t):
+			x = int(t)
+			out += [dict(asm=f'push.{x}')]
 		else:
-			out += [dict(hla=t)]
+			# TODO: verify
+			out += [dict(asm=t)]
 	return out
+
+def is_int(x):
+	try:
+		int(x)
+		return True
+	except:
+		return False
 
 # ------------------------------------------------------------------------------
 
-if __name__=="__main__":
-	x = to_hla("""
+def xxx_test():
+	x = to_asm("""
 		def foo ( a -- b )
 			2 mul
 		end
@@ -91,3 +105,22 @@ if __name__=="__main__":
 		dot
 	""")
 	print(x)
+
+if __name__=="__main__":
+	parser = argparse.ArgumentParser(description='Compile Morty source code into MortyVM assembler')
+	parser.add_argument('-o',  metavar='path', type=str, help='output path')
+	parser.add_argument('-i',  metavar='path', type=str, help='input path (default: stdin)')
+	args = parser.parse_args()
+
+	if args.i:
+		code = open(args.i,'r').read()
+	else:
+		code = sys.stdin.read()
+
+	asm = to_asm(code)
+	
+	if args.o:
+		with open(args.o,'w') as f:
+			print(asm,file=f)
+	else:
+		print(asm)

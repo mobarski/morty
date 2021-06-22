@@ -1,0 +1,7 @@
+def fib (n--f) :n
+	n 2 lt then 1 ret do
+	n 2 sub fib (f2)
+	n 1 sub fib (f2 f1) add (f)
+end
+
+38 fib vminfo
