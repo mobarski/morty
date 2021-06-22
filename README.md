@@ -420,10 +420,13 @@ Character literals are converted into integer literals ("push.value").
 
 ```
 Active:
-- fix random.hla -O (muli, divi, modi)
-- docs: all vm instructions (including turbo mode)
+- remove HLA (lang.py prototype + asm is enough)
+- compiler CLI
 
 Next:
+- lang: lambdas
+- fix random.hla -O (muli, divi, modi)
+- docs: all vm instructions (including turbo mode)
 - stand-alone executable
 - fix globals_cnt
 

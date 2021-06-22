@@ -4,3 +4,6 @@ cd ../test/asm
 
 python3 ../../asm.py -hl -i fibo.hla -d -O -o fibo.mrt
 vm fibo.mrt
+
+python3 ../../asm.py -i fibo.asm -d -O -o fibo.mrt
+vm fibo.mrt
