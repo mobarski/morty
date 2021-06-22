@@ -4,3 +4,6 @@ cd ../test/asm
 
 python3 ../../asm.py -hl -i sieve.hla -o sieve.mrt
 vm -mem 100000 sieve.mrt
+
+python3 ../../asm.py -i sieve.asm -o sieve.mrt
+vm -mem 100000 sieve.mrt
