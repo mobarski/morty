@@ -8,8 +8,8 @@ This is pre-alpha work in progress!
 
 Status:
 - C version of the VM is fully functional.
-- The assembler is fully functional BUT error detection and error reporting is very primitive.
-- Work on the compiler is not yet started as the language is still in a very early phase.
+- The assembler is fully functional BUT error detection and error reporting are very primitive.
+- Work on the compiler has just started.
 
 The system is now able to compile VM ASM and to execute it.
 It's ready for running experiments "how feature X should be compiled and how it affects the performance". 
@@ -420,8 +420,9 @@ Character literals are converted into integer literals ("push.value").
 
 ```
 Active:
-- remove HLA (lang.py prototype + asm is enough)
 - compiler CLI
+- rewrite benchmarks from HLA to ASM and to Morty (to make sure that the results are the same)
+- remove HLA (lang.py prototype + asm is enough)
 
 Next:
 - lang: lambdas
