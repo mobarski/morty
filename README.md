@@ -420,7 +420,8 @@ Character literals are converted into integer literals ("push.value").
 
 ```
 Active:
-- rewrite benchmarks from HLA to ASM and to Morty (to make sure that the results are the same)
+- rewrite benchmarks from HLA to Morty
+- rewrite benchmarks from HLA to ASM
 - remove HLA (lang.py prototype + asm is enough)
 
 Next:
