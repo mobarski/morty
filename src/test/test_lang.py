@@ -32,6 +32,7 @@ if 1:
 			3 c div
 		end
 		[ 42 dot ] call
+		{ 11 } $aaa
 	( -------------------
 		20 foo 2 add
 		$x

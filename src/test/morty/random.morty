@@ -8,4 +8,11 @@
 		(max) LAST mul 139968 div (n)
 	end
 
+	def main (n--)
+		(n) times
+			100 gen-random drop
+		loop
+		100 gen-random dot
+	end
+
 	70_000_000 main vminfo

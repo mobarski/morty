@@ -23,6 +23,7 @@ def tokenize(text):
 ops = OPCODE.keys()
 def compile(tokens):
 	out = []
+	mode = 'normal'
 	functions = []
 	local = []
 	glob = []
@@ -30,6 +31,15 @@ def compile(tokens):
 	while i<len(tokens):
 		t = tokens[i]
 		i += 1
+		if mode == 'raw':
+			if t == '}':
+				mode = 'normal'
+				asm = 'push.@]'
+			else:
+				asm = t
+			out += [dict(asm=asm)]
+			continue
+		
 		if t[0] in '\r\n\t (':
 			asm = t
 		# functions
@@ -82,6 +92,10 @@ def compile(tokens):
 			asm = 'goto.@['
 		elif t == ']':
 			asm = 'ret.0 push.@]'
+		elif t == '{':
+			asm = 'goto.@['
+			mode = 'raw'
+		#
 		elif t in ops:
 			asm = f'{t}.0'
 		elif is_int(t):
