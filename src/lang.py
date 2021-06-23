@@ -15,7 +15,7 @@ def tokenize(text):
 	return re.findall("""(?xms)
 			  [(][(].*?[)][)]  # multi-line comment
 			| [(].*?[)]        # inline comment
-			| [(].*            # line comment
+			| [(].*?\n         # line comment
 			| [^ \t\r\n]+      # "normal" token
 			| \s+              # whitespace
 		""",text)
@@ -25,6 +25,7 @@ def compile(tokens):
 	out = []
 	functions = []
 	local = []
+	glob = []
 	i = 0
 	while i<len(tokens):
 		t = tokens[i]
@@ -47,21 +48,32 @@ def compile(tokens):
 			asm = 'jz.@['
 		elif t=='do':
 			asm = ']:'
+		# names
 		elif t[0]==':':
 			name = t[1:]
 			if name not in local:
 				local += [name]
 				asm = f'stor.0'
 			else:
-				fi = 1+local.index(name)
-				asm = f'vset.{fi}'
+				idx = 1+local.index(name)
+				asm = f'vset.{idx}'
+		elif t[0]=='$':
+			name = t[1:]
+			if name not in glob:
+				glob += [name]
+			idx = glob.index(name)
+			asm = f'gset.{idx}'
 		elif t in local:
-			fi = 1+local.index(t)
-			asm = f'vget.{fi}'
+			idx = 1+local.index(t)
+			asm = f'vget.{idx}'
+		elif t in glob:
+			idx = glob.index(t)
+			asm = f'gget.{idx}'
 		elif t in functions:
 			asm = f'call.@{t}'
 		elif t in ops:
 			asm = f'{t}.0'
+		# 
 		elif is_int(t):
 			x = int(t)
 			asm = f'push.{x}'
