@@ -31,6 +31,7 @@ if 1:
 			2 b add
 			3 c div
 		end
+		[ 42 dot ] call
 	( -------------------
 		20 foo 2 add
 		$x

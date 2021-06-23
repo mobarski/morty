@@ -77,7 +77,11 @@ def compile(tokens):
 			asm = f'gget.{idx}'
 		elif t in functions:
 			asm = f"call.@{t}"
-		# 
+		#
+		elif t == '[':
+			asm = 'goto.@['
+		elif t == ']':
+			asm = 'ret.0 push.@]'
 		elif t in ops:
 			asm = f'{t}.0'
 		elif is_int(t):
