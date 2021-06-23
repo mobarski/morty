@@ -1,0 +1,13 @@
+((
+	based on http://dada.perl.it/shootout/nestedloop.html
+))
+
+	def loops (n--a) :x
+		0
+		x times x times x times x times x times x times
+			1 add
+		loop loop loop loop loop loop
+	ret
+	
+	28 loops vminfo
+

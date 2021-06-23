@@ -1,0 +1,23 @@
+((
+	http://dada.perl.it/shootout/ary3.html
+))
+
+	def main (n--) :n
+		n allot :x
+		n allot :y
+		n times
+			i 1 add  x i add set
+		loop
+		1000 times
+			n times ( this should count down to 0 !!! )
+				x i add get
+				y i add get
+				add
+				y i add set
+			loop
+		loop
+		y get dot (first y)
+		y n 1 sub add get dot (last y)
+	end
+
+	100000 main vminfo

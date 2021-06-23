@@ -1,0 +1,22 @@
+((
+	http://dada.perl.it/shootout/sieve.html
+))
+	def sieve (n) :n
+		8193 allot :flags
+		0 :count
+		n times
+			0 :count
+			8193 times 1 flags i add set loop
+			8193 2 1 for
+				flags i add get 0 gt then
+					8193 i 2 mul i for
+						0 flags i add set
+					loop
+					count 1 add :count
+				do
+			loop
+		loop
+		count dot
+	end
+
+	5000 sieve vminfo

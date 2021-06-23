@@ -1,0 +1,11 @@
+((
+	http://dada.perl.it/shootout/random.html
+))
+
+	{ 42 } $LAST
+	def gen-random (max--n)
+		LAST 3877 mul 29573 add 139968 mod $LAST
+		(max) LAST mul 139968 div (n)
+	end
+
+	70_000_000 main vminfo
