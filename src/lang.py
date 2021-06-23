@@ -30,44 +30,45 @@ def compile(tokens):
 		t = tokens[i]
 		i += 1
 		if t[0] in '\r\n\t (':
-			out += [dict(asm=f'{t}')]
+			asm = t
 		elif t=='def':
 			name = tokens[i]
 			functions += [name]
-			out += [dict(asm=f'goto.@[ {name}:')]
+			asm = f'goto.@[ {name}:'
 			i += 1
 		elif t=='end':
 			local = []
-			out += [dict(asm='ret.0 ]:')]
+			asm = 'ret.0 ]:'
 		elif t=='times':
-			out += [dict(asm='times.@[')]
+			asm = 'times.@['
 		elif t=='loop':
-			out += [dict(asm='loop.@]')]
+			asm = 'loop.@]'
 		elif t=='then':
-			out += [dict(asm='jz.@[')]
+			asm = 'jz.@['
 		elif t=='do':
-			out += [dict(asm=']:')]
+			asm = ']:'
 		elif t[0]==':':
 			name = t[1:]
 			if name not in local:
 				local += [name]
-				out += [dict(asm=f'stor.0')]
+				asm = f'stor.0'
 			else:
 				fi = 1+local.index(name)
-				out += [dict(asm=f'vset.{fi}')]
+				asm = f'vset.{fi}'
 		elif t in local:
 			fi = 1+local.index(t)
-			out += [dict(asm=f'vget.{fi}')]
+			asm = f'vget.{fi}'
 		elif t in functions:
-			out += [dict(asm=f'call.@{t}')]
+			asm = f'call.@{t}'
 		elif t in ops:
-			out += [dict(asm=f'{t}.0')]
+			asm = f'{t}.0'
 		elif is_int(t):
 			x = int(t)
-			out += [dict(asm=f'push.{x}')]
+			asm = f'push.{x}'
 		else:
 			# TODO: verify
-			out += [dict(asm=t)]
+			asm = t
+		out += [dict(asm=asm)]
 	return out
 
 def is_int(x):
