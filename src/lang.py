@@ -94,7 +94,7 @@ def is_int(x):
 
 if __name__=="__main__":
 	parser = argparse.ArgumentParser(description='Compile Morty source code into MortyVM assembler')
-	parser.add_argument('-o',  metavar='path', type=str, help='output path')
+	parser.add_argument('-o',  metavar='path', type=str, help='output path (default: stdout)')
 	parser.add_argument('-i',  metavar='path', type=str, help='input path (default: stdin)')
 	args = parser.parse_args()
 
