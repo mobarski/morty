@@ -44,6 +44,8 @@ def compile(tokens):
 		# loops
 		elif t=='times':
 			asm = 'times.@['
+		elif t=='for':
+			asm = 'for.@['
 		elif t=='loop':
 			asm = 'loop.@]'
 		elif t=='then':
