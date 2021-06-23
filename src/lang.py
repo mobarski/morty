@@ -32,6 +32,7 @@ def compile(tokens):
 		i += 1
 		if t[0] in '\r\n\t (':
 			asm = t
+		# functions
 		elif t=='def':
 			name = tokens[i]
 			functions += [name]
@@ -40,6 +41,7 @@ def compile(tokens):
 		elif t=='end':
 			local = []
 			asm = 'ret.0 ]:'
+		# loops
 		elif t=='times':
 			asm = 'times.@['
 		elif t=='loop':
@@ -71,9 +73,9 @@ def compile(tokens):
 			asm = f'gget.{idx}'
 		elif t in functions:
 			asm = f'call.@{t}'
+		# 
 		elif t in ops:
 			asm = f'{t}.0'
-		# 
 		elif is_int(t):
 			x = int(t)
 			asm = f'push.{x}'
