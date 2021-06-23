@@ -19,7 +19,7 @@ def strip_comments(text):
 
 # TODO: preserve leading whitespace (indent)
 def tokenize(text):
-	return re.findall('[^ \t\r\n]+|\n',text.strip())
+	return re.findall('[^ \t\r\n]+|\n[ \t]*',text)
 
 ops = OPCODE.keys()
 def compile(tokens):
@@ -30,8 +30,8 @@ def compile(tokens):
 	while i<len(tokens):
 		t = tokens[i]
 		i += 1
-		if t=='\n':
-			out += [dict(asm='\n')]
+		if t[0]=='\n':
+			out += [dict(asm=f'{t}')]
 		elif t=='def':
 			name = tokens[i]
 			functions += [name]
@@ -80,32 +80,6 @@ def is_int(x):
 		return False
 
 # ------------------------------------------------------------------------------
-
-def xxx_test():
-	x = to_asm("""
-		def foo ( a -- b )
-			2 mul
-		end
-		def bar ( -- )
-			10 times
-				1 dot
-			loop
-		end
-		def baz ( a -- )
-			5 lt then
-				2 dot
-			do
-		end
-		def foobar
-			:a :b :c
-			1 a mul
-			2 b add
-			3 c div
-		end
-		20 foo 2 add
-		dot
-	""")
-	print(x)
 
 if __name__=="__main__":
 	parser = argparse.ArgumentParser(description='Compile Morty source code into MortyVM assembler')
