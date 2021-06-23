@@ -11,13 +11,14 @@ def to_asm(text):
 
 # ------------------------------------------------------------------------------
 
+# TODO: combine with tokenize
 def strip_comments(text):
 	text = re.sub('(?ms)[(]{2}.*?[)]{2}', ' ', text) # multiline comments (( ... ))
 	text = re.sub('\s[(].*?[)]', ' ', text)
 	text = re.sub('\s[(].*', ' ', text)
 	return text
 
-# TODO: preserve leading whitespace (indent)
+# TODO: preserve comments
 def tokenize(text):
 	return re.findall('[^ \t\r\n]+|(?:\n|^)[ \t]*',text)
 
