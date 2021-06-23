@@ -148,6 +148,7 @@ def optimize(tokens,rules):
 	return out
 
 
+# TODO: remove
 def hlasm_to_asm(code):
 	"""Morty High Level Assebler
 	
@@ -227,7 +228,7 @@ if __name__=="__main__":
 	parser = argparse.ArgumentParser(description='Compile MortyVM assembler code into binary cells')
 	parser.add_argument('-o',  metavar='path', type=str, help='output path')
 	parser.add_argument('-i',  metavar='path', type=str, help='input path (default: stdin)')
-	parser.add_argument('-hl', action='store_true', help='treat input as high level assembler')
+	parser.add_argument('-hl', action='store_true', help='treat input as high level assembler') # TODO: remove
 	parser.add_argument('-d',  action='store_true', help='debug')
 	parser.add_argument('-O',  action='store_true', help='optimize')
 	args = parser.parse_args()
