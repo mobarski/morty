@@ -19,7 +19,7 @@ def strip_comments(text):
 
 # TODO: preserve leading whitespace (indent)
 def tokenize(text):
-	return re.findall('[^ \t\r\n]+|\n[ \t]*',text)
+	return re.findall('[^ \t\r\n]+|(?:\n|^)[ \t]*',text)
 
 ops = OPCODE.keys()
 def compile(tokens):
@@ -31,6 +31,8 @@ def compile(tokens):
 		t = tokens[i]
 		i += 1
 		if t[0]=='\n':
+			out += [dict(asm=f'{t}')]
+		elif t[0] in "\t ": # initial indent
 			out += [dict(asm=f'{t}')]
 		elif t=='def':
 			name = tokens[i]

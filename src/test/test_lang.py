@@ -6,8 +6,7 @@ def test_code(code):
 	print(asm)
 
 if 1:
-	test_code("""
-		def foo ( a -- b )
+	test_code("""		def foo ( a -- b )
 			2 mul
 		end
 		def bar ( -- )
