@@ -4,7 +4,6 @@ import argparse
 from asm import OPCODE
 
 def to_asm(text):
-	text = strip_comments(text)
 	tokens = tokenize(text)
 	ops = compile(tokens)
 	asm = ''.join([op['asm'] for op in ops])
@@ -12,16 +11,14 @@ def to_asm(text):
 
 # ------------------------------------------------------------------------------
 
-# TODO: combine with tokenize
-def strip_comments(text):
-	text = re.sub('(?ms)[(]{2}.*?[)]{2}', ' ', text) # multiline comments (( ... ))
-	text = re.sub('\s[(].*?[)]', ' ', text)
-	text = re.sub('\s[(].*', ' ', text)
-	return text
-
-# TODO: preserve comments
 def tokenize(text):
-	return re.findall('[^ \t\r\n]+|\s+',text)
+	return re.findall("""(?xms)
+			  [(][(].*?[)][)]  # multi-line comment
+			| [(].*?[)]        # inline comment
+			| [(].*            # line comment
+			| [^ \t\r\n]+      # "normal" token
+			| \s+              # whitespace
+		""",text)
 
 ops = OPCODE.keys()
 def compile(tokens):
@@ -32,7 +29,7 @@ def compile(tokens):
 	while i<len(tokens):
 		t = tokens[i]
 		i += 1
-		if t[0] in '\r\n\t ':
+		if t[0] in '\r\n\t (':
 			out += [dict(asm=f'{t}')]
 		elif t=='def':
 			name = tokens[i]
@@ -51,7 +48,6 @@ def compile(tokens):
 		elif t=='do':
 			out += [dict(asm=']:')]
 		elif t[0]==':':
-			# TODO: reserve frame cells right after "def"
 			name = t[1:]
 			if name not in local:
 				local += [name]

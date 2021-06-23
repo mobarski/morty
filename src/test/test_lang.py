@@ -7,6 +7,11 @@ def test_code(code):
 
 if 1:
 	test_code("""
+	((
+		this
+		is a
+		test
+	))
 		def foo ( a -- b )
 			2 mul
 		end
@@ -26,6 +31,8 @@ if 1:
 			2 b add
 			3 c div
 		end
+	( -------------------
 		20 foo 2 add
 		dot
+
 	""")
