@@ -420,7 +420,8 @@ Character literals are converted into integer literals ("push.value").
 
 ```
 Active:
-- rewrite benchmarks from HLA to Morty
+- fix: sieve.morty
+- fix: random.morty
 - rewrite benchmarks from HLA to ASM
 - remove HLA (lang.py prototype + asm is enough)
 
@@ -453,6 +454,8 @@ To do:
 - add Morty to linguist (https://github.com/github/linguist) so it can be detected by GitHub
 
 Done:
+- fix: array.morty
+- rewrite benchmarks from HLA to Morty
 - compiler CLI (morty -> asm, -i -o)
 - global references -> globals pointer
 - static arrays

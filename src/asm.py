@@ -29,6 +29,7 @@ def to_text_file(filename, text, op_code, do_optimize=False):
 	open(filename,'w').write("\n".join(compiled))
 	return cells	
 
+# TODO: remove
 def to_direct_threading(text, op_code, do_optimize=False):
 	op_name = {v:name for name,v in op_code.items()}
 	cells = to_cells(code, op_code, do_optimize)

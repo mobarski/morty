@@ -34,10 +34,10 @@ def compile(tokens):
 			asm = t
 		# functions
 		elif t=='def':
-			name = tokens[i]
+			name = tokens[i+1] # skip whitespace
 			functions += [name]
 			asm = f'goto.@[ {name}:'
-			i += 1
+			i += 2 # whitespace + name
 		elif t=='end':
 			local = []
 			asm = 'ret.0 ]:'
@@ -50,12 +50,14 @@ def compile(tokens):
 			asm = 'jz.@['
 		elif t=='do':
 			asm = ']:'
+		elif t=='i':
+			asm = 'rget.0'
 		# names
 		elif t[0]==':':
 			name = t[1:]
 			if name not in local:
 				local += [name]
-				asm = f'stor.0'
+				asm = 'stor.0'
 			else:
 				idx = 1+local.index(name)
 				asm = f'vset.{idx}'
@@ -72,7 +74,7 @@ def compile(tokens):
 			idx = glob.index(t)
 			asm = f'gget.{idx}'
 		elif t in functions:
-			asm = f'call.@{t}'
+			asm = f"call.@{t}"
 		# 
 		elif t in ops:
 			asm = f'{t}.0'

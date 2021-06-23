@@ -7,7 +7,7 @@
 		x times x times x times x times x times x times
 			1 add
 		loop loop loop loop loop loop
-	ret
+	end
 	
 	28 loops vminfo
 
