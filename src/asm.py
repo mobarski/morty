@@ -86,7 +86,7 @@ def apply_labels(tokens, pos_by_label):
 			p = pos_by_label[label]
 			out += [str(p)]
 			pos += 1
-		elif t[:2] in ['@+','@-']:
+		elif t[:2] in ['@+','@-']: # NOT USED
 			p = pos + int(arg[1:])
 			out += [str(p)]
 			pos += 1
