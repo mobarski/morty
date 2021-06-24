@@ -400,7 +400,6 @@ Stack based labels:
 
 ```
 Active:
-- vm: load cell code from stdin
 - fix random.asm -O (muli, divi, modi)
 - docs: all vm instructions (including turbo mode)
 
@@ -429,6 +428,7 @@ To do:
 - add Morty to linguist (https://github.com/github/linguist) so it can be detected by GitHub
 
 Done:
+- vm: load cell code from stdin
 - remove HLA (lang.py prototype + asm is enough)
 - capture variables in lambdas (lambdas will use call frames)
 - rewrite benchmarks from HLA to ASM

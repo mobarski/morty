@@ -169,10 +169,14 @@ load_from_text_file(char *path, t_cell *code, int max_len) {
 	FILE *in;
 	int i; // cell position in the code
 	
-	in = fopen(path,"r");
-	if (!in) {
-		fprintf(stderr, "ERROR: Cannot open input file.\n");
-		return 0; // TODO: panic
+	if (path != NULL) {
+		in = fopen(path,"r");	
+		if (!in) {
+			fprintf(stderr, "ERROR: Cannot open input file.\n");
+			return 0; // TODO: panic
+		}
+	} else {
+		in = stdin;
 	}
 	
 	for (i=0; i<max_len; i++) {
@@ -224,7 +228,7 @@ parse_args(int argc, char *argv[], char **env, config *cfg) {
 	// PRINT USAGE
 	if (argc<=1) {
 		usage:
-		fprintf(stderr, "\nUSAGE: %s filename.mrt [-mem n] [-ds n] [-rs n] [-code n]\n", argv[0]);
+		fprintf(stderr, "\nUSAGE: %s [path] [-mem n] [-ds n] [-rs n] [-code n]\n", argv[0]);
 		fprintf(stderr, "\n");
 		fprintf(stderr, "OPTIONS:\n");
 		fprintf(stderr, "  -mem N    memory cells count        (default: %d)\n", cfg->memory_size);
@@ -304,7 +308,7 @@ main(int argc, char *argv[], char **env) {
 	cfg.data_stack_size = 64;
 	cfg.return_stack_size = 32;
 	cfg.globals_cnt = 32; // TODO: from code
-	cfg.path = "input.mrt";
+	cfg.path = NULL; // NULL -> stdin
 
 	int err = parse_args(argc, argv, env, &cfg);
 	if (err) return err;
