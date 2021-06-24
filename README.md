@@ -400,14 +400,16 @@ Stack based labels:
 
 ```
 Active:
-- fix random.asm -O (muli, divi, modi)
-- docs: all vm instructions (including turbo mode)
+- fix random.asm -O (muli, divi, modi vs OPFREQ)
 
 Next:
 - stand-alone executable
+- docs: all vm instructions (including turbo mode)
 - transpilation to C
 
 To do:
+- structs
+- macros / inline
 - tail call optimization
 - fix globals_cnt
 - separate stacks, code and mem ?

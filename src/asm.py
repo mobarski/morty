@@ -8,11 +8,13 @@ import peephole
 # TODO: comments as tokens similar to labels ??? NO -> optimization
 # TODO: map token to file @ line
 
-def to_cells(text, op_code, do_optimize=False):
+def to_cells(text, op_code, do_optimize=False, do_debug=False):
 	text          = strip_comments(text)
 	tokens        = tokenize(text)
 	if do_optimize: # TODO: multi-pass optimization
 		tokens    = optimize(tokens, peephole.rules)
+		if do_debug:
+			print(" ".join(tokens), file=sys.stderr)
 	tokens        = split_tokens(tokens)
 	pos_by_label  = detect_labels(tokens)
 	tokens        = apply_labels(tokens, pos_by_label)
@@ -112,7 +114,7 @@ def compile(tokens, op_code):
 				cells += [int(t)]
 			except ValueError:
 				N = 6
-				print('ERROR',i, tokens[max(0,i-N):i],t,tokens[i+1:i+1+N]) # TODO: error reporing
+				print('ERROR',i, tokens[max(0,i-N):i],t,tokens[i+1:i+1+N], file=sys.stderr) # TODO: error reporing
 	return cells
 
 
@@ -181,11 +183,11 @@ if __name__=="__main__":
 	else:
 		code = sys.stdin.read()		
 
-	cells = to_cells(code, OPCODE, do_optimize=args.O)
+	cells = to_cells(code, OPCODE, do_optimize=args.O, do_debug=args.d)
 	text = cells_to_text(cells)
 	if args.d:
-		print(text)
-		print(f"cells: {len(cells)}")
+		print(text, file=sys.stderr)
+		print(f"cells: {len(cells)}", file=sys.stderr)
 	if args.o:
 		open(args.o,'w').write(text)
 	else:
