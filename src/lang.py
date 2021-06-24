@@ -27,10 +27,14 @@ def compile(tokens):
 	functions = []
 	local = []
 	glob = []
+	struct = {}
+	struct_name = ''
 	i = 0
 	while i<len(tokens):
 		t = tokens[i]
 		i += 1
+		
+		# MODE: raw
 		if mode == 'raw':
 			if t == '}':
 				mode = 'normal'
@@ -40,6 +44,20 @@ def compile(tokens):
 			out += [dict(asm=asm)]
 			continue
 		
+		# MODE: struct
+		if mode == 'struct':
+			if '\n' in t:
+				mode = 'normal'
+				asm = t
+			elif t[0]=='.':
+				struct[struct_name] += [t]
+				asm = ''
+			else:
+				asm = t
+			out += [dict(asm=asm)]
+			continue
+		
+		# MODE: normal
 		if t[0] in '\r\n\t (':
 			asm = t
 		# functions
@@ -92,9 +110,16 @@ def compile(tokens):
 			asm = 'goto.@['
 		elif t == ']':
 			asm = 'ret.0 push.@]'
+		# mode change
 		elif t == '{':
 			asm = 'goto.@['
 			mode = 'raw'
+		elif t == 'struct':
+			mode = 'struct'
+			struct_name = tokens[i+1] # skip whitespace
+			struct[struct_name] = []
+			i += 2 # whitespace + name
+			asm = f'( struct {struct_name} ... )'
 		#
 		elif t in ops:
 			asm = f'{t}.0'

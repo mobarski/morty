@@ -400,6 +400,7 @@ Stack based labels:
 
 ```
 Active:
+- structs: usage
 
 Next:
 - stand-alone executable
@@ -408,7 +409,6 @@ Next:
 To do:
 - separate stacks, code and mem ?
 - cooperative multitasking
-- structs
 - docs: all vm instructions (including turbo mode)
 - macros / inline ?
 - tail call optimization
@@ -429,6 +429,7 @@ To do:
 - add Morty to linguist (https://github.com/github/linguist) so it can be detected by GitHub
 
 Done:
+- structs: declaration
 - fix random.asm -O (muli, divi, modi vs OPFREQ)
 - vm: load cell code from stdin
 - remove HLA (lang.py prototype + asm is enough)

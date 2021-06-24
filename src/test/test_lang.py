@@ -12,6 +12,10 @@ if 1:
 		is a
 		test
 	))
+		(start-of-struct)
+		struct my .a .b .c  
+		(end-of-struct-def)
+		
 		def foo ( a -- b )
 			2 mul
 		end
