@@ -400,6 +400,7 @@ Stack based labels:
 
 ```
 Active:
+- vm: load cell code from stdin
 - fix random.asm -O (muli, divi, modi)
 - docs: all vm instructions (including turbo mode)
 
