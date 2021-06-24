@@ -400,7 +400,6 @@ Stack based labels:
 
 ```
 Active:
-- fix random.asm -O (muli, divi, modi vs OPFREQ)
 
 Next:
 - stand-alone executable
@@ -409,7 +408,7 @@ Next:
 
 To do:
 - structs
-- macros / inline
+- macros / inline ?
 - tail call optimization
 - fix globals_cnt
 - separate stacks, code and mem ?
@@ -430,6 +429,7 @@ To do:
 - add Morty to linguist (https://github.com/github/linguist) so it can be detected by GitHub
 
 Done:
+- fix random.asm -O (muli, divi, modi vs OPFREQ)
 - vm: load cell code from stdin
 - remove HLA (lang.py prototype + asm is enough)
 - capture variables in lambdas (lambdas will use call frames)
