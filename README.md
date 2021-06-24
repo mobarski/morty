@@ -403,16 +403,16 @@ Active:
 
 Next:
 - stand-alone executable
-- docs: all vm instructions (including turbo mode)
 - transpilation to C
 
 To do:
+- separate stacks, code and mem ?
+- cooperative multitasking
 - structs
+- docs: all vm instructions (including turbo mode)
 - macros / inline ?
 - tail call optimization
 - fix globals_cnt
-- separate stacks, code and mem ?
-- cooperative multitasking
 - constants
 - iterators
 - array operations (similar to numpy / APL) ?
