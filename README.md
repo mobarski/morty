@@ -192,9 +192,6 @@ This is on purpose to keep the macros simple.
 21 [ dup add ] call
 ```
 
-Lambda functions are using the stack frame of the parent.
-They are not closures and should not be shared if they are using parent's local variables.
-
 ## Global variables
 
 TODO
@@ -399,60 +396,43 @@ Stack based labels:
     halt.0
 ```
 
-## High-Level Assembler
-
-TODO
-
-Instructions with operations that always take 0 as the argument don't have to contain the argument (ie "add" instead of "add.0").
-All values are transformed into "push.value".
-Character literals are converted into integer literals ("push.value").
-
-```
-    goto.@start
-    inc:
-        1 add ret
-    start:
-        2 :inc
-    stop
-```
-
 # Kanban
 
 ```
 Active:
-- fix: random.morty
-- rewrite benchmarks from HLA to ASM
-- remove HLA (lang.py prototype + asm is enough)
+- fix random.asm -O (muli, divi, modi)
+- docs: all vm instructions (including turbo mode)
 
 Next:
-- lang: lambdas
-- fix random.hla -O (muli, divi, modi)
-- docs: all vm instructions (including turbo mode)
 - stand-alone executable
-- fix globals_cnt
+- transpilation to C
 
 To do:
-- separate stacks, code and mem ?
-- constants
-- encode word in ASM
-- capture variables in lambdas (lambdas will use call frames)
 - tail call optimization
+- fix globals_cnt
+- separate stacks, code and mem ?
+- cooperative multitasking
+- constants
+- iterators
+- array operations (similar to numpy / APL) ?
+- encode word in ASM
 - special stack shuffling syntax -> ie abcd|cadb or |cabd // ab|aba or |aba
 - vm text-based mem dump
 - strings
-- array operations (similar to numpy / APL) ?
 - quote / unquote 
-- transpilation to C
 - ASM - token to line number (for error reporting)
-- iterators
 - else, case
-- cooperative multitasking
 - little vs big endian
 - literate programming (compile from markdown)
 - multiprocessing
 - add Morty to linguist (https://github.com/github/linguist) so it can be detected by GitHub
 
 Done:
+- remove HLA (lang.py prototype + asm is enough)
+- capture variables in lambdas (lambdas will use call frames)
+- rewrite benchmarks from HLA to ASM
+- lang: lambdas
+- fix: random.morty
 - fix: sieve.morty
 - fix: array.morty
 - rewrite benchmarks from HLA to Morty

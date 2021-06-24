@@ -19,25 +19,12 @@ def to_cells(text, op_code, do_optimize=False):
 	cells         = compile(tokens, op_code)
 	return cells
 
-def to_text_file(filename, text, op_code, do_optimize=False):
-	cells = to_cells(code, op_code, do_optimize)
+def cells_to_text(cells, per_line=10, sep='\t'):
 	compiled = []
-	PER_LINE = 10 # TODO param
-	for i in range(0, len(cells), PER_LINE):
-		line = "\t".join([str(x) for x in cells[i:i+PER_LINE]])
+	for i in range(0, len(cells), per_line):
+		line = sep.join([str(x) for x in cells[i:i+per_line]])
 		compiled += [line]
-	open(filename,'w').write("\n".join(compiled))
-	return cells	
-
-# TODO: remove
-def to_direct_threading(text, op_code, do_optimize=False):
-	op_name = {v:name for name,v in op_code.items()}
-	cells = to_cells(code, op_code, do_optimize)
-	for i in range(0,len(cells),2):
-		op = cells[i]
-		arg = cells[i+1]
-		name = op_name[op].upper()
-		print(f"&&OP_{name},\t(void*) {arg},\t// ip={i}")
+	return "\n".join(compiled)
 
 # -----------------------------------------------------------------------------
 # -----------------------------------------------------------------------------
@@ -63,6 +50,7 @@ def split_tokens(tokens):
 	return out
 
 def detect_labels(tokens):
+	""
 	pos = 0
 	pos_by_label = {}
 	for i,t in enumerate(tokens):
@@ -74,6 +62,7 @@ def detect_labels(tokens):
 	return pos_by_label
 
 def apply_labels(tokens, pos_by_label):
+	""
 	out = []
 	stack = []
 	pos = 0
@@ -109,6 +98,7 @@ def apply_labels(tokens, pos_by_label):
 	return out
 
 def compile(tokens, op_code):
+	""
 	cells = []
 	#print(tokens) # XXX
 	for i,t in enumerate(tokens):
@@ -148,53 +138,6 @@ def optimize(tokens,rules):
 			i += 1
 	return out
 
-
-# TODO: remove
-def hlasm_to_asm(code):
-	"""Morty High Level Assebler
-	
-	Tranformations:
-		number   -> push.number
-		'c'      -> push.char_as_number
-		label:   -> label:
-		:label   -> call.@label
-		op.@xxx  -> op.@xxx
-		op       -> op.0
-		#number  -> number
-	"""
-	code = strip_comments(code)
-	
-	out = []
-	for line in code.split("\n"):
-		indent = len(line)-len(line.lstrip())
-		asm = []
-		tokens = re.split('\s+',line)
-		for t in tokens:
-			if not t: continue
-			try:
-				v = int(t)
-			except:
-				v = None
-			if v is not None:
-				asm += [f'push.{v}']
-			elif t[0]=="'":
-				v = ord(t[1:2])
-				asm += [f'push.{v}']
-			elif '.' in t:
-				asm += [t]
-			elif t[-1]==':':
-				asm += [t]
-			elif t[0]==':':
-				v = t[1:]
-				asm += [f'call.@{v}']
-			elif t[0]=='#':
-				asm += [t[1:]]
-			else:
-				asm += [f'{t}.0']
-		line_out = ' '*indent + '   '.join(asm)
-		out += [line_out]
-	return '\n'.join(out)
-
 # -----------------------------------------------------------------------------
 
 OPS = [
@@ -227,9 +170,8 @@ OPCODE['vminfo'] = 255
 
 if __name__=="__main__":
 	parser = argparse.ArgumentParser(description='Compile MortyVM assembler code into binary cells')
-	parser.add_argument('-o',  metavar='path', type=str, help='output path')
+	parser.add_argument('-o',  metavar='path', type=str, help='output path (default: stdout)')
 	parser.add_argument('-i',  metavar='path', type=str, help='input path (default: stdin)')
-	parser.add_argument('-hl', action='store_true', help='treat input as high level assembler') # TODO: remove
 	parser.add_argument('-d',  action='store_true', help='debug')
 	parser.add_argument('-O',  action='store_true', help='optimize')
 	args = parser.parse_args()
@@ -239,15 +181,12 @@ if __name__=="__main__":
 	else:
 		code = sys.stdin.read()		
 
-	if args.hl:
-		code = hlasm_to_asm(code)
-		if args.d:
-			print(code)
-
 	cells = to_cells(code, OPCODE, do_optimize=args.O)
+	text = cells_to_text(cells)
 	if args.d:
-		print(cells)
+		print(text)
 		print(f"cells: {len(cells)}")
-		#to_direct_threading(code, OPCODE, do_optimize=args.O) # XXX
 	if args.o:
-		to_text_file(args.o, code, OPCODE, do_optimize=args.O)
+		open(args.o,'w').write(text)
+	else:
+		print(text)
