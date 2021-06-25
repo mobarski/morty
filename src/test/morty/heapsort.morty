@@ -1,0 +1,68 @@
+((
+	http://dada.perl.it/shootout/heapsort.html
+))
+
+	{ 42 } $LAST
+	def gen-random (max--n)
+		LAST get 3877 mul 29573 add 139968 mod LAST set
+		(max) LAST get mul 139968 div (n)
+	end
+	
+	def heapsort (n ra --) :ra :n
+		0 :rra
+		0 :ii
+		0 :jj
+		n 1 shr 1 add :l
+		n :ir
+		
+		begin
+			l 1 gt then
+				l 1 sub :l
+				ra l add get :rra
+			else
+				ra ir add get :rra
+				ra 1 add get ra ir add set
+				ir 1 sub :ir
+				ir 1 eq then
+					rra ra 1 add set
+					ret
+				do
+			do
+			l :ii
+			l 1 shl :jj
+			begin jj ir gt then break do
+				jj ir lt (bool) nz
+				ra jj add get ra jj 1 add add get (bool) nz
+				and then jj 1 add :jj do
+				rra ra jj add get lt then
+					ra jj add get ra ii add set
+					jj :ii
+					jj 1 add :jj
+				else
+					ir 1 add :jj
+				do
+			again
+			rra ra ii add set
+		again
+		
+	end
+	
+	101 allot $ary
+	101 times
+		1000 gen-random
+		ary i add set
+	loop
+	(TODO: fix first element)
+	
+	101 times
+		ary i add get dot
+	loop
+	
+	((
+	101 ary heapsort
+	vminfo
+	
+	101 times
+		ary i add get dot
+	loop
+	))

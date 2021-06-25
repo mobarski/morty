@@ -400,6 +400,9 @@ Stack based labels:
 
 ```
 Active:
+- else
+- heapsort.morty
+- debug stacks depth
 - structs: usage
 
 Next:
@@ -422,13 +425,14 @@ To do:
 - strings
 - quote / unquote 
 - ASM - token to line number (for error reporting)
-- else, case
+- case
 - little vs big endian
 - literate programming (compile from markdown)
 - multiprocessing
 - add Morty to linguist (https://github.com/github/linguist) so it can be detected by GitHub
 
 Done:
+- ackerman.morty
 - structs: declaration
 - fix random.asm -O (muli, divi, modi vs OPFREQ)
 - vm: load cell code from stdin
