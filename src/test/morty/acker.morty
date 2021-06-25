@@ -9,3 +9,5 @@
 			m n 1 sub ack
 		ack
 	end
+
+	3 9 ack vminfo
