@@ -188,6 +188,25 @@ push.2 lt.0 jz.@[ push.1 ret.0 push.@]   ( no replacement required )
 
 ### New
 
+"if" as syntax sugar ?
+"fi / end / endif / end-if" as end-if ?
+
+
+```forth
+
+if distance 10 or-less then 10 times beep loop fi
+
+if distance 10 or-less then
+	10 times beep loop
+else
+	1 sec wait
+fi
+
+
+```
+
+### New
+
 ```forth
 distance 10 or-less then [ 10 times [ beep ] ]
 distance 10 or-less then 10 times beep loop do
@@ -361,6 +380,46 @@ Continue should be jump @addr and break jump @addr+2.
 ```
 
 ## Sandbox
+
+### New
+
+```forth
+
+10 times
+	...
+loop
+
+
+for 0 10 1 do
+	...
+loop
+OR
+0 10 1 for
+
+loop
+
+while x 5 lt do
+	...
+loop
+# HLA -> 0 0 0 loop-frame  [: x 5 lt jnz.@[ break ]: ... jump.@]
+
+always
+	if x 5 lt then break do
+loop
+
+
+# optional
+repeat
+	...
+until x 5 lt loop
+OR 
+repeat
+	...
+x 5 lt until
+
+```
+
+### Old
 
 ```forth
 5 times 

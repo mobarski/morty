@@ -401,9 +401,7 @@ Stack based labels:
 
 ```
 Active:
-- array notation
 - { ... } ( -- len addr ) push array length on the stack
-- more intuitive for ( lo hi incr )
 - forward-declarations or other technique for top-down programming
 - debug stacks depth
 - check stacks overflows
@@ -439,6 +437,8 @@ To do:
 - add Morty to linguist (https://github.com/github/linguist) so it can be detected by GitHub
 
 Done:
+- array notation ( .get .set )
+- more intuitive for ( lo hi incr )
 - qsort
 - ackerman.morty
 - structs: declaration

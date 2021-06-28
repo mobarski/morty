@@ -1,6 +1,6 @@
 t_cell op  = mem[ip++];
 t_cell arg = mem[ip++];
-t_cell v,v2,v3;
+t_cell v,v1,v2,v3;
 
 #ifdef DEBUG_FREQ
 	final.op_freq[op] += 1;
@@ -23,7 +23,7 @@ switch(op) {
 	case NOP:                                           break;
 	// LOOPS
 	case TIMES:  v=s_pop(); r_push(arg); r_push(1); r_push(v-1); r_push(0); break; // with loop frame // TODO zero iterations
-	case FOR:    v=s_pop();v2=s_pop();v3=s_pop(); r_push(arg); r_push(v); r_push(v3); r_push(v2); break; // TODO zero iterations
+	case FOR:    v3=s_pop();v2=s_pop();v1=s_pop(); r_push(arg); r_push(v3); r_push(v2); r_push(v1); break; // TODO zero iterations
 	case LOOP:   if (mem[rp]<mem[rp-1]) {ip=arg; mem[rp]+=mem[rp-2];} else {rp-=4;};  break;
 	case BEGIN:  r_push(arg); r_push(0); r_push(0); r_push(0); break; // REMOVE? -> replace with for with step=0
 	case BREAK:    ip=mem[rp-3]+2; rp-=4;                      break;

@@ -10,7 +10,7 @@ end
 def partition ( a lo hi -- ii ) :hi :lo :a
 	a hi .get :pivot
 	lo :ii
-	hi lo 1 for
+	lo hi 1 for
 		a i .get pivot lt then
 			a ii i swap-arr
 			ii 1 add :ii
