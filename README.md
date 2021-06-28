@@ -476,26 +476,27 @@ Done:
 
 # References
 
-|                     Title | URL                                                            |
-| ------------------------: | -------------------------------------------------------------- |
-| **Generic stack machine** | https://users.ece.cmu.edu/~koopman/stack_computers/sec3_2.html |
-|        **Permacomputing** | http://viznut.fi/texts-en/permacomputing.html                  |
-|        **Starting Forth** | https://www.forth.com/starting-forth/                          |
-|        **P-code machine** | https://en.wikipedia.org/wiki/P-code_machine                   |
-|         **Stack machine** | https://en.wikipedia.org/wiki/Stack_machine                    |
-|        **Thinking Forth** | http://thinking-forth.sourceforge.net/thinking-forth-ans.pdf   |
-|                **Fabris** | https://github.com/mobarski/fabris                             |
-|               **UCBLogo** | https://en.wikipedia.org/wiki/UCBLogo                          |
-|                   **Uxn** | https://100r.co/site/uxn.html                                  |
-|         **Threaded code** | https://en.wikipedia.org/wiki/Threaded_code                    |
-|       **Forth threading** | http://www.complang.tuwien.ac.at/forth/threading/              |
-|   **Forth threaded code** | http://www.complang.tuwien.ac.at/forth/threaded-code.html      |
-|          **Interpreters** | http://realityforge.org/code/virtual-machines/2011/05/19/interpreters.html |
-|    **Cozy design spaces** | https://www.lexaloffle.com/bbs/?tid=31634                      |
-|         **Another World** | https://fabiensanglard.net/another_world_polygons/             |
-|                  **Mako** | https://github.com/JohnEarnest/Mako                            |
-|            **Blacklight** | https://github.com/acook/blacklight/wiki                       |
-|                 **Quark** | https://github.com/henrystanley/Quark                          |
-|     **Array programming** | https://en.wikipedia.org/wiki/Array_programming                |
+|                          Title | URL                                                            |
+| -----------------------------: | -------------------------------------------------------------- |
+|      **Generic stack machine** | https://users.ece.cmu.edu/~koopman/stack_computers/sec3_2.html |
+|  **The Pancake stack machine** | https://people.ece.cornell.edu/land/courses/ece5760/DE2/Stack_cpu.html | 
+|             **Permacomputing** | http://viznut.fi/texts-en/permacomputing.html                  |
+|             **Starting Forth** | https://www.forth.com/starting-forth/                          |
+|             **P-code machine** | https://en.wikipedia.org/wiki/P-code_machine                   |
+|              **Stack machine** | https://en.wikipedia.org/wiki/Stack_machine                    |
+|             **Thinking Forth** | http://thinking-forth.sourceforge.net/thinking-forth-ans.pdf   |
+|                     **Fabris** | https://github.com/mobarski/fabris                             |
+|                    **UCBLogo** | https://en.wikipedia.org/wiki/UCBLogo                          |
+|                        **Uxn** | https://100r.co/site/uxn.html                                  |
+|              **Threaded code** | https://en.wikipedia.org/wiki/Threaded_code                    |
+|            **Forth threading** | http://www.complang.tuwien.ac.at/forth/threading/              |
+|        **Forth threaded code** | http://www.complang.tuwien.ac.at/forth/threaded-code.html      |
+|               **Interpreters** | http://realityforge.org/code/virtual-machines/2011/05/19/interpreters.html |
+|         **Cozy design spaces** | https://www.lexaloffle.com/bbs/?tid=31634                      |
+|              **Another World** | https://fabiensanglard.net/another_world_polygons/             |
+|                       **Mako** | https://github.com/JohnEarnest/Mako                            |
+|                 **Blacklight** | https://github.com/acook/blacklight/wiki                       |
+|                      **Quark** | https://github.com/henrystanley/Quark                          |
+|          **Array programming** | https://en.wikipedia.org/wiki/Array_programming                |
 
 [//]: # (online .md editor: https://markdown-editor.github.io/ )
