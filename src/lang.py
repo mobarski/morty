@@ -82,6 +82,11 @@ def compile(tokens):
 			asm = ']:'
 		elif t=='i':
 			asm = 'rget.0'
+		# arrays
+		elif t=='.get':
+			asm = 'add.0 get.0'
+		elif t=='.set':
+			asm = 'add.0 set.0'
 		# names
 		elif t[0]==':':
 			name = t[1:]

@@ -531,6 +531,13 @@ def swap-arr ( a x y -- ) :y :x :a
 	(tmp) y a []set
 end
 
+# new-word th not reversed
+def swap-arr ( a x y -- ) :y :x :a
+	a x th (tmp)
+	a y th a x th-set
+	(tmp) a y th-set
+end
+
 # new-word . not reversed
 def swap-arr ( a x y -- ) :y :x :a
 	a x .get (tmp)
