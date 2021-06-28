@@ -70,6 +70,7 @@ Almost all VM instructions can be used directly.
 
 In addition the language provides some high-level mechanisms:
 - named local variables
+- explicit array access
 - data structures
 
 ## Language Examples
@@ -400,6 +401,7 @@ Stack based labels:
 
 ```
 Active:
+- array notation
 - { ... } ( -- len addr ) push array length on the stack
 - more intuitive for ( lo hi incr )
 - forward-declarations or other technique for top-down programming

@@ -343,6 +343,25 @@ A similar effect can be achieved with a proper indention and/or loop keywords hi
 
 Block based loops require that loop setup and loop cleanup happens in the single keyword.
 
+## ASM
+
+The loop requires setup code, repetition code and cleanup code.
+
+Setup code creates loop frame on the return stack.
+Cleanup code drops the loop frame from the return stack.
+Loop frame enables "break" and "continue" instructions.
+Loop frame should contain only one address so it can be created with one asm instruction.
+The rules for performing "break" and "continue" must base on only one addres.
+Continue should be jump @addr and break jump @addr+2.
+
+```
+(n) times.@]1 [1: (code) ]1: loop.@[1 rsub.2
+(n) times.@[ 1 add loop.@]
+
+```
+
+## Sandbox
+
 ```forth
 5 times 
     i dot
@@ -444,23 +463,6 @@ again
 begin xx f while yyy repeat
 ```
 
-## ASM
-
-The loop requires setup code, repetition code and cleanup code.
-
-Setup code creates loop frame on the return stack.
-Cleanup code drops the loop frame from the return stack.
-Loop frame enables "break" and "continue" instructions.
-Loop frame should contain only one address so it can be created with one asm instruction.
-The rules for performing "break" and "continue" must base on only one addres.
-Continue should be jump @addr and break jump @addr+2.
-
-```
-(n) times.@]1 [1: (code) ]1: loop.@[1 rsub.2
-(n) times.@[ 1 add loop.@]
-
-```
-
 # Threading
 
 To benchmark new Threading Model following instructions must be implemented:
@@ -484,3 +486,106 @@ Following threading models are implemented:
 | .mro      | .moo        | Morty optimized executable |
 | .mrp      | .mop        | Morty portable executable  |
 | .mrt      | .mo         | Morty source code          |
+
+
+## Sandbox
+
+### array access
+
+```
+# current
+def swap-arr ( a x y -- ) :y :x :a
+	a x add get (tmp)
+	a y add get a x add set
+	(tmp) a y add set
+end
+
+# square brackets
+# - suggests that any operation can be made inside brackets
+# + most common array notation
+# - conflict with lambda
+def swap-arr ( a x y -- ) :y :x :a
+	a[x] get (tmp)
+	a[y] get a[x] set
+	(tmp) a[y] set
+end
+
+# dot
+def swap-arr ( a x y -- ) :y :x :a
+	a.x get (tmp)
+	a.y get a.x set
+	(tmp) a.y set
+end
+
+# new-word [] not reversed
+def swap-arr ( a x y -- ) :y :x :a
+	a x []get (tmp)
+	a y []get a x []set
+	(tmp) a y []set
+end
+
+# new-word [] reversed
+def swap-arr ( a x y -- ) :y :x :a
+	x a []get (tmp)
+	y a []get x a []set
+	(tmp) y a []set
+end
+
+# new-word . not reversed
+def swap-arr ( a x y -- ) :y :x :a
+	a x .get (tmp)
+	a y .get a x .set
+	(tmp) a y .set
+end
+
+# new-word . reversed
+def swap-arr ( a x y -- ) :y :x :a
+	x a .get (tmp)
+	y a .get x a .set
+	(tmp) y a .set
+end
+
+# new-word COMBO . not reversed
+def swap-arr ( a x y -- ) :y :x :a
+	a x.get (tmp)
+	a y.get a x.set
+	(tmp) a y.set
+end
+
+# new-word COMBO . reversed  <-----------------------------
+def swap-arr ( a x y -- ) :y :x :a
+	x a.get (tmp)
+	y a.get x a.set
+	(tmp) y a.set
+end
+
+#
+def swap-arr ( a x y -- ) :y :x :a
+	a x []@ (tmp)
+	a y []@ a x []!
+	(tmp) a y []!
+end
+
+
+# colon
+def swap-arr ( a x y -- ) :y :x :a
+	a:x get (tmp)
+	a:y get a:x set
+	(tmp) a:y set
+end
+
+# comma
+def swap-arr ( a x y -- ) :y :x :a
+	a,x get (tmp)
+	a,y get a,x set
+	(tmp) a,y set
+end
+
+# plus
+def swap-arr ( a x y -- ) :y :x :a
+	a+x get (tmp)
+	a+y get a+x set
+	(tmp) a+y set
+end
+
+```
