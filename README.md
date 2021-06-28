@@ -400,12 +400,11 @@ Stack based labels:
 
 ```
 Active:
-- else
-- heapsort.morty
-- debug stacks depth
+- qsort
 - structs: usage
 
 Next:
+- debug stacks depth
 - stand-alone executable
 - transpilation to C
 
@@ -418,6 +417,8 @@ To do:
 - fix globals_cnt
 - constants
 - iterators
+- else ?
+- heapsort.morty (requires else for easy porting)
 - array operations (similar to numpy / APL) ?
 - encode word in ASM
 - special stack shuffling syntax -> ie abcd|cadb or |cabd // ab|aba or |aba
