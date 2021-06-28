@@ -400,7 +400,9 @@ Stack based labels:
 
 ```
 Active:
-- qsort
+- more intuitive for ( lo hi incr )
+- forward-declarations or other technique for top-down programming
+- trace
 - structs: usage
 
 Next:
@@ -433,6 +435,7 @@ To do:
 - add Morty to linguist (https://github.com/github/linguist) so it can be detected by GitHub
 
 Done:
+- qsort
 - ackerman.morty
 - structs: declaration
 - fix random.asm -O (muli, divi, modi vs OPFREQ)

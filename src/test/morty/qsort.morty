@@ -1,0 +1,45 @@
+((
+	https://en.wikipedia.org/wiki/Quicksort
+))
+
+def swap-arr ( a x y -- ) :y :x :a
+	a x add get (tmp)
+	a y add get a x add set
+	(tmp) a y add set
+end
+
+def partition ( a lo hi -- ) :hi :lo :a
+	a hi add get :pivot
+	lo :ii
+	hi lo 1 for
+		a i add get pivot lt then
+			a ii i swap-arr
+			ii 1 add :ii
+		do
+	loop
+	a ii hi swap-arr
+	ii
+end
+
+def qsort ( a lo hi -- ) :hi :lo :a
+	lo hi lt then
+		a lo hi partition :p
+		(( (xxx) a dot lo dot hi dot p dot 10 emit (xxx) ))
+		a lo p 1 sub qsort
+		a p 1 add hi qsort
+	do
+end
+
+{ 3 5 6 8 6 5 4 3 2 2 4 65 7 7 8 6 5 4 43 42 } $A
+
+20 times
+	A i add get dot
+loop
+10 emit
+
+A 0 19 qsort
+
+10 emit
+20 times
+	A i add get dot
+loop
