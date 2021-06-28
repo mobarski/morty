@@ -15,7 +15,7 @@ def tokenize(text):
 	return re.findall("""(?xms)
 			  [(][(].*?[)][)]  # multi-line comment
 			| [(].*?[)]        # inline comment
-			| [(].*?\n         # line comment
+			| [#].*?\n         # line comment
 			| [^ \t\r\n]+      # "normal" token
 			| \s+              # whitespace
 		""",text)
@@ -58,7 +58,7 @@ def compile(tokens):
 			continue
 		
 		# MODE: normal
-		if t[0] in '\r\n\t (':
+		if t[0] in '\r\n\t (#':
 			asm = t
 		# functions
 		elif t=='def':
