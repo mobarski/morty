@@ -60,6 +60,9 @@ def compile(tokens):
 		# MODE: normal
 		if t[0] in '\r\n\t (#':
 			asm = t
+		# sugar
+		elif t in ['if']:
+			asm = ''
 		# functions
 		elif t=='def':
 			name = tokens[i+1] # skip whitespace

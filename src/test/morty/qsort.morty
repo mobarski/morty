@@ -11,7 +11,7 @@ def partition ( a lo hi -- ii ) :hi :lo :a
 	a hi .get :pivot
 	lo :ii
 	lo hi 1 for
-		a i .get pivot lt then
+		if a i .get pivot lt then
 			a ii i swap-arr
 			ii 1 add :ii
 		do
@@ -21,7 +21,7 @@ def partition ( a lo hi -- ii ) :hi :lo :a
 end
 
 def qsort ( a lo hi -- ) :hi :lo :a
-	lo hi lt then
+	if lo hi lt then
 		a lo hi partition :p
 		a lo p 1 sub qsort
 		a p 1 add hi qsort
