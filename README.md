@@ -400,13 +400,15 @@ Stack based labels:
 
 ```
 Active:
+- { ... } ( -- len addr ) push array length on the stack
 - more intuitive for ( lo hi incr )
 - forward-declarations or other technique for top-down programming
+- debug stacks depth
+- check stacks overflows
 - trace
 - structs: usage
 
 Next:
-- debug stacks depth
 - stand-alone executable
 - transpilation to C
 
