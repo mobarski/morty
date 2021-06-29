@@ -44,10 +44,12 @@ def tokenize(text):
 def split_tokens(tokens):
 	out = []
 	for t in tokens:
-		# TODO partition
 		# TODO error detection
 		# TODO vs float
-		for c in t.split('.'):
+		if t[0]=='.': # allow labels starting with the dot
+			out += [t]
+			continue
+		for c in t.split('.',1):
 			out += [c]
 	return out
 
@@ -55,6 +57,7 @@ def detect_labels(tokens):
 	""
 	pos = 0
 	pos_by_label = {}
+	#print(list(enumerate(tokens)),file=sys.stderr) # XXX
 	for i,t in enumerate(tokens):
 		if t[-1]==':':
 			label = t[:-1]
@@ -70,6 +73,9 @@ def apply_labels(tokens, pos_by_label):
 	pos = 0
 	#print(tokens) # XXX
 	for t in tokens:
+		# if not t: # XXX
+			# print(out)
+			# break
 		if t=='@[':
 			stack.append((pos,len(out)))
 			out += [t]
