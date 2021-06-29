@@ -38,13 +38,15 @@ TOTAL:   51 + 7?
 
 ## Feature importance
 
-| rank |      feature | reason |
-| ---- | ------------ | ------ |
-|  1.1 | conditionals | required for Turing completnes |
-|  1.2 | loops        | required for Turing completnes BUT since single, global loop is enough conditionals are more important OTOH conditional execution is a special case of 0 or 1 times loop |
-|  2.1 | arrays       | the most primitive collection |
-|  2.2 | structures   |  |
-|    4 | lambdas      | without closures they are not that usefull |
+| rank |      feature    | reason |
+| ---- | --------------- | ------ |
+|  1.1 | conditionals    | required for Turing completnes |
+|  1.2 | loops           | required for Turing completnes BUT since single, global loop is enough conditionals are more important OTOH conditional execution is a special case of 0 or 1 times loop |
+|  2.1 | arrays          | the most primitive collection |
+|  2.2 | structures      |  |
+|  3.1 | multitasking    |  |
+|  3.2 | multiprocessing |  |
+|    4 | lambdas         | without closures they are not that usefull |
 
 
 # Memory
@@ -96,10 +98,9 @@ end
 # Compiler:
 
 The compiler is separated into several layers:
-- language processor
-- high level assembler
-- peephole optimizer
-- assembler
+- language (morty -> vm-asm)
+- peephole optimizer (vm-asm -> vm-asm)
+- assembler (vm-asm -> p-code)
 - linker?
 
 # Function arguments
@@ -371,7 +372,7 @@ Measured on loops.hla with n=28.
 Enclosing the block in [ & ] helps in code editors (matching bracket can be highlighted) and helps to distinguish loop start and end.
 A similar effect can be achieved with a proper indention and/or loop keywords highlighting.
 
-Block based loops require that loop setup and loop cleanup happens in the single keyword.
+Block based loops require that loop setup and loop cleanup happens in the single keyword -> BAD.
 
 ## ASM
 
@@ -406,7 +407,12 @@ for 0 10 1 do
 loop
 OR
 0 10 1 for
+	...
+loop
 
+0 :i
+while i 10 lt do
+	i 4 add :i
 loop
 
 while x 5 lt do
