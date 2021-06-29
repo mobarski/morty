@@ -399,7 +399,7 @@ Stack based labels:
 
 ```
 Active:
-- { ... } ( -- len addr ) push array length on the stack
+- { ... } ( -- len addr ) push array length on the stack OR len is at addr-1
 
 Next:
 - forward-declarations or other technique for top-down programming
