@@ -137,8 +137,8 @@ Counted loops:
     i dot
 loop
 
-( loop to 10 from 2 with step 1 )
-10 2 1 for
+( loop from 2 to 9 with step 1 )
+2 10 1 for
     i dot
 loop
 ```
