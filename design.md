@@ -36,6 +36,17 @@ nop:     1
 TOTAL:   51 + 7?
 ```
 
+## Feature importance
+
+| rank |      feature | reason |
+| ---- | ------------ | ------ |
+|  1.1 | conditionals | required for Turing completnes |
+|  1.2 | loops        | required for Turing completnes BUT since single, global loop is enough conditionals are more important OTOH conditional execution is a special case of 0 or 1 times loop |
+|  2.1 | arrays       | the most primitive collection |
+|  2.2 | structures   |  |
+|    4 | lambdas      | without closures they are not that usefull |
+
+
 # Memory
 
 This will change.
