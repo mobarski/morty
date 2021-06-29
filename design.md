@@ -4,6 +4,7 @@
 - [memory](#memory)
 - [conditionals](#conditionals)
 - [loops](#loops)
+- [arrays](#arrays)
 - [threading](#threading)
 - [other](#other)
 
@@ -564,9 +565,10 @@ Following threading models are implemented:
 | .mrt      | .mo         | Morty source code          |
 
 
-## Sandbox
 
-### array access
+# Arrays
+
+## Sandbox
 
 ```
 # current
@@ -577,9 +579,9 @@ def swap-arr ( a x y -- ) :y :x :a
 end
 
 # square brackets
-# - suggests that any operation can be made inside brackets
+# = suggests that any operation can be made inside brackets -> should be allowed 
 # + most common array notation
-# - conflict with lambda
+# - conflict with lambda -> arrays are more important
 def swap-arr ( a x y -- ) :y :x :a
 	a[x] get (tmp)
 	a[y] get a[x] set

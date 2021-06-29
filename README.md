@@ -39,10 +39,10 @@ Target usage:
 - simple backend services
 
 Design principles:
-- easy to implement (close to the stack machine like Forth)
+- easy to implement (like Forth; close to the stack machine)
 - performant
 - easy to learn (like Go)
-- easy to read (like Python or Logo; named arguments, dot properties, less symbols)
+- easy to read (like Python or Logo; captures intent -> named arguments, dot properties, array notation, less symbols)
 
 Target VM implementations:
 - C (most performant, portable with recompilation)
@@ -402,13 +402,14 @@ Stack based labels:
 ```
 Active:
 - { ... } ( -- len addr ) push array length on the stack
+- `a[x 1 add] get` array notation
+
+Next:
 - forward-declarations or other technique for top-down programming
 - debug stacks depth
 - check stacks overflows
 - trace
 - structs: usage
-
-Next:
 - stand-alone executable
 - transpilation to C
 
