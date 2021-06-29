@@ -189,9 +189,7 @@ This is on purpose to keep the macros simple.
 
 ## Lambda functions
 
-```
-21 [ dup add ] call
-```
+TODO
 
 ## Global variables
 
@@ -402,7 +400,7 @@ Stack based labels:
 ```
 Active:
 - { ... } ( -- len addr ) push array length on the stack
-- `a[x 1 add] get` array notation
+- `a[x 1 add] get` array notation (remove lambdas for now)
 
 Next:
 - forward-declarations or other technique for top-down programming

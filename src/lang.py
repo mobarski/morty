@@ -16,7 +16,8 @@ def tokenize(text):
 			  [(][(].*?[)][)]  # multi-line comment
 			| [(].*?[)]        # inline comment
 			| [#].*?\n         # line comment
-			| [^ \t\r\n]+      # "normal" token
+			| [^ \t\r\n\[\]]+  # "normal" token
+			| [\[\]]           # separators
 			| \s+              # whitespace
 		""",text)
 
@@ -60,6 +61,8 @@ def compile(tokens):
 		# MODE: normal
 		if t[0] in '\r\n\t (#':
 			asm = t
+		elif t[0] in '[]':
+			asm = f' ({t}) '
 		# sugar
 		elif t in ['if']:
 			asm = ''
@@ -85,7 +88,7 @@ def compile(tokens):
 			asm = ']:'
 		elif t=='i':
 			asm = 'rget.0'
-		# arrays
+		# arrays TODO: remove
 		elif t=='.get':
 			asm = 'add.0 get.0'
 		elif t=='.set':
@@ -113,11 +116,6 @@ def compile(tokens):
 			asm = f'gget.{idx}'
 		elif t in functions:
 			asm = f"call.@{t}"
-		#
-		elif t == '[':
-			asm = 'goto.@['
-		elif t == ']':
-			asm = 'ret.0 push.@]'
 		# mode change
 		elif t == '{':
 			asm = 'goto.@['

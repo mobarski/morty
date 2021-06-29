@@ -35,8 +35,10 @@ if 1:
 			2 b add
 			3 c div
 		end
-		[ 42 dot ] call
 		{ 11 } $aaa
+		{ 11 22 33 44 } $arr
+		arr[1] .get
+		arr[1 1 add] .get 
 	# -------------------
 		20 foo 2 add
 		$x
