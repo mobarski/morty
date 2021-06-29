@@ -88,7 +88,7 @@ def compile(tokens):
 			asm = ']:'
 		elif t=='i':
 			asm = 'rget.0'
-		# arrays TODO: remove
+		# arrays # TODO: stdlib as macro
 		elif t=='.get':
 			asm = 'add.0 get.0'
 		elif t=='.set':

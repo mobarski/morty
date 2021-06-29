@@ -400,7 +400,6 @@ Stack based labels:
 ```
 Active:
 - { ... } ( -- len addr ) push array length on the stack
-- `a[x 1 add] get` array notation (remove lambdas for now)
 
 Next:
 - forward-declarations or other technique for top-down programming
@@ -436,6 +435,7 @@ To do:
 - add Morty to linguist (https://github.com/github/linguist) so it can be detected by GitHub
 
 Done:
+- `a[x 1 add] .get` array notation (remove lambdas for now, introduce [ and ] as visual separators)
 - array notation ( .get .set )
 - more intuitive for ( lo hi incr )
 - qsort

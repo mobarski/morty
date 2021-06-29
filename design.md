@@ -572,6 +572,15 @@ Following threading models are implemented:
 
 ```
 # current
+# [ and ] acts only as visual separator
+def swap-arr ( a x y -- ) :y :x :a
+	a[x] .get (tmp)
+	a[y] .get a[x] .set
+	(tmp) a[y] .set
+end
+
+
+# old
 def swap-arr ( a x y -- ) :y :x :a
 	a x add get (tmp)
 	a y add get a x add set
