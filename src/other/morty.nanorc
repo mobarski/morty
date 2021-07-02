@@ -1,0 +1,31 @@
+syntax morty "\.morty"
+comment "#"
+
+# TODO: better colors / scheme
+
+# control structures
+color brightmagenta "\<(if|then|else|is|fi|do|case|switch)\>"
+color brightmagenta "\<(times|loop|for|repeat|again|begin|while|until|next)\>"
+
+# arrays
+color brightwhite "[{}]"
+color brightwhite "\B[.]\S+"
+color brightblack "\[|\]"
+color brightblack "[|]"
+
+# globals
+color brightgreen "\B[$]\S+"
+
+# functions
+color brightcyan "def \S+"
+color cyan       "\<(def|end|ret)\>"
+
+# variables
+color brightyellow "\B[:]\S+"
+
+# numbers
+color yellow "[+-]?[0-9_]+"
+
+# comments
+color brightblack "[(][^)]*[)]"
+color brightblue "[#].*"
