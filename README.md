@@ -98,6 +98,18 @@ def potential-energy (m h -- e)
 end
 ```
 
+## Comments
+
+Morty has three kinds of comments:
+- inline comments `code (some comment) code`
+- line comments `code # some comment`
+- multi-line comments:
+```
+code (( this is
+        multi line
+        comment )) code
+```
+
 ## Named local variables
 
 Morty allows capturing values into named local variables.
@@ -195,9 +207,25 @@ TODO
 
 TODO
 
+```
+{ 42 } $LAST
+def gen-random (max--n)
+	LAST get 3877 mul 29573 add 139968 mod LAST set
+	(max) LAST get mul 139968 div (n)
+end
+```
+
 ## Arrays
 
 TODO
+
+```
+def .swap ( a x y -- ) :y :x :a
+	a[x] .get (X)
+	a[y] .get (X Y) a[x] .set
+	(X) a[y] .set
+end
+```
 
 ## Strings
 
@@ -403,15 +431,17 @@ Active:
 
 Next:
 - forward-declarations or other technique for top-down programming
+
+To do:
+- separate stacks, code and mem ?
+- memory slices (addr -> slice,offset) ?
+- all addrs are indirect ?
 - debug stacks depth
 - check stacks overflows
 - trace
 - structs: usage
 - stand-alone executable
 - transpilation to C
-
-To do:
-- separate stacks, code and mem ?
 - cooperative multitasking
 - docs: all vm instructions (including turbo mode)
 - macros / inline ?
@@ -505,5 +535,8 @@ Done:
 |                 **Blacklight** | https://github.com/acook/blacklight/wiki                       |
 |                      **Quark** | https://github.com/henrystanley/Quark                          |
 |          **Array programming** | https://en.wikipedia.org/wiki/Array_programming                |
+|        **NGA virtual machine** | https://github.com/crcx/nga/blob/master/Nga.md                 |
+|       **Parable (mem slices)** | https://github.com/crcx/parable                                |
+|         **Vaporisation (mem)** | https://slightknack.dev/blog/vaporization/                     |
 
 [//]: # (online .md editor: https://markdown-editor.github.io/ )
