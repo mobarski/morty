@@ -52,76 +52,76 @@ Continue should be jump @addr and break jump @addr+2.
 ### While
 
 ```
-	while x 5 lt do ... loop
-	->
-	while.@[ x 5 lt breakzero.0 ... loop.@]
-	
+while x 5 lt do ... loop
+->
+while.@[ x 5 lt breakzero.0 ... loop.@]
+
 ```
 
 ### New
 
 ```forth
 
-	10 times ... loop
-	
-	for 0 10 1 do ... loop
-	
-	0 10 1 for ... loop
+10 times ... loop
 
-	0 :i
-	while i 10 lt do
-		i 4 add :i
-	loop
+for 0 10 1 do ... loop
 
-	while x 5 lt do ... loop
-	# HLA -> 0 0 0 loop-frame  [: x 5 lt jnz.@[ break ]: ... jump.@]
+0 10 1 for ... loop
 
-	always
-		if x 5 lt then break do
-	loop
+0 :i
+while i 10 lt do
+    i 4 add :i
+loop
+
+while x 5 lt do ... loop
+# HLA -> 0 0 0 loop-frame  [: x 5 lt jnz.@[ break ]: ... jump.@]
+
+always
+    if x 5 lt then break do
+loop
 
 
-	# optional
-	repeat
-		...
-	until x 5 lt loop
-	OR 
-	repeat
-		...
-	x 5 lt until
+# optional
+repeat
+    ...
+until x 5 lt loop
+OR 
+repeat
+    ...
+x 5 lt until
 
 ```
 
 ### Old
 
 ```forth
-	5 times 
-		i dot
-	loop
+5 times 
+    i dot
+loop
 
-	5 times 
-		i dot
-	repeat
+5 times 
+    i dot
+repeat
 
-	10 2 1 for
-		i dot
-	loop
+10 2 1 for
+    i dot
+loop
 
-	( vs )
+( vs )
 
-	5 [ i dot ] repeat
+5 [ i dot ] repeat
 
-	10 2 1 [ i dot ] loop
+10 2 1 [ i dot ] loop
 
-	( vs )
+( vs )
 
-	5 [
-		i dot
-	] repeat
+5 [
+    i dot
+] repeat
 
-	10 2 1 [
-		i dot
-	] loop
+10 2 1 [
+    i dot
+] loop
 
 
 ```
@@ -130,67 +130,67 @@ Continue should be jump @addr and break jump @addr+2.
 ### Definite
 ```forth
 
-	5 times [ 1 add ]
+5 times [ 1 add ]
 
-	5 times [ 1 add ] loop
+5 times [ 1 add ] loop
 
-	5 times 1 add loop
+5 times 1 add loop
 
 ```
 
 ### Indefinite
 ```forth
-	loop [ ... ]
+loop [ ... ]
 
-	do [ ... ] loop
+do [ ... ] loop
 
-	do [ ... ] repeat
+do [ ... ] repeat
 
-	for [ ... ] loop
+for [ ... ] loop
 
-	loop [ ... 10 ge then [ break ] ... ]
+loop [ ... 10 ge then [ break ] ... ]
 
 ```
 
 ```forth
-	5 times
-		i print
-	loop
+5 times
+    i print
+loop
 
-	10 0 do
-		i print
-	loop
+10 0 do
+    i print
+loop
 
-	10 0 2 for
-		i print
-	loop
+10 0 2 for
+    i print
+loop
 
 ```
 
 ## Mako
 ```forth
-	loop
-		...
-	while / until / again
+loop
+    ...
+while / until / again
 
-	10 for
-		... ( supports i and j loop indices )
-	next
+10 for
+    ... ( supports i and j loop indices )
+next
 ```
 
 ## Forth
 ```forth
-	limit index do
-		...
-	loop / +loop
+limit index do
+    ...
+loop / +loop
 
-	begin
-		...
-	f until
+begin
+    ...
+f until
 
-	begin
-		...
-	again
+begin
+    ...
+again
 
-	begin xx f while yyy repeat
+begin xx f while yyy repeat
 ```
