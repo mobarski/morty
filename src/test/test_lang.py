@@ -5,7 +5,7 @@ def test_code(code):
 	asm = to_asm(code)
 	print(asm)
 
-if 1:
+if 0:
 	test_code("""
 	((
 		this
@@ -43,4 +43,12 @@ if 1:
 		20 foo 2 add
 		$x
 		x dot
+	""")
+
+if 1:
+	test_code("""
+		def foo bar end
+		def bar baz end
+		def baz 123 end
+		foo dot
 	""")

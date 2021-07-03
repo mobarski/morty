@@ -132,9 +132,9 @@ def compile(tokens):
 		elif is_int(t):
 			x = int(t)
 			asm = f'push.{x}'
-		else:
-			# TODO: verify
-			asm = t
+		else: # call unknown function
+			#asm = t # OLD
+			asm = f"call.@{t}" # TEST: regression
 		out += [dict(asm=asm)]
 	return out
 
