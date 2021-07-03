@@ -29,3 +29,4 @@ color yellow "[+-]?[0-9_]+"
 # comments
 color brightblack "[(][^)]*[)]"
 color brightblue "[#].*"
+color brightblack start="[(][(]" end="[)][)]"
