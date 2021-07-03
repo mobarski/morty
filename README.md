@@ -428,6 +428,8 @@ Stack based labels:
 ```
 Active:
 - while-do-loop (`do` in then vs `do` in loop) vs begin-again loop
+- structs: usage
+- struct: "methods"
 
 Next:
 - forward-declarations or other technique for top-down programming
@@ -439,7 +441,6 @@ To do:
 - debug stacks depth
 - check stacks overflows
 - trace
-- structs: usage
 - stand-alone executable
 - transpilation to C
 - cooperative multitasking

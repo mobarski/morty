@@ -23,14 +23,28 @@ end
 ```
 
 ### method
+Idea:
+- `a.x` is for method calls
+- `a:x` is for attrubutes since `:x` is local variable
+- `a|x` or `a'x` is for type/interface declaration/casting
 ```
-def swap-arr ( a x y -- ) :y :x :a
+def swap-arr ( a x y -- ) :y :x :a|array
     x a.get (tmp)
     y a.get x a.set
     (tmp) y a.set
 end
-```
 
+def swap-arr ( a x y -- ) :y :x :a|array
+    x a:get (tmp)
+    y a:get x a:set
+    (tmp) y a:set
+end
+
+# EFFECT:
+    x a array-get (tmp)
+    y a array-get x a array-set
+    (tmp) y a array-set
+```
 
 
 ## Sandbox - other
