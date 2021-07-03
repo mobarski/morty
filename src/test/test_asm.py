@@ -5,11 +5,7 @@ def test_asm(asm, optimize=False):
 	cells = to_cells(asm, OPCODE, do_optimize=optimize)
 	print(cells)
 
-def test_hla(hla, optimize=False):
-	asm = hlasm_to_asm(hla)
-	cells = to_cells(asm, OPCODE, do_optimize=optimize)
-	print(cells)
-	print(asm)
+# -----------------------------------------------------------------------------
 
 if 0:
 	asm = """
@@ -22,17 +18,6 @@ if 0:
 	"""
 	test_asm(asm)
 	
-if 0:
-	hla = """
-	0 jz.@start
-	inc:
-		1 add ret
-	start:
-		2 :inc
-	stop
-	"""
-	test_hla(hla)
-
 if 0:
 	asm = "push.0 jz.@[ push.1 add.0 push.@] push.2"
 	test_asm(asm)
@@ -81,7 +66,6 @@ if 0:
 	test_asm(asm, optimize=True)
 
 if 1:
-	hla = """
-	11 22 goto.@[ #33 #44 pusha.@] 55
-	"""
-	test_hla(hla)
+	#asm = "push.1 goto.@[ 11 22 33 push.@] push.@@" # @@ after @]
+	asm = "push.1 goto.@[ 11 22 33 44 55 66 push.@@ push.@]" # @@ before @]
+	test_asm(asm)

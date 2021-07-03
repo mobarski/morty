@@ -16,7 +16,7 @@ def to_cells(text, op_code, do_optimize=False, do_debug=False):
 		if do_debug:
 			print(" ".join(tokens), file=sys.stderr)
 	tokens        = split_tokens(tokens)
-	pos_by_label  = detect_labels(tokens)
+	pos_by_label  = get_pos_by_label(tokens)
 	tokens        = apply_labels(tokens, pos_by_label)
 	cells         = compile(tokens, op_code)
 	return cells
@@ -42,6 +42,7 @@ def tokenize(text):
 	return re.split('\s+',text.strip())
 
 def split_tokens(tokens):
+	"split [op.arg op.arg] into [op arg op arg]"
 	out = []
 	for t in tokens:
 		# TODO error detection
@@ -53,8 +54,7 @@ def split_tokens(tokens):
 			out += [c]
 	return out
 
-def detect_labels(tokens):
-	""
+def get_pos_by_label(tokens):
 	pos = 0
 	pos_by_label = {}
 	#print(list(enumerate(tokens)),file=sys.stderr) # XXX
@@ -67,7 +67,15 @@ def detect_labels(tokens):
 	return pos_by_label
 
 def apply_labels(tokens, pos_by_label):
-	""
+	"""return tokens with labels references replaced by addresses
+	notation:
+	- x: -> a label (nothing to write)
+	- @x -> write the address of the label
+	- @[ -> push current address on the compiler stack, write placeholder
+	- @] -> pop address from the assembler stack, write current address there, and write that address here
+	- @@ -> write push.len, where len is offset between here and addres from the top of the compiler stack (don't pop)
+	- ]: -> pop address from the assembler stack, write current address there
+	"""
 	out = []
 	stack = []
 	pos = 0
@@ -89,6 +97,11 @@ def apply_labels(tokens, pos_by_label):
 			target,i = stack.pop()
 			out[i] = str(pos)
 			out += [t]
+		elif t=='@@':
+			#val = pos - int(out[-2]) - 3 # after @]
+			target,i = stack[-1] # before @]
+			val = pos - target - 2 # before @]
+			out += [str(val)]
 		elif t[0]=='@':
 			label = t[1:]
 			p = pos_by_label[label]

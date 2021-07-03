@@ -35,8 +35,8 @@ if 1:
 			2 b add
 			3 c div
 		end
-		{ 11 } $aaa
-		{ 11 22 33 44 } $arr
+		{ 11 } $aaa drop
+		{ 11 22 33 44 } $arr $arr-len
 		arr[1] .get
 		arr[1 1 add] .get 
 	# -------------------

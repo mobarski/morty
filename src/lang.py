@@ -39,7 +39,7 @@ def compile(tokens):
 		if mode == 'raw':
 			if t == '}':
 				mode = 'normal'
-				asm = 'push.@]'
+				asm = 'push.@@ push.@]'
 			else:
 				asm = t
 			out += [dict(asm=asm)]
