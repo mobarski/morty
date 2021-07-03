@@ -1,16 +1,27 @@
 
 # Loops
 
+## Loop frame variants
+
+1. val                     - counting down to 0 (no break & continue)
+2. addr  val               - counting down to 0
+3. addr  from  val         - counting down to 0
+4. addr  target val        - counting up to target
+5. addr  step  target  val - counting up to target with step >= 1
+6. addr  step  val         - counting down to 0 with step >= 1
+7. addr  step  from  val   - counting down to 0 with step >= 1
+
+
 ## Performance
 
 Measured on loops.hla with n=28.
 
-| implementation            | times [ms]                         | mean | stdev |
-| ------------------------: | ---------------------------------- | ---- | ----- |
-|               frame + cnt | 1886,1895,1878,1890,1886,1900,1890 | 1889 |  7.04 |
-|            no frame + cnt | 1939,1927,1938,1934,1950,1948,1975 | 1944 | 15.61 |
-|         frame + from + to | 2010,2000,1995,2001,2083,2012,2045 | 2020 | 31.99 |
-| frame + from + to + delta | 1999,1987,1996,1994,2073,2000,2067 | 2016 | 36.78 |
+| frame variant            | times [ms]                         | mean | stdev |
+| -----------------------: | ---------------------------------- | ---- | ----- |
+|                      val | 1886,1895,1878,1890,1886,1900,1890 | 1889 |  7.04 |
+|                 addr val | 1939,1927,1938,1934,1950,1948,1975 | 1944 | 15.61 |
+|            addr from val | 2010,2000,1995,2001,2083,2012,2045 | 2020 | 31.99 |
+|  addr  step  target  val | 1999,1987,1996,1994,2073,2000,2067 | 2016 | 36.78 |
 
 ## Lang
 
@@ -38,31 +49,31 @@ Continue should be jump @addr and break jump @addr+2.
 
 ## Sandbox
 
+### While
+
+```
+	while x 5 lt do ... loop
+	->
+	while.@[ x 5 lt breakzero.0 ... loop.@]
+	
+```
+
 ### New
 
 ```forth
 
-	10 times
-		...
-	loop
-
-
-	for 0 10 1 do
-		...
-	loop
-	OR
-	0 10 1 for
-		...
-	loop
+	10 times ... loop
+	
+	for 0 10 1 do ... loop
+	
+	0 10 1 for ... loop
 
 	0 :i
 	while i 10 lt do
 		i 4 add :i
 	loop
 
-	while x 5 lt do
-		...
-	loop
+	while x 5 lt do ... loop
 	# HLA -> 0 0 0 loop-frame  [: x 5 lt jnz.@[ break ]: ... jump.@]
 
 	always
@@ -78,14 +89,6 @@ Continue should be jump @addr and break jump @addr+2.
 	repeat
 		...
 	x 5 lt until
-
-	while x 5 lt then
-		...
-	loop
-	->
-	while.@[ vget.1 push.5 lt.0 breakzero.0
-		...
-	loop.@]
 
 ```
 
@@ -124,7 +127,7 @@ Continue should be jump @addr and break jump @addr+2.
 ```
 
 
-Definite:
+### Definite
 ```forth
 
 	5 times [ 1 add ]
@@ -135,7 +138,7 @@ Definite:
 
 ```
 
-Indefinite:
+### Indefinite
 ```forth
 	loop [ ... ]
 
@@ -164,7 +167,7 @@ Indefinite:
 
 ```
 
-Mako
+## Mako
 ```forth
 	loop
 		...
@@ -175,7 +178,7 @@ Mako
 	next
 ```
 
-Forth
+## Forth
 ```forth
 	limit index do
 		...
