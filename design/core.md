@@ -10,8 +10,9 @@ In practice it's not about instruction count. All ALU instructions are trivial t
 should not be minimalistic. It's better to provide expressive power similar to C operators with small additions
 to handle some low-cost CPU architectures (ie mulshr for CPUs without divide operation).
 
-
 ## Current core:
+
+TODO: recalculate
 
 ```
 branch:  4 + 3 (loops)
@@ -45,5 +46,7 @@ TOTAL:   51 + 7?
 The compiler is separated into several layers:
 - language (morty -> vm-asm)
 - peephole optimizer (vm-asm -> vm-asm)
-- assembler (vm-asm -> p-code)
-- linker?
+- assembler (vm-asm -> dynamic p-code)
+- linker (dynamic p-code -> static p-code)
+- loader ? 
+

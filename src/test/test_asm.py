@@ -1,9 +1,13 @@
 import sys; sys.path.append('../')
-from asm import *
+from asm import to_cells,OPCODE
+from link import *
 
 def test_asm(asm, optimize=False):
+	print('asm:', asm)
 	cells = to_cells(asm, OPCODE, do_optimize=optimize)
-	print(cells)
+	print('before linking:',cells)
+	cells = link(cells)
+	print('after linking: ',cells)
 
 # -----------------------------------------------------------------------------
 
@@ -14,7 +18,7 @@ if 0:
 		push.1 add.0 ret.0
 	start:
 		push.2 call.@inc
-	stop.0
+	halt.0
 	"""
 	test_asm(asm)
 	
@@ -61,6 +65,7 @@ if 0:
 	"""
 	test_asm(asm)
 
+# ERROR:
 if 0:
 	asm = "push.1   push.2   add.0   jz.@[   push.1   ret.0   qret.0   ]:   push.3"
 	test_asm(asm, optimize=True)

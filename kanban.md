@@ -1,14 +1,18 @@
 # Kanban
 
 ## Active
+- fix: sieve.asm
+- fix: loops.asm
+- replace -i option with -f (more standard)
+
+## Next
 - while-do-loop (`do` in then vs `do` in loop) vs begin-again loop
 - structs: usage
 - types: methods
-
-## Next
 - forward-declarations or other technique for top-down programming
 
 ## To do
+- peephole optimizer as a separate tool
 - separate stacks, code and mem ?
 - memory slices (addr -> slice,offset) ?
 - all addrs are indirect ?
@@ -40,6 +44,7 @@
 - add Morty to linguist (https://github.com/github/linguist) so it can be detected by GitHub
 
 ## Done
+- separate linker
 - { ... } ( -- len addr ) push array length on the stack before addr
 - `a[x 1 add] .get` array notation (remove lambdas for now, introduce [ and ] as visual separators)
 - array notation ( .get .set )

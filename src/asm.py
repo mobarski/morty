@@ -11,13 +11,11 @@ import peephole
 def to_cells(text, op_code, do_optimize=False, do_debug=False):
 	text          = strip_comments(text)
 	tokens        = tokenize(text)
-	if do_optimize: # TODO: multi-pass optimization
+	if do_optimize: # TODO: separate into another tool
 		tokens    = optimize(tokens, peephole.rules)
 		if do_debug:
 			print(" ".join(tokens), file=sys.stderr)
 	tokens        = split_tokens(tokens)
-	pos_by_label  = get_pos_by_label(tokens)
-	tokens        = apply_labels(tokens, pos_by_label)
 	cells         = compile(tokens, op_code)
 	return cells
 
@@ -54,75 +52,20 @@ def split_tokens(tokens):
 			out += [c]
 	return out
 
-def get_pos_by_label(tokens):
-	pos = 0
-	pos_by_label = {}
-	#print(list(enumerate(tokens)),file=sys.stderr) # XXX
-	for i,t in enumerate(tokens):
-		if t[-1]==':':
-			label = t[:-1]
-			pos_by_label[label] = pos
-		else:
-			pos += 1
-	return pos_by_label
-
-def apply_labels(tokens, pos_by_label):
-	"""return tokens with labels references replaced by addresses
-	notation:
-	- x: -> a label (nothing to write)
-	- @x -> write the address of the label
-	- @[ -> push current address on the compiler stack, write placeholder
-	- @] -> pop address from the assembler stack, write current address there, and write that address here
-	- @@ -> write push.len, where len is offset between here and addres from the top of the compiler stack (don't pop)
-	- ]: -> pop address from the assembler stack, write current address there
-	"""
-	out = []
-	stack = []
-	pos = 0
-	#print(tokens) # XXX
-	for t in tokens:
-		# if not t: # XXX
-			# print(out)
-			# break
-		if t=='@[':
-			stack.append((pos,len(out)))
-			out += [t]
-			pos += 1
-		elif t=='@]':
-			target,i = stack.pop()
-			out[i] = str(pos-1)
-			out += [str(target+1)]
-			pos += 1
-		elif t==']:':
-			target,i = stack.pop()
-			out[i] = str(pos)
-			out += [t]
-		elif t=='@@':
-			#val = pos - int(out[-2]) - 3 # after @]
-			target,i = stack[-1] # before @]
-			val = pos - target - 2 # before @]
-			out += [str(val)]
-		elif t[0]=='@':
-			label = t[1:]
-			p = pos_by_label[label]
-			out += [str(p)]
-			pos += 1
-		elif t[:2] in ['@+','@-']: # NOT USED
-			p = pos + int(arg[1:])
-			out += [str(p)]
-			pos += 1
-		elif t[-1]==":":
-			out += [t]
-		else:
-			out += [t]
-			pos += 1
-	return out
+def is_linker_token(t):
+	if not t: return False
+	if t[0]=='@': return True
+	if t[-1]==':': return True
+	return False
 
 def compile(tokens, op_code):
 	""
 	cells = []
 	#print(tokens) # XXX
 	for i,t in enumerate(tokens):
+		if is_linker_token(t):
+			cells += [t]
+			continue
 		c = op_code.get(t)
 		if c is not None:
 			cells += [c]
