@@ -3,14 +3,13 @@
 
 ## Loop frame variants
 
-1. val                     - counting down to 0 (no break & continue)
+1. val                     - counting down to 0
 2. addr  val               - counting down to 0
 3. addr  from  val         - counting down to 0
 4. addr  target val        - counting up to target
 5. addr  step  target  val - counting up to target with step >= 1
 6. addr  step  val         - counting down to 0 with step >= 1
 7. addr  step  from  val   - counting down to 0 with step >= 1
-
 
 ## Performance
 
@@ -22,6 +21,8 @@ Measured on loops.hla with n=28.
 |                 addr val | 1939,1927,1938,1934,1950,1948,1975 | 1944 | 15.61 |
 |            addr from val | 2010,2000,1995,2001,2083,2012,2045 | 2020 | 31.99 |
 |  addr  step  target  val | 1999,1987,1996,1994,2073,2000,2067 | 2016 | 36.78 |
+
+While the performance of 4 item frame is only 5% worse than the simplest case it requires 4 times more return stack cells.
 
 ## Lang
 
@@ -40,6 +41,17 @@ Loop frame enables "break" and "continue" instructions.
 Loop frame should contain only one address so it can be created with one asm instruction.
 The rules for performing "break" and "continue" must base on only one addres.
 Continue should be jump @addr and break jump @addr+2.
+
+**NEW** Idea for *break* without addr in the frame - new tokens for the linker:
+- `@>>` which is set to the address following next `@]`.
+- `@>` which is set to the address before next `@]`.
+**PROBLEM** - not only loops use `@]` (conditionals, arrays, etc)
+**SOLUTION** - use other markers than `@]` and use them after loop:
+- `@>break` + `loop.@] break::`
+where `::` denotes non-distinct label, for which we collect all positions
+`@>name` will use address of the next occurence (based on current position)
+`@<name` will use address of the previous occurence (based on current position) 
+**IDEA** we can gather all occurences of labels (not only ending with `::`) and the standard reference `@name` will point to the greatest address. This might enable something similar to "monkey patching".
 
 ```
 (n) times.@]1 [1: (code) ]1: loop.@[1 rsub.2
