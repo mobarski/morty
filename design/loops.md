@@ -52,6 +52,7 @@ where `::` denotes non-distinct label, for which we collect all positions
 `@>name` will use address of the next occurence (based on current position)
 `@<name` will use address of the previous occurence (based on current position) 
 **IDEA** we can gather all occurences of labels (not only ending with `::`) and the standard reference `@name` will point to the greatest address. This might enable something similar to "monkey patching".
+**ANOTHER IDEA** - loops use `@]! instead of `@]` and `@>` and `@>>` will seek just that - no other changes are neccessary.
 
 ```
 (n) times.@]1 [1: (code) ]1: loop.@[1 rsub.2
