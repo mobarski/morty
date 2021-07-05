@@ -42,6 +42,8 @@ Loop frame should contain only one address so it can be created with one asm ins
 The rules for performing "break" and "continue" must base on only one addres.
 Continue should be jump @addr and break jump @addr+2.
 
+Ideas below will not work as they don't handle nested loops.
+```
 **NEW** Idea for *break* without addr in the frame - new tokens for the linker:
 - `@>>` which is set to the address following next `@]`.
 - `@>` which is set to the address before next `@]`.
@@ -53,6 +55,7 @@ where `::` denotes non-distinct label, for which we collect all positions
 `@<name` will use address of the previous occurence (based on current position) 
 **IDEA** we can gather all occurences of labels (not only ending with `::`) and the standard reference `@name` will point to the greatest address. This might enable something similar to "monkey patching".
 **ANOTHER IDEA** - loops use `@]! instead of `@]` and `@>` and `@>>` will seek just that - no other changes are neccessary.
+```
 
 ```
 (n) times.@]1 [1: (code) ]1: loop.@[1 rsub.2
