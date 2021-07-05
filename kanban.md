@@ -1,6 +1,7 @@
 # Kanban
 
 ## Active
+- local labels (visibility limited to single function)
 
 ## Next
 - while-do-loop (`do` in then vs `do` in loop) vs begin-again loop
