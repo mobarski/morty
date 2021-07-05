@@ -29,9 +29,9 @@ goto.@start
 		vget.1 (n) times.@[
 			push.0 vset.3
 			push.8193 times.@[ push.1 vget.2 rget.0 add.0 set.0 loop.@]
-			push.8193 push.2 push.1 for.@[
+			push.2 push.8193 push.1 for.@[
 				vget.2 rget.0 add.0 get.0 push.0 gt.0 jz.@[
-					push.8193 rget.0 push.2 mul.0 rget.0 for.@[
+					rget.0 push.8193 push.2 mul.0 rget.0 for.@[
 						push.0 vget.2 rget.0 add.0 set.0
 					loop.@]
 					vget.3 push.1 add.0 vset.3

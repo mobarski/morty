@@ -1,7 +1,6 @@
 # Kanban
 
 ## Active
-- fix: sieve.asm
 - fix: loops.asm
 
 ## Next
@@ -43,6 +42,7 @@
 - add Morty to linguist (https://github.com/github/linguist) so it can be detected by GitHub
 
 ## Done
+- fix: sieve.asm / sieve.morty (for loop order)
 - replace -i option with -f (more standard)
 - forward-declarations or other technique for top-down programming
 - separate linker
