@@ -92,12 +92,12 @@ def apply_labels(tokens, pos_by_label):
 if __name__=="__main__":
 	parser = argparse.ArgumentParser(description='Link MortyVM assembler output into textual p-code')
 	parser.add_argument('-o',  metavar='path', type=str, help='output path (default: stdout)')
-	parser.add_argument('-i',  metavar='path', type=str, help='input path (default: stdin)')
+	parser.add_argument('-f',  metavar='path', type=str, help='input path (default: stdin)')
 	parser.add_argument('-d',  action='store_true', help='debug')
 	args = parser.parse_args()
 
-	if args.i:
-		code = open(args.i,'r').read()
+	if args.f:
+		code = open(args.f,'r').read()
 	else:
 		code = sys.stdin.read()		
 	

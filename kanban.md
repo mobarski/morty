@@ -3,7 +3,6 @@
 ## Active
 - fix: sieve.asm
 - fix: loops.asm
-- replace -i option with -f (more standard)
 
 ## Next
 - while-do-loop (`do` in then vs `do` in loop) vs begin-again loop
@@ -44,6 +43,7 @@
 - add Morty to linguist (https://github.com/github/linguist) so it can be detected by GitHub
 
 ## Done
+- replace -i option with -f (more standard)
 - forward-declarations or other technique for top-down programming
 - separate linker
 - { ... } ( -- len addr ) push array length on the stack before addr
