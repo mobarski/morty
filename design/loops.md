@@ -10,6 +10,7 @@
 5. addr  step  target  val - counting up to target with step >= 1
 6. addr  step  val         - counting down to 0 with step >= 1
 7. addr  step  from  val   - counting down to 0 with step >= 1
+8. addr                    - indefinite loop with break/continue support
 
 ## Performance
 
@@ -41,6 +42,18 @@ Loop frame enables "break" and "continue" instructions.
 Loop frame should contain only one address so it can be created with one asm instruction.
 The rules for performing "break" and "continue" must base on only one addres.
 Continue should be jump @addr and break jump @addr+2.
+
+Break and continue don't have to require addr in the frame - they can be handled with `goto` and reusable labels:
+
+```
+5 times ... break ... loop
+->
+5 times ... goto.@>brk ... loop brk::
+
+5 times ... continue ... loop
+->
+5 times ... goto.@>cnt ... cnt:: loop
+```
 
 Ideas below will not work as they don't handle nested loops.
 ```
