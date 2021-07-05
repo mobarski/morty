@@ -62,11 +62,24 @@ if distance 10 or-less then
 else
 	1 sec wait
 fi
-
-
 ```
 
-### New
+### Case - procedures
+
+```forth
+# case requires procedure
+
+def age-range (n--) :age
+    age 18 or-more  then adult         ret  do
+    age 13 or-more  then teen          ret  do
+    age  7 or-more  then gradeschooler ret  do
+    age  4 or-more  then preschooler   ret  do
+    age  1 or-more  then toddler       ret  do
+                         baby
+end
+```
+
+### Else
 
 ```forth
 distance 10 or-less then [ 10 times [ beep ] ]
@@ -99,7 +112,6 @@ distance 10 or-less if
 then
 ```
 
-### Old
 
 ```forth
 distance 10 or-less then collision-warning end-then
@@ -129,15 +141,18 @@ age 18 or-more then [ show-content ]
                else [ show-restriction ]
 ```
 
+### Case - forth
+
 ```forth
 ( ala FORTH ) :age
-    age 18 or-more  if adult           else
-    age 13 or-more  if teen            else
-    age  7 or-more  if gradeschooler   else
-    age  4 or-more  if preschooler     else
-    age  1 or-more  if toddler         else
-                       baby            
-    then then then then then then
+    age 18 or-more  then  adult           else
+    age 13 or-more  then  teen            else
+    age  7 or-more  then  gradeschooler   else
+    age  4 or-more  then  preschooler     else
+    age  1 or-more  then  toddler         else
+                          baby            
+    do do do do do
+
 
 vget.1 push.18 gte.0 jz.@[  call.@adult        goto.@[2 ]:
 vget.1 push.13 gte.0 jz.@[  call.@teen         goto.@[2 ]:
@@ -145,46 +160,31 @@ vget.1 push.7  gte.0 jz.@[  call.@gradschooler goto.@[2 ]:
 vget.1 push.4  gte.0 jz.@[  call.@prescholer   goto.@[2 ]:
 vget.1 push.1  gte.0 jz.@[  call.@toddler      goto.@[2 ]:
                             call.@baby
-]2: ]2: ]2: ]2: ]2: ]2: 
+]2: ]2: ]2: ]2: ]2:
+```
 
-( case requires procedure )
+### Case - goto
 
-def age-range (n--) :age
-    age 18 or-more  then adult         ret  end-then
-    age 13 or-more  then teen          ret  end-then
-    age  7 or-more  then gradeschooler ret  end-then
-    age  4 or-more  then preschooler   ret  end-then
-    age  1 or-more  then toddler       ret  end-then
-                         baby
-end
+```forth
+( goto ) :age
+    age 18 or-more  then  adult           else
+    age 13 or-more  then  teen            else
+    age  7 or-more  then  gradeschooler   else
+    age  4 or-more  then  preschooler     else
+    age  1 or-more  then  toddler         else
+                          baby            
+    endcase::
 
-def age-range (n--) :age
-    age 18 or-more  then[ adult         ret ]then
-    age 13 or-more  then[ teen          ret ]then
-    age  7 or-more  then[ gradeschooler ret ]then
-    age  4 or-more  then[ preschooler   ret ]then
-    age  1 or-more  then[ toddler       ret ]then
-                          baby          ret
-end
+vget.1 push.18 gte.0 jz.@[  call.@adult        goto.@endcase ]:
+vget.1 push.13 gte.0 jz.@[  call.@teen         goto.@endcase ]:
+vget.1 push.7  gte.0 jz.@[  call.@gradschooler goto.@endcase ]:
+vget.1 push.4  gte.0 jz.@[  call.@prescholer   goto.@endcase ]:
+vget.1 push.1  gte.0 jz.@[  call.@toddler      goto.@endcase ]:
+                            call.@baby
+endcase::
+```
 
-
-    age 18 or-more then [ adult         ] else
-    age 13 or-more then [ teen          ] else
-    age  7 or-more then [ gradeschooler ] else
-    age  4 or-more then [ preschooler   ] else
-    age  1 or-more then [ toddler       ] else
-                        [ baby          ]
-( push end of case onto R ??? )
-
-
-def age-range (n--) :age
-    age 18 or-more  [ adult         ret ] then
-    age 13 or-more  [ teen          ret ] then
-    age  7 or-more  [ gradeschooler ret ] then
-    age  4 or-more  [ preschooler   ret ] then
-    age  1 or-more  [ toddler       ret ] then
-                      baby          ret
-end
+```
 
 cnd [a] [b] if-else
 if-else -> rot pick call

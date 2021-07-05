@@ -131,12 +131,26 @@ On function end or early return they will be automatically discarded.
 
 ## Conditionals
 
-There is only one form of conditional code execution in the form of "some-condition then ... do".
-The support for "else" or "case" might be added later.
+Simple "if X then Y":
 
 ```forth
 distance 10 or-less then collision-warning do
 ```
+
+Case like example (requires defining new function):
+
+```forth
+def age-range (n--) :age
+    age 18 or-more  then adult         ret  do
+    age 13 or-more  then teen          ret  do
+    age  7 or-more  then gradeschooler ret  do
+    age  4 or-more  then preschooler   ret  do
+    age  1 or-more  then toddler       ret  do
+                         baby
+end
+```
+
+The support for "else" might be added later.
 
 ## Loops
 
