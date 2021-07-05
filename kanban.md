@@ -1,7 +1,6 @@
 # Kanban
 
 ## Active
-- fix: loops.asm
 
 ## Next
 - while-do-loop (`do` in then vs `do` in loop) vs begin-again loop
@@ -42,6 +41,7 @@
 - add Morty to linguist (https://github.com/github/linguist) so it can be detected by GitHub
 
 ## Done
+- fix: loops.asm (comments, wrong for order)
 - fix: sieve.asm / sieve.morty (for loop order)
 - replace -i option with -f (more standard)
 - forward-declarations or other technique for top-down programming

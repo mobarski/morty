@@ -151,6 +151,7 @@ if __name__=="__main__":
 	parser = argparse.ArgumentParser(description='Compile Morty source code into MortyVM assembler')
 	parser.add_argument('-o',  metavar='path', type=str, help='output path (default: stdout)')
 	parser.add_argument('-f',  metavar='path', type=str, help='input path (default: stdin)')
+	parser.add_argument('-d',  action='store_true', help='debug')
 	args = parser.parse_args()
 
 	if args.f:
@@ -160,6 +161,8 @@ if __name__=="__main__":
 
 	asm = to_asm(code)
 	
+	if args.d:
+		print(asm, file=sys.stderr)
 	if args.o:
 		with open(args.o,'w') as f:
 			print(asm,file=f)

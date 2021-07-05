@@ -14,8 +14,7 @@
 
 goto.@start
 
-((
-loops: (28: 2000ms  frame=addr,incr,to,from; loop increments / 1351ms with addi 
+loops: (28: 2000ms  frame=addr,incr,to,from; loop increments / 1351ms with addi )
 	stor.0
 	push.0 stor.0
 	push.0
@@ -35,18 +34,18 @@ loops: (28: 2000ms  frame=addr,incr,to,from; loop increments / 1351ms with addi
 		loop.@]
 	loop.@]
 ret.0
-))
 
-loops: (28: 2455ms without addi, 1800ms with addi
+((
+loops: (28: 2455ms without addi, 1800ms with addi)
 	stor.0
 	push.0 stor.0
 	push.0
-	vget.1 (n) push.0 push.1 for.@[
-		vget.1 (n) push.0 push.1 for.@[
-			vget.1 (n) push.0 push.1 for.@[
-				vget.1 (n) push.0 push.1 for.@[
-					vget.1 (n) push.0 push.1 for.@[
-						vget.1 (n) push.0 push.1 for.@[
+	push.0 vget.1 (n) push.1 for.@[
+		push.0 vget.1 (n) push.1 for.@[
+			push.0 vget.1 (n) push.1 for.@[
+				push.0 vget.1 (n) push.1 for.@[
+					push.0 vget.1 (n) push.1 for.@[
+						push.0 vget.1 (n) push.1 for.@[
 							( push.1 add.0 ( 1800 ms with addi )
 							rget.0 push.1 add.0 vset.2 ( 3232ms with addi )
 							( rget.0 push.2 mul.0 push.1 add.0 vset.2 ( 3812ms with muli addi )
@@ -57,7 +56,7 @@ loops: (28: 2455ms without addi, 1800ms with addi
 		loop.@]
 	loop.@]
 ret.0
-
+))
 
 start:
 	push.28 call.@loops vminfo.0
