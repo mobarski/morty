@@ -4,12 +4,12 @@ comment "#"
 # TODO: better colors / scheme
 
 # control structures
-color brightmagenta "\<(if|then|else|is|fi|do|case|switch)\>"
-color brightmagenta "\<(times|loop|for|repeat|again|begin|while|until|next)\>"
+color brightred "\<(if|then|else|is|fi|do|case|switch)\>"
+color brightred "\<(times|loop|for|repeat|again|begin|while|until|next)\>"
 
 # arrays
 color brightwhite "[{}]"
-color brightwhite "\B[.]\S+"
+#color brightwhite "\B[.]\S+"
 color brightblack "\[|\]"
 color brightblack "[|]"
 
@@ -17,14 +17,14 @@ color brightblack "[|]"
 color brightgreen "\B[$]\S+"
 
 # functions
-color brightcyan "def \S+"
-color cyan       "\<(def|end|ret)\>"
+color brightyellow "def \S+"
+color brightred   "\<(def|end|ret)\>"
 
 # variables
-color brightyellow "\B[:]\S+"
+color brightwhite "\B[:]\S+"
 
 # numbers
-color yellow "[+-]?[0-9_]+"
+color brightcyan "[+-]?[0-9_]+"
 
 # comments
 color brightblack "[(][^)]*[)]"
