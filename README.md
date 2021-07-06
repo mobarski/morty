@@ -131,13 +131,13 @@ On function end or early return they will be automatically discarded.
 
 ## Conditionals
 
-Simple "if X then Y":
+Morty supports only the simplest conditional statement:
 
 ```forth
 distance 10 or-less then collision-warning do
 ```
 
-Case like example (requires defining new function):
+Case requires defining new function:
 
 ```forth
 def age-range (n--) :age
@@ -174,7 +174,7 @@ Indefinite loops:
 begin
     beep
     500 ms sleep
-again
+loop
 ```
 
 Loops are counted up.  
