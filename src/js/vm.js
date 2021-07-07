@@ -5,7 +5,6 @@ vm.fp = 0
 vm.ip = 0
 vm.rp = 0
 vm.sp = 0
-vm.tos = 0
 vm.gp = 0
 vm.hp = 0
 
@@ -120,6 +119,11 @@ function boot(code) {
 	vm.hp = pos
 }
 
+function s_pop() { return vm.mem[vm.sp--] }
+function r_pop() { return vm.mem[vm.rp--] }
+function s_push(v) { vm.mem[++vm.sp]=v }
+function r_push(v) { vm.mem[++vm.rp]=v }
+
 function run() {
 	for (i=0; i<100; i++) { // TODO: replace with while (1)
 		op = vm.mem[vm.ip]
@@ -127,8 +131,12 @@ function run() {
 		vm.ip += 2
 		//console.log("ip =",vm.ip,"op =",op) // XXX
 		switch (op) {
-			case HALT: return; break;
-			case NOP:  break;
+			case CALL: r_push(vm.fp); r_push(vm.ip); vm.ip=arg; vm.fp=vm.rp;      break;
+			case RET:  vm.ip=vm.mem[vm.fp]; vm.rp=vm.fp-2; vm.fp=vm.mem[vm.fp-1]; break;
+			case JZ:   v=s_pop(); if (v==0) vm.ip=arg;                            break;
+			case GOTO: vm.ip=arg;                                                 break;
+			case HALT: return;                                                    break;
+			case NOP:                                                             break;
 		}
 	}	
 }
