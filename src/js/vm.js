@@ -167,6 +167,13 @@ function run() {
 			case INVERT: mem[vm.sp]= ~mem[vm.sp];                           break; 
 			case NEGATE: mem[vm.sp]= -mem[vm.sp];                           break; 
 			case ABS:    mem[vm.sp]= mem[vm.sp]<0 ? -mem[vm.sp]:mem[vm.sp]; break;
+			// COMPARATORS - MAIN
+			case LT:     v=s_pop(); mem[vm.sp]=mem[vm.sp]<v  ? 1:0;  break;
+			case LE:     v=s_pop(); mem[vm.sp]=mem[vm.sp]<=v ? 1:0;  break;
+			case GT:     v=s_pop(); mem[vm.sp]=mem[vm.sp]>v  ? 1:0;  break;
+			case GE:     v=s_pop(); mem[vm.sp]=mem[vm.sp]>=v ? 1:0;  break;
+			case EQ:     v=s_pop(); mem[vm.sp]=mem[vm.sp]==v ? 1:0;  break;
+			case NE:     v=s_pop(); mem[vm.sp]=mem[vm.sp]!=v ? 1:0;  break;
 		}
 	}	
 	console.log('HALT')
