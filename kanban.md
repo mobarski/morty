@@ -1,10 +1,12 @@
 # Kanban
 
 ## Active
-- vm.js prototype
-- local labels (visibility limited to single function)
+- shorter VMINFO (TOS IP SD RD HD dt) -> JS + C
+- JS - better code loading
+- JS - IO ops - canvas
 
 ## Next
+- local labels (visibility limited to single function)
 - structs: usage
 - types: methods
 - modules
@@ -42,6 +44,7 @@
 - add Morty to linguist (https://github.com/github/linguist) so it can be detected by GitHub
 
 ## Done
+- vm.js prototype
 - remove old VM ops in preparation for JS VM
 - fix: loops.asm (comments, wrong for order)
 - fix: sieve.asm / sieve.morty (for loop order)
