@@ -11,7 +11,7 @@ vm.rp = 0
 vm.sp = 0
 vm.gp = 0
 vm.hp = 0
-vm.ts_vminfo = ms_clock()
+vm.ts_vminfo = 0
 
 cfg = {}
 cfg.data_stack_size = 100
@@ -52,6 +52,7 @@ function r_push(v) { vm.mem[++vm.rp]=v }
 
 function run() {
 	mem = vm.mem
+	vm.ts_vminfo = ms_clock()
 	outer_loop:
 	for (i=0; i<100; i++) { // TODO: replace with while (1)
 		op = mem[vm.ip]
@@ -129,5 +130,3 @@ function run() {
 boot([PUSH,42,DOT,0,PUSH,42,EMIT,0,VMINFO,0,HALT,0])
 run()
 console.log('DONE')
-
-
