@@ -464,5 +464,6 @@ Stack based labels:
 |        **NGA virtual machine** | https://github.com/crcx/nga/blob/master/Nga.md                 |
 |       **Parable (mem slices)** | https://github.com/crcx/parable                                |
 |         **Vaporisation (mem)** | https://slightknack.dev/blog/vaporization/                     |
+|          **Custom Allocators** | https://slembcke.github.io/2020/10/12/CustomAllocators.html    |
 
 [//]: # (online .md editor: https://markdown-editor.github.io/ )
