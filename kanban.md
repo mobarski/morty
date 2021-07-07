@@ -1,7 +1,7 @@
 # Kanban
 
 ## Active
-- shorter VMINFO (TOS IP SD RD HD dt) -> JS + C
+- C  - shorter VMINFO (TOS IP SD RD HD dt)
 - JS - better code loading
 - JS - IO ops - canvas
 
@@ -44,6 +44,7 @@
 - add Morty to linguist (https://github.com/github/linguist) so it can be detected by GitHub
 
 ## Done
+- JS - shorter VMINFO (TOS IP SD RD HD dt)
 - vm.js prototype
 - remove old VM ops in preparation for JS VM
 - fix: loops.asm (comments, wrong for order)

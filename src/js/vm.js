@@ -31,18 +31,18 @@ const LTI=80, GEI=81, GTI=82, EQI=83, NEI=84, IOGET=85, IOSET=86, VMINFO=255
 // ----------------------------------------------------------------------------
 
 function boot(code) {
-	vm.ip = 0
+	vm.ip = cfg.ip = 0
 	for (i in code) {
 		vm.mem[i] = code[i]
 		//console.log(`boot code[${i}] -> ${code[i]} mem[${i}] -> ${vm.mem[i]}`) // XXX
 	}
 	pos = 0
 	pos += code.length + 10
-	vm.sp = pos; pos += cfg.data_stack_size
-	vm.fp = pos
-	vm.rs = pos; pos += cfg.return_stack_size
-	vm.gp = pos; pos += cfg.globals_cnt
-	vm.hp = pos
+	vm.sp = cfg.sp = pos; pos += cfg.data_stack_size
+	vm.fp = cfg.fp = pos
+	vm.rp = cfg.rp = pos; pos += cfg.return_stack_size
+	vm.gp = cfg.gp = pos; pos += cfg.globals_cnt
+	vm.hp = cfg.hp = pos
 }
 
 function s_pop() { return vm.mem[vm.sp--] }
@@ -113,7 +113,7 @@ function run() {
 			case ALLOT:  v=s_pop(); s_push(vm.hp); vm.hp+=v;  break;
 			// DEBUG
 			case VMINFO:
-				console.log(`TOS:${mem[vm.sp]}\tIP:${vm.ip}\tSP:${vm.sp}\tRP:${vm.rp}\tdt:${ms_clock()-vm.ts_vminfo} ms`)
+				console.log(`TOS:${mem[vm.sp]}\tIP:${vm.ip}\tSD:${vm.sp-cfg.sp}\tRD:${vm.rp-cfg.rp}\tHD:${vm.hp-cfg.hp}\tdt:${ms_clock()-vm.ts_vminfo} ms`)
 				vm.ts_vminfo = ms_clock()
 				break;
 			// PRIMITIVE OUTPUT
