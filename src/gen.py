@@ -22,6 +22,10 @@ if 1:
 	print("char* OP_NAME[] = {",values,"};")
 
 # js OPS
-	print("// --- JS OPCODES ---")
-	for op in OPCODE:
-		print(f"const {op.upper()}={OPCODE[op]}")
+if 1:
+	print("\n// --- OPCODES (.js) --- ")
+	for i,op in enumerate(OPCODE):
+		if i%10==0:
+			print("\b\b\nconst",end=' ')
+		print(f"{op.upper()}={OPCODE[op]},",end=' ')
+	print('\b\b')

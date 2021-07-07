@@ -1,7 +1,7 @@
 # Kanban
 
 ## Active
-- remove old VM ops in preparation for JS VM
+- vm.js prototype
 - local labels (visibility limited to single function)
 
 ## Next
@@ -42,6 +42,7 @@
 - add Morty to linguist (https://github.com/github/linguist) so it can be detected by GitHub
 
 ## Done
+- remove old VM ops in preparation for JS VM
 - fix: loops.asm (comments, wrong for order)
 - fix: sieve.asm / sieve.morty (for loop order)
 - replace -i option with -f (more standard)

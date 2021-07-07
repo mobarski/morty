@@ -18,96 +18,16 @@ cfg.data_stack_size = 100
 cfg.return_stack_size = 100
 cfg.globals_cnt = 100
 
-// --- OPCODES ---
-const HALT=0
-const NOP=1
-const PUSHA=2
-const PUSH=3
-const DUP=4
-const DROP=5
-const SWAP=6
-const STOR=7
-const RTOS=8
-const ADD=9
-const MUL=10
-const DIV=11
-const SUB=12
-const AND=13
-const OR=14
-const XOR=15
-const NZ=16
-const CALL=17
-const RET=18
-const JZ=19
-const QCALL=20
-const QRET=21
-const GET=22
-const SET=23
-const ALLOT=24
-const MOD=25
-const SHL=26
-const SHR=27
-const USHR=28
-const INVERT=29
-const NEGATE=30
-const ABS=31
-const LE=32
-const LT=33
-const GE=34
-const GT=35
-const EQ=36
-const NE=37
-const XLE=38
-const XLT=39
-const XGE=40
-const XGT=41
-const XEQ=42
-const XNE=43
-const ROT=44
-const OVER=45
-const UNROT=46
-const VGET=47
-const VSET=48
-const RADD=49
-const GGET=50
-const GSET=51
-const EMIT=52
-const DOT=53
-const ECHO=54
-const IF=55
-const IFELSE=56
-const GOTO=57
-const LAMBDA=58
-const MIN=59
-const MAX=60
-const PICK=61
-const GTZ=62
-const EQZ=63
-const LTZ=64
-const TIMES=65
-const LOOP=66
-const FOR=67
-const RSUB=68
-const RGET=69
-const BEGIN=70
-const BREAK=71
-const CONTINUE=72
-const ADDI=73
-const MULI=74
-const ADDGET=75
-const ADDSET=76
-const IADDGET=77
-const IADDSET=78
-const LEI=79
-const LTI=80
-const GEI=81
-const GTI=82
-const EQI=83
-const NEI=84
-const IOGET=85
-const IOSET=86
-const VMINFO=255
-
+// --- OPCODES (.js) ---
+const HALT=0, NOP=1, PUSHA=2, PUSH=3, DUP=4, DROP=5, SWAP=6, STOR=7, RTOS=8, ADD=9
+const MUL=10, DIV=11, SUB=12, AND=13, OR=14, XOR=15, NZ=16, CALL=17, RET=18, JZ=19
+const QCALL=20, QRET=21, GET=22, SET=23, ALLOT=24, MOD=25, SHL=26, SHR=27, USHR=28, INVERT=29
+const NEGATE=30, ABS=31, LE=32, LT=33, GE=34, GT=35, EQ=36, NE=37, XLE=38, XLT=39
+const XGE=40, XGT=41, XEQ=42, XNE=43, ROT=44, OVER=45, UNROT=46, VGET=47, VSET=48, RADD=49
+const GGET=50, GSET=51, EMIT=52, DOT=53, ECHO=54, IF=55, IFELSE=56, GOTO=57, LAMBDA=58, MIN=59
+const MAX=60, PICK=61, GTZ=62, EQZ=63, LTZ=64, TIMES=65, LOOP=66, FOR=67, RSUB=68, RGET=69
+const BEGIN=70, BREAK=71, CONTINUE=72, ADDI=73, MULI=74, ADDGET=75, ADDSET=76, IADDGET=77, IADDSET=78, LEI=79
+const LTI=80, GEI=81, GTI=82, EQI=83, NEI=84, IOGET=85, IOSET=86, VMINFO=255
 // ----------------------------------------------------------------------------
 
 function boot(code) {
