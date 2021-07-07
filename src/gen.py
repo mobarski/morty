@@ -20,3 +20,8 @@ if 1:
 		out[code] = f'"{op}"'
 	values = ",".join(out)
 	print("char* OP_NAME[] = {",values,"};")
+
+# js OPS
+	print("// --- JS OPCODES ---")
+	for op in OPCODE:
+		print(f"const {op.upper()}={OPCODE[op]}")

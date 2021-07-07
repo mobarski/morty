@@ -15,8 +15,8 @@ switch(op) {
 	// BRANCHING
 	case CALL:   r_push(fp); r_push(ip); ip=arg; fp=rp; break; // TEST ME
 	case RET:    ip=mem[fp]; rp=fp-2; fp=mem[fp-1];     break; // TEST ME
-	case QCALL:  r_push(ip); ip=s_pop();                break;
-	case QRET:   ip = r_pop();                          break;
+	//case QCALL:  r_push(ip); ip=s_pop();                break; // NOT USED YET
+	//case QRET:   ip = r_pop();                          break; // NOT USED YET
 	case JZ:     v=s_pop();  if (v==0) ip=arg;          break;
 	case GOTO:   ip=arg;                                break;
 	case HALT:   goto halt;                             break;
@@ -41,11 +41,11 @@ switch(op) {
 	case DUP:    s_push(tos);                   break;
 	case DROP:   v=s_pop();                     break;
 	case OVER:   s_push(mem[sp]);               break;
-	case ROT:    v=mem[sp-1]; mem[sp-1]=mem[sp]; mem[sp]=tos; tos=v; break;
-	case UNROT:  v=tos; tos=mem[sp]; mem[sp]=mem[sp-1]; mem[sp-1]=v; break;
+	case ROT:    v=mem[sp-1]; mem[sp-1]=mem[sp]; mem[sp]=tos; tos=v; break; // NOT USED YET
+	case UNROT:  v=tos; tos=mem[sp]; mem[sp]=mem[sp-1]; mem[sp-1]=v; break; // NOT USED YET
 	// ALU
 	case MUL:    v=s_pop(); tos *= v;           break;
-	case DIV:    v=s_pop(); tos /= v;           break;
+	case DIV:    v=s_pop(); tos /= v;           break; // DIV tends to be slow on microcontrollers
 	case ADD:    v=s_pop(); tos += v;           break;
 	case SUB:    v=s_pop(); tos -= v;           break;
 	case AND:    v=s_pop(); tos &= v;           break;
@@ -57,7 +57,7 @@ switch(op) {
 	case INVERT: tos= ~tos;                     break; 
 	case NEGATE: tos= -tos;                     break; 
 	case ABS:    tos= tos<0 ? -tos:tos;         break;
-	case USHR:   v=s_pop(); uv=tos; tos=uv>>v;  break; // NOT CORE ? -> for hash?
+	//case USHR:   v=s_pop(); uv=tos; tos=uv>>v;  break; // NOT CORE ? -> for hash?
 	// COMPARATORS - MAIN
 	case LT:     v=s_pop(); tos= tos<v  ? 1:0;  break;
 	case LE:     v=s_pop(); tos= tos<=v ? 1:0;  break;
