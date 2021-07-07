@@ -178,6 +178,12 @@ function run() {
 			case MIN:    v=s_pop(); mem[vm.sp]=mem[vm.sp]<v ? mem[vm.sp]:v;    break;
 			case MAX:    v=s_pop(); mem[vm.sp]=mem[vm.sp]>v ? mem[vm.sp]:v;    break;
 			case PICK:   mem[vm.sp-2]=mem[vm.sp] ? mem[sp-2]:mem[sp-1]; sp-=2; break;
+			// MEMORY
+			case GET:    mem[vm.sp] = mem[mem[vm.sp]];        break;
+			case SET:    v=s_pop(); mem[v]=s_pop();           break;
+			case GGET:   v=mem[vm.gp+arg]; s_push(mem[v]);    break; // global variables
+			case GSET:   v=s_pop(); mem[mem[vm.gp+arg]]=v;    break; // global variables
+			case ALLOT:  v=s_pop(); s_push(vm.hp); vm.hp+=v;  break;
 		}
 	}	
 	console.log('HALT')
