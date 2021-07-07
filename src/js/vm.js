@@ -125,20 +125,38 @@ function s_push(v) { vm.mem[++vm.sp]=v }
 function r_push(v) { vm.mem[++vm.rp]=v }
 
 function run() {
+	mem = vm.mem
+	outer_loop:
 	for (i=0; i<100; i++) { // TODO: replace with while (1)
-		op = vm.mem[vm.ip]
-		arg = vm.mem[vm.ip+1]
+		op = mem[vm.ip]
+		arg = mem[vm.ip+1]
 		vm.ip += 2
 		//console.log("ip =",vm.ip,"op =",op) // XXX
 		switch (op) {
-			case CALL: r_push(vm.fp); r_push(vm.ip); vm.ip=arg; vm.fp=vm.rp;      break;
-			case RET:  vm.ip=vm.mem[vm.fp]; vm.rp=vm.fp-2; vm.fp=vm.mem[vm.fp-1]; break;
-			case JZ:   v=s_pop(); if (v==0) vm.ip=arg;                            break;
-			case GOTO: vm.ip=arg;                                                 break;
-			case HALT: return;                                                    break;
-			case NOP:                                                             break;
+			// BRANCHING
+			case CALL: r_push(vm.fp); r_push(vm.ip); vm.ip=arg; vm.fp=vm.rp; break;
+			case RET:  vm.ip=mem[vm.fp]; vm.rp=vm.fp-2; vm.fp=mem[vm.fp-1];  break;
+			case JZ:   v=s_pop(); if (v==0) vm.ip=arg;                       break;
+			case GOTO: vm.ip=arg;                                            break;
+			case HALT: break outer_loop;                                     break;
+			case NOP:                                                        break;
+			// RETURN STACK
+			case STOR:   v=s_pop(); r_push(v);          break;
+			case RTOS:   v=r_pop(); s_push(v);          break;
+			case RGET:   v=mem[vm.rp-arg]; s_push(v);   break; // loop variables
+			case VGET:   v=mem[vm.fp+arg]; s_push(v);   break; // local variables
+			case VSET:   v=s_pop(); mem[vm.fp+arg]=v;   break; // local variables
+			// DATA STACK
+			case SWAP:   v=mem[vm.sp]; mem[vm.sp]=mem[vm.sp-1]; mem[vm.sp-1]=v; break;
+			case PUSH:   s_push(arg);                                           break;
+			case PUSHA:  s_push(arg);                                           break;
+			case DUP:    s_push(mem[vm.sp]);                                    break;
+			case DROP:   v=s_pop();                                             break;
+			case OVER:   s_push(mem[sp-1]);                                     break;
+			
 		}
 	}	
+	console.log('HALT')
 }
 
 boot([1,0,0,0])
