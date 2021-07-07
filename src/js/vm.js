@@ -153,7 +153,20 @@ function run() {
 			case DUP:    s_push(mem[vm.sp]);                                    break;
 			case DROP:   v=s_pop();                                             break;
 			case OVER:   s_push(mem[sp-1]);                                     break;
-			
+			// ALU
+			case MUL:    v=s_pop(); mem[vm.sp] *= v;                        break;
+			case DIV:    v=s_pop(); mem[vm.sp] /= v;                        break; // DIV tends to be slow on microcontrollers
+			case ADD:    v=s_pop(); mem[vm.sp] += v;                        break;
+			case SUB:    v=s_pop(); mem[vm.sp] -= v;                        break;
+			case AND:    v=s_pop(); mem[vm.sp] &= v;                        break;
+			case OR:     v=s_pop(); mem[vm.sp] |= v;                        break;
+			case XOR:    v=s_pop(); mem[vm.sp] ^= v;                        break;
+			case MOD:    v=s_pop(); mem[vm.sp] %= v;                        break;
+			case SHL:    v=s_pop(); mem[vm.sp] <<= v;                       break;
+			case SHR:    v=s_pop(); mem[vm.sp] >>= v;                       break;
+			case INVERT: mem[vm.sp]= ~mem[vm.sp];                           break; 
+			case NEGATE: mem[vm.sp]= -mem[vm.sp];                           break; 
+			case ABS:    mem[vm.sp]= mem[vm.sp]<0 ? -mem[vm.sp]:mem[vm.sp]; break;
 		}
 	}	
 	console.log('HALT')
