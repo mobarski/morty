@@ -1,3 +1,7 @@
+function ms_clock() {
+	return Math.floor(Date.now())
+}
+
 vm = {}
 vm.mem = new Array(2048)
 vm.mem.fill(0)
@@ -7,6 +11,7 @@ vm.rp = 0
 vm.sp = 0
 vm.gp = 0
 vm.hp = 0
+vm.ts_vminfo = ms_clock()
 
 cfg = {}
 cfg.data_stack_size = 100
@@ -185,15 +190,23 @@ function run() {
 			case GGET:   v=mem[vm.gp+arg]; s_push(mem[v]);    break; // global variables
 			case GSET:   v=s_pop(); mem[mem[vm.gp+arg]]=v;    break; // global variables
 			case ALLOT:  v=s_pop(); s_push(vm.hp); vm.hp+=v;  break;
+			// DEBUG
+			case VMINFO:
+				console.log(`T:${mem[vm.sp]} IP:${vm.ip} SP:${vm.sp} RP:${vm.rp} dt:${ms_clock()-vm.ts_vminfo}`)
+				vm.ts_vminfo = ms_clock()
+				break;
 			// PRIMITIVE OUTPUT
 			case EMIT:   v=s_pop(); console.log(String.fromCharCode(v));  break; // TODO: screen -> textbox
 			case DOT:    v=s_pop(); console.log(v);                       break; // TODO: screen -> textbox
+			// IO
+			case IOGET: break; // TODO
+			case IOSET: break; // TODO
 		}
 	}	
 	console.log('HALT')
 }
 
-boot([PUSH,42,DOT,0,PUSH,42,EMIT,0,HALT,0])
+boot([PUSH,42,DOT,0,PUSH,42,EMIT,0,VMINFO,0,HALT,0])
 run()
 console.log('DONE')
 
