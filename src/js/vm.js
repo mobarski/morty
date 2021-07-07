@@ -174,6 +174,10 @@ function run() {
 			case GE:     v=s_pop(); mem[vm.sp]=mem[vm.sp]>=v ? 1:0;  break;
 			case EQ:     v=s_pop(); mem[vm.sp]=mem[vm.sp]==v ? 1:0;  break;
 			case NE:     v=s_pop(); mem[vm.sp]=mem[vm.sp]!=v ? 1:0;  break;
+			// COMPARATORS - AUX
+			case MIN:    v=s_pop(); mem[vm.sp]=mem[vm.sp]<v ? mem[vm.sp]:v;    break;
+			case MAX:    v=s_pop(); mem[vm.sp]=mem[vm.sp]>v ? mem[vm.sp]:v;    break;
+			case PICK:   mem[vm.sp-2]=mem[vm.sp] ? mem[sp-2]:mem[sp-1]; sp-=2; break;
 		}
 	}	
 	console.log('HALT')
