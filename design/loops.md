@@ -43,7 +43,7 @@ Loop frame should contain only one address so it can be created with one asm ins
 The rules for performing "break" and "continue" must base on only one addres.
 Continue should be jump @addr and break jump @addr+2.
 
-Break and continue don't have to require addr in the frame - they can be handled with `goto` and reusable labels:
+Break and continue don't have to require addr in the frame - they can be handled with `goto` and reusable labels BUT it requires r-stack cleanup!
 
 ```
 5 times ... break ... loop
