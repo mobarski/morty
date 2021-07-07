@@ -112,7 +112,7 @@ function run() {
 			case ALLOT:  v=s_pop(); s_push(vm.hp); vm.hp+=v;  break;
 			// DEBUG
 			case VMINFO:
-				console.log(`T:${mem[vm.sp]}\tIP:${vm.ip}\tSP:${vm.sp}\tRP:${vm.rp}\tdt:${ms_clock()-vm.ts_vminfo} ms`)
+				console.log(`TOS:${mem[vm.sp]}\tIP:${vm.ip}\tSP:${vm.sp}\tRP:${vm.rp}\tdt:${ms_clock()-vm.ts_vminfo} ms`)
 				vm.ts_vminfo = ms_clock()
 				break;
 			// PRIMITIVE OUTPUT
