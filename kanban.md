@@ -1,10 +1,10 @@
 # Kanban
 
 ## Active
+- remove old VM ops in preparation for JS VM
 - local labels (visibility limited to single function)
 
 ## Next
-- while-do-loop (`do` in then vs `do` in loop) vs begin-again loop
 - structs: usage
 - types: methods
 - modules
