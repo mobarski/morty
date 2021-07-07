@@ -106,11 +106,12 @@ const VMINFO=255
 // ----------------------------------------------------------------------------
 
 function boot(code) {
-	pos = 0
-	vm.ip = pos
+	vm.ip = 0
 	for (i in code) {
-		vm.mem[pos+i] = code[i]
+		vm.mem[i] = code[i]
+		//console.log(`boot code[${i}] -> ${code[i]} mem[${i}] -> ${vm.mem[i]}`) // XXX
 	}
+	pos = 0
 	pos += code.length + 10
 	vm.sp = pos; pos += cfg.data_stack_size
 	vm.fp = pos
@@ -184,12 +185,15 @@ function run() {
 			case GGET:   v=mem[vm.gp+arg]; s_push(mem[v]);    break; // global variables
 			case GSET:   v=s_pop(); mem[mem[vm.gp+arg]]=v;    break; // global variables
 			case ALLOT:  v=s_pop(); s_push(vm.hp); vm.hp+=v;  break;
+			// PRIMITIVE OUTPUT
+			case EMIT:   v=s_pop(); console.log(String.fromCharCode(v));  break; // TODO: screen -> textbox
+			case DOT:    v=s_pop(); console.log(v);                       break; // TODO: screen -> textbox
 		}
 	}	
 	console.log('HALT')
 }
 
-boot([1,0,0,0])
+boot([PUSH,42,DOT,0,PUSH,42,EMIT,0,HALT,0])
 run()
 console.log('DONE')
 
