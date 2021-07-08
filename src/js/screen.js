@@ -7,6 +7,8 @@ function init_screen(width=800, height=400) {
 	
 	ctx = cnv.getContext("2d")
 	ctx.imageSmoothingEnabled = false
+	
+	get_frame_buffer()
 }
 
 function fullscreen() {
@@ -21,6 +23,8 @@ function fullscreen() {
 		elem.msRequestFullscreen()
 	}
 }
+
+// ---[ canvas api based ]-----------------------------------------------------
 
 function color(r,g,b,a=1) {
 	ctx.fillStyle = `rgb(${r},${g},${b},${a})`
@@ -38,3 +42,34 @@ function cls() {
 function pset(x,y) {
 	rect(x,y,1,1)
 }
+
+// ---[ frame buffer based ]---------------------------------------------------
+
+function get_frame_buffer() {
+    image_data = ctx.getImageData(0, 0, ctx.canvas.width, ctx.canvas.height)
+    frame_buffer = image_data.data
+}
+
+function pseti(i,r,g,b,a=255) {
+	frame_buffer[i+0] = r
+	frame_buffer[i+1] = g
+	frame_buffer[i+2] = b
+	frame_buffer[i+3] = a
+}
+
+function psetxy(x,y,r,g,b,a=255) {
+	i = (y*ctx.canvas.width+x)*4
+	frame_buffer[i+0] = r
+	frame_buffer[i+1] = g
+	frame_buffer[i+2] = b
+	frame_buffer[i+3] = a
+}
+
+function flip() {
+	ctx.putImageData(image_data, 0, 0)
+	get_frame_buffer()
+}
+
+// ----------------------------------------------------------------------------
+
+init_screen() // XXX
