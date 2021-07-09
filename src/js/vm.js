@@ -162,12 +162,12 @@ function screen_set() {
 		case 3: v=s_pop(); scr.c=v; break; // scr-color
 		case 4: v=s_pop(); scr.i=v; break; // scr-set-i
 		case 5: pset(scr.i++);      break; // scr-put
-		case 6:
+		case 6: // scr-set-x
 			x = s_pop()
 			x0 = scr.i % scr.w
 			scr.i += x-x0
 			break
-		case 7:
+		case 7: // scr-set-y
 			y = s_pop()
 			y0 = Math.floor(scr.i / scr.h)
 			scr.i += (y-y0)*scr.h
