@@ -126,7 +126,3 @@ function run() {
 	}	
 	console.log('HALT')
 }
-
-boot([PUSH,42,DOT,0,PUSH,42,EMIT,0,VMINFO,0,HALT,0])
-run()
-console.log('DONE')

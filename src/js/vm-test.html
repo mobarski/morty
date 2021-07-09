@@ -1,5 +1,10 @@
 <div id="screen"></div>
 <script src="screen.js"></script>
 <a onclick='fullscreen()'>fullscreen</a/>
-
 <script src="vm.js"></script>
+
+<script>
+	rom = [PUSH,42,DOT,0,PUSH,42,EMIT,0,VMINFO,0,HALT,0]
+	boot(rom)
+	run()
+</script>
