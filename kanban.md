@@ -1,8 +1,8 @@
 # Kanban
 
 ## Active
-- C  - shorter VMINFO (TOS IP SD RD HD dt)
 - JS - IO ops - canvas
+- C  - shorter VMINFO (TOS IP SD RD HD dt)
 
 ## Next
 - local labels (visibility limited to single function)
@@ -44,6 +44,7 @@
 
 ## Done
 - JS - better code loading
+- JS - canvas api adapter
 - JS - shorter VMINFO (TOS IP SD RD HD dt)
 - vm.js prototype
 - remove old VM ops in preparation for JS VM
