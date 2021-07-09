@@ -2,7 +2,6 @@
 
 ## Active
 - C  - shorter VMINFO (TOS IP SD RD HD dt)
-- JS - better code loading
 - JS - IO ops - canvas
 
 ## Next
@@ -44,6 +43,7 @@
 - add Morty to linguist (https://github.com/github/linguist) so it can be detected by GitHub
 
 ## Done
+- JS - better code loading
 - JS - shorter VMINFO (TOS IP SD RD HD dt)
 - vm.js prototype
 - remove old VM ops in preparation for JS VM

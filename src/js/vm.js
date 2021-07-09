@@ -120,9 +120,49 @@ function run() {
 			case EMIT:   v=s_pop(); console.log(String.fromCharCode(v));  break; // TODO: screen -> textbox
 			case DOT:    v=s_pop(); console.log(v);                       break; // TODO: screen -> textbox
 			// IO
-			case IOGET: break; // TODO
-			case IOSET: break; // TODO
+			case IOGET:  io_get(arg);  break;
+			case IOSET:  io_set(arg);  break;
 		}
 	}	
 	console.log('HALT')
+}
+
+// ---[ IO ]-------------------------------------------------------------------
+
+function io_get(dev) {
+	switch (dev) {
+		case 1: screen_get(); break;
+	}
+}
+
+function io_set(dev) {
+	switch (dev) {
+		case 1: screen_set(); break;
+	}
+}
+
+// ---[ SCREEN ]---------------------------------------------------------------
+
+function screen_get() {
+	fun = s_pop()
+	switch (fun) {
+		case 3: s_push(scr.c);  break; // scr-get-color
+		case 4: s_push(scr.i);  break; // scr-get-i
+		case 5: s_push(0);      break; // TODO: scr-get (pixel-color)
+		case 6: s_push(scr.x);  break; // scr-get-x // TODO: recalc x based on i
+		case 7: s_push(scr.y);  break; // scr-get-y // TODO: recalc y based on i
+	}
+}
+
+function screen_set() {
+	fun = s_pop()
+	switch (fun) {
+		case 1: flip();             break; // scr-flip
+		case 2: cls(scr.c);         break; // scr-cls
+		case 3: v=s_pop(); scr.c=v; break; // scr-color
+		case 4: v=s_pop(); scr.i=v; break; // scr-set-i
+		case 5: pset(scr.i++);      break; // scr-put
+		case 6: break; // TODO: scr-set-x TODO: recalc i
+		case 7: break; // TODO: scr-set-y TODO: recalc i
+	}
 }
