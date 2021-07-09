@@ -3,6 +3,7 @@
 ## Active
 - C  - shorter VMINFO (TOS IP SD RD HD dt)
 - JS - better code loading
+- JS - canvas api adapter
 - JS - IO ops - canvas
 
 ## Next
