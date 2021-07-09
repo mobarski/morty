@@ -162,7 +162,11 @@ function screen_set() {
 		case 3: v=s_pop(); scr.c=v; break; // scr-color
 		case 4: v=s_pop(); scr.i=v; break; // scr-set-i
 		case 5: pset(scr.i++);      break; // scr-put
-		case 6: break; // TODO: scr-set-x TODO: recalc i
+		case 6:
+			x = s_pop()
+			x0 = scr.i % scr.w
+			scr.i += x-x0
+			break
 		case 7: break; // TODO: scr-set-y TODO: recalc i
 	}
 }
