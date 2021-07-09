@@ -3,8 +3,6 @@ scr = {}
 scr.w = 0
 scr.h = 0
 scr.c = 0
-scr.x = 0 // TODO
-scr.y = 0 // TODO
 scr.i = 0
 scr.pal = [
 	0x1a,0x18,0x28,0xff,
