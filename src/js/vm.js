@@ -159,8 +159,8 @@ function screen_set() {
 	switch (fun) {
 		case 1: flip();             break; // scr-flip
 		case 2: cls(scr.c);         break; // scr-cls
-		case 3: v=s_pop(); scr.c=v; break; // scr-color
-		case 4: v=s_pop(); scr.i=v; break; // scr-set-i
+		case 3: scr.c = s_pop();    break; // scr-color
+		case 4: scr.i = s_pop();    break; // scr-set-i
 		case 5: pset(scr.i++);      break; // scr-put
 		case 6: // scr-set-x
 			x = s_pop()
