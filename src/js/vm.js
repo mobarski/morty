@@ -146,11 +146,11 @@ function io_set(dev) {
 function screen_get() {
 	fun = s_pop()
 	switch (fun) {
-		case 3: s_push(scr.c);          break; // scr-get-color
-		case 4: s_push(scr.i);          break; // scr-get-i
-		case 5: s_push(0);              break; // TODO: scr-get (pixel-color)
-		case 6: s_push(scr.i % scr.w);  break; // scr-get-x
-		case 7: s_push(scr.y);          break; // scr-get-y // TODO: recalc y based on i
+		case 3: s_push(scr.c);                     break; // scr-get-color
+		case 4: s_push(scr.i);                     break; // scr-get-i
+		case 5: s_push(0);                         break; // TODO: scr-get (pixel-color)
+		case 6: s_push(scr.i % scr.w);             break; // scr-get-x
+		case 7: s_push(Math.floor(scr.i / scr.h)); break; // scr-get-y
 	}
 }
 
@@ -167,6 +167,10 @@ function screen_set() {
 			x0 = scr.i % scr.w
 			scr.i += x-x0
 			break
-		case 7: break; // TODO: scr-set-y TODO: recalc i
+		case 7:
+			y = s_pop()
+			y0 = Math.floor(scr.i / scr.h)
+			scr.i += (y-y0)*scr.h
+			break
 	}
 }
