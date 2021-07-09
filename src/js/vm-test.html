@@ -4,7 +4,7 @@
 <script src="vm.js"></script>
 
 <script>
-	rom = [PUSH,42,DOT,0,PUSH,42,EMIT,0,VMINFO,0,HALT,0]
+	rom = [PUSH,42,DOT,0,PUSH,42,EMIT,0,VMINFO,0,PUSH,1,PUSH,2,IOSET,1,PUSH,1,IOSET,1,HALT,0]
 	boot(rom)
 	run()
 </script>
