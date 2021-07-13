@@ -1,0 +1,77 @@
+# virtual device ID
+const SCR  1
+
+# virtual device ADDR
+const I 3
+const GETI 4
+const GETW 5 
+const GETH 6  
+const PSET 7
+
+def seti (i--)
+	SETI io.SCR
+end
+
+def I (--i)
+	GETI io.SCR
+end
+
+def W (--w)
+	GETW io.SCR
+end
+
+def H (--h)
+	GETH io.SCR
+end
+
+def X (--x) 
+	I W mod
+end
+
+def Y (--y)
+	I W div 
+end
+
+def setx (x--) :x
+	Y W mul x add seti
+end
+
+def sety (y--) :y
+	y W mul X add seti
+end
+
+def setxy (xy--) :y :x
+	y W mul x add seti
+end
+
+def put (--)
+	PSET io.SCR
+end
+
+def get (--)
+	PGET io.SCR
+end
+
+def setpalr (rc--) :c :r
+	r c SETPALR io.SCR
+end
+
+def setpalrgb (rgbc--) :c :b :g :r
+	r c setpalr
+	g c setpalg
+	b c setpalb
+end
+
+def hline (w--) 
+	w times
+		put
+	loop
+end
+
+def rect (wh--) :h :w
+	h times
+		I
+		w hline
+		W add seti
+	loop
+end

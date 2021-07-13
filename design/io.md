@@ -30,3 +30,18 @@ Better performance.
 Device ID is encoded into Arg. Function ID is passed on the stack.
 
 Better modularity.
+
+## Function Arguments
+
+## Option E
+
+Functions have access to the stack and can push/pop as many values as they want.
+
+## Option F
+
+Functions can push/pop 0 or 1 value
+
+## Option G
+
+Function always push/pop 1 value 
+
