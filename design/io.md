@@ -9,8 +9,12 @@ Selected Approach: B+D
 
 ### Option A:
  
-IO operations are separated into two categories - get and set.
-IO subsytem consists of two vectors.
+IO operations are separated into three categories - get,set,exec
+Get/Set changes virtual device memory.
+Exec runs virtual device function.
+
+Mimics normal memory.
+
 
 ### Option B:
 

@@ -55,8 +55,8 @@ if 0:
 
 if 1:
 	test_code("""
-		const x 1
-		const y 2
+		const x 1 # comment 1 ERROR: this is not treated as comment !!!
+		const y 2 ( yy yyy y yy yyy )
 		def foo
 			x y mul
 		end
