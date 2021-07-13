@@ -30,7 +30,10 @@ function init_screen(width=800, height=400) {
 	ctx = cnv.getContext("2d")
 	ctx.imageSmoothingEnabled = false
 	
-	get_frame_buffer()
+	// frame buffer
+    image_data = ctx.getImageData(0, 0, ctx.canvas.width, ctx.canvas.height)
+	frame_buffer = new Array(ctx.canvas.width * ctx.canvas.height)
+	frame_buffer.fill(0)
 }
 
 function fullscreen() {
@@ -45,11 +48,6 @@ function fullscreen() {
 	}
 }
 
-function get_frame_buffer() {
-    image_data = ctx.getImageData(0, 0, ctx.canvas.width, ctx.canvas.height)
-    frame_buffer = image_data.data
-}
-
 function flip() {
 	ctx.putImageData(image_data, 0, 0)
 }
@@ -57,20 +55,43 @@ function flip() {
 // ----------------------------------------------------------------------------
 
 function cls(c) {
-	i_max = ctx.canvas.width * ctx.canvas.height
-	for (i=0; i<i_max; i++) {
-		pset(i,c)
-	}
+	n = ctx.canvas.width * ctx.canvas.height
+	fill(0,n,c)
 }
 
 function pset(i,c) {
+	frame_buffer[i] = c
+	//
 	po = i*4 // pixel offset
 	co = c*4 // color offset
-	frame_buffer[po+0] = scr.pal[co+0]
-	frame_buffer[po+1] = scr.pal[co+1]
-	frame_buffer[po+2] = scr.pal[co+2]
-	frame_buffer[po+3] = scr.pal[co+3]
+	rgba_frame_buffer = image_data.data
+	rgba_frame_buffer[po+0] = scr.pal[co+0]
+	rgba_frame_buffer[po+1] = scr.pal[co+1]
+	rgba_frame_buffer[po+2] = scr.pal[co+2]
+	rgba_frame_buffer[po+3] = scr.pal[co+3]
 }
+
+function pget(i) {
+	return frame_buffer[i]
+}
+
+function fill(i0,n,c) {
+	co = c*4 // color offset
+	r = scr.pal[co+0]
+	g = scr.pal[co+1]
+	b = scr.pal[co+2]
+	a = scr.pal[co+3]
+	rgba_frame_buffer = image_data.data
+	for (i=i0; i<i0+n; i++) {
+		frame_buffer[i] = c
+		po = i*4 // pixel offset
+		rgba_frame_buffer[po+0] = r
+		rgba_frame_buffer[po+1] = g
+		rgba_frame_buffer[po+2] = b
+		rgba_frame_buffer[po+3] = a
+	}
+}
+
 
 // ----------------------------------------------------------------------------
 
