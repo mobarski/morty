@@ -45,10 +45,20 @@ if 0:
 		x dot
 	""")
 
-if 1:
+if 0:
 	test_code("""
 		def foo bar end
 		def bar baz end
 		def baz 123 end
 		foo dot
+	""")
+
+if 1:
+	test_code("""
+		const x 1
+		const y 2
+		def foo
+			x y mul
+		end
+		foo
 	""")

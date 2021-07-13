@@ -29,7 +29,9 @@ def compile(tokens):
 	local = []
 	glob = []
 	struct = {}
+	const = {}
 	struct_name = ''
+	const_name  = ''
 	i = 0
 	while i<len(tokens):
 		t = tokens[i]
@@ -57,6 +59,14 @@ def compile(tokens):
 				asm = t
 			out += [dict(asm=asm)]
 			continue
+		
+		# MODE: const
+		# if mode == 'const':
+			# if '\n' in t:
+				# mode = 'normal'
+				# asm = t
+			# else:
+				# const[const_name] = [t]
 		
 		# MODE: normal
 		if t[0] in '\r\n\t (#':
@@ -116,6 +126,14 @@ def compile(tokens):
 			asm = f'gget.{idx}'
 		elif t in functions:
 			asm = f"call.@{t}"
+		# 
+		elif t in const:
+			asm = f"push.{const[t]}"
+		elif t == 'const':
+			const_name = tokens[i+1] # skip whitespace
+			const[const_name] = tokens[i+3] # skip whitespace
+			i += 4 # whitespace + name + whitespace + value
+			asm = f'( const {const_name} {const[const_name]} )'
 		# mode change
 		elif t == '{':
 			asm = 'goto.@['
