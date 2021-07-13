@@ -1,0 +1,44 @@
+# virtual device ADDR
+const SCR-I 
+const SCR-W 
+const SCR-H 
+const SCR-P 
+const SCR-C 
+const SCR-R 
+const SCR-G 
+const SCR-B
+const SCR-A
+const SCR-PIX
+const SCR-INIT
+const SCR-FILL
+const SCR-FLIP
+
+# ---[ extension ]-------------------------------------------------------------
+
+def X (--x) 
+	I W mod
+end
+
+def Y (--y)
+	I W div 
+end
+
+def setx (x--) :x
+	Y W mul x add seti
+end
+
+def sety (y--) :y
+	y W mul X add seti
+end
+
+def setxy (xy--) :y :x
+	y W mul x add seti
+end
+
+def rect (wh--) :h :w
+	h times
+		I
+		w fill
+		W add seti
+	loop
+end
