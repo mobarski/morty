@@ -27,7 +27,7 @@ const XGE=40, XGT=41, XEQ=42, XNE=43, ROT=44, OVER=45, UNROT=46, VGET=47, VSET=4
 const GGET=50, GSET=51, EMIT=52, DOT=53, ECHO=54, IF=55, IFELSE=56, GOTO=57, LAMBDA=58, MIN=59
 const MAX=60, PICK=61, GTZ=62, EQZ=63, LTZ=64, TIMES=65, LOOP=66, FOR=67, RSUB=68, RGET=69
 const BEGIN=70, BREAK=71, CONTINUE=72, ADDI=73, MULI=74, ADDGET=75, ADDSET=76, IADDGET=77, IADDSET=78, LEI=79
-const LTI=80, GEI=81, GTI=82, EQI=83, NEI=84, IOGET=85, IOSET=86, VMINFO=255
+const LTI=80, GEI=81, GTI=82, EQI=83, NEI=84, IOGET=85, IOSET=86, IO=87, EXT=88, VMINFO=255
 // ----------------------------------------------------------------------------
 
 function boot(code) {
@@ -122,6 +122,8 @@ function run() {
 			// IO
 			case IOGET:  io_get(arg);  break;
 			case IOSET:  io_set(arg);  break;
+			case IO:     break; // TODO
+			case EXT:    break; // TODO
 		}
 	}	
 	console.log('HALT')

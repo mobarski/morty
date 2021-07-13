@@ -89,6 +89,8 @@ switch(op) {
 	//
 	case IOGET: break; // TODO
 	case IOSET: break; // TODO
+	case IO:    break; // TODO
+	case EXT:   break; // TODO
 	
 	// === TURBO EXTENSION ====================================================
 	

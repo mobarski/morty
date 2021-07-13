@@ -126,7 +126,7 @@ OPS = [
 	'TIMES','LOOP','FOR','RSUB','RGET','BEGIN','BREAK','CONTINUE',
 	'ADDI','MULI','ADDGET','ADDSET','IADDGET','IADDSET',
 	'LEI','LTI','GEI','GTI','EQI','NEI',
-	'IOGET','IOSET',
+	'IOGET','IOSET','IO','EXT',
 	'VMINFO'
 ]
 OPCODE = {n.lower():i for i,n in enumerate(OPS)}
