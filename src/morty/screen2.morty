@@ -1,19 +1,42 @@
-# virtual device ADDR
-const SCR-I 
-const SCR-W 
-const SCR-H 
-const SCR-P 
-const SCR-C 
-const SCR-R 
-const SCR-G 
-const SCR-B
-const SCR-A
-const SCR-PIX
-const SCR-INIT
-const SCR-FILL
-const SCR-FLIP
+macro >SCR ioset.1
+macro <SCR ioget.1
+
+# ---[ core ]-------------------------------------------------------------------
+
+def W  (--x) 1 <SCR end
+def >W (x--) 1 >SCR end
+def H  (--x) 2 <SCR end
+def >H (x--) 2 >SCR end
+def P  (--x) 3 <SCR end
+def >P (x--) 3 >SCR end
+def C  (--x) 4 <SCR end
+def >C (x--) 4 >SCR end
+def I  (--x) 5 <SCR end
+def >I (x--) 5 >SCR end
+
+def R  (--x) 6 <SCR end
+def >R (x--) 6 >SCR end
+def G  (--x) 7 <SCR end
+def >G (x--) 7 >SCR end
+def B  (--x) 8 <SCR end
+def >B (x--) 8 >SCR end
+def A  (--x) 9 <SCR end
+def >A (x--) 9 >SCR end
+
+def fill  (x--) 10 >SCR end
+def init  (--)  11 >SCR end
+def flip  (--)  12 >SCR end
+def pix   (--)  13 >SCR end (pput)
+def <pix  (--x) 13 <SCR end (pget)
+
+def <<<<RGBA (--rgba) 6 <SCR end
+def >>>>RGBA (rgba--) 6 >SCR end
 
 # ---[ extension ]-------------------------------------------------------------
+
+def cls (--)
+	0 W H mul fill
+end
 
 def X (--x) 
 	I W mod
@@ -24,21 +47,21 @@ def Y (--y)
 end
 
 def setx (x--) :x
-	Y W mul x add seti
+	Y W mul x add >I
 end
 
 def sety (y--) :y
-	y W mul X add seti
+	y W mul X add >I
 end
 
 def setxy (xy--) :y :x
-	y W mul x add seti
+	y W mul x add >I
 end
 
 def rect (wh--) :h :w
 	h times
 		I
 		w fill
-		W add seti
+		W add >I
 	loop
 end
