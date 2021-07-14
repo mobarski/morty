@@ -1,3 +1,5 @@
+# screen module - ioget / ioset version
+
 macro >SCR ioset.1
 macro <SCR ioget.1
 
