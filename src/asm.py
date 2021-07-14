@@ -32,8 +32,8 @@ def cells_to_text(cells, per_line=10, sep='\t'):
 
 def strip_comments(text):
 	text = re.sub('(?ms)[(]{2}.*?[)]{2}', ' ', text) # multiline comments (( ... ))
-	text = re.sub('\s[(].*?[)]', ' ', text) # inline comments ( ... )
-	text = re.sub('\s[#].*', ' ', text) # line comments -> code # comment
+	text = re.sub('(?:\s|^)[(].*?[)]', ' ', text) # inline comments ( ... )
+	text = re.sub('(?:\s|^)[#].*', ' ', text) # line comments -> code # comment
 	return text
 
 def tokenize(text):
@@ -76,7 +76,7 @@ def compile(tokens, op_code):
 				cells += [int(t)]
 			except ValueError:
 				N = 6
-				print('ERROR',i, tokens[max(0,i-N):i],t,tokens[i+1:i+1+N], file=sys.stderr) # TODO: error reporing
+				print('ERROR',i, tokens[max(0,i-N):i],'>>>',t,'<<<',tokens[i+1:i+1+N], file=sys.stderr) # TODO: error reporing
 	return cells
 
 
