@@ -207,7 +207,7 @@ Field names are prefixed with a dot to make them easier to grep and highlight.
 TODO
 
 ```
-macro rot  >R swap <R swap
+macro rot  stor.0 swap.0 rtos.0 swap.0
 ```
 
 Macros cannot be longer than 1 line.

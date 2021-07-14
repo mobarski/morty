@@ -57,8 +57,13 @@ if 1:
 	test_code("""
 		const x 1 # comment 1 ERROR: this is not treated as comment !!!
 		const y 2 ( yy yyy y yy yyy )
+		macro >scr push.11 ioset.1
+		macro <scr push.22 ioget.1
+		macro xxx
 		def foo
 			x y mul
 		end
 		foo
+		1 >scr 2
+		1 xxx 2
 	""")
