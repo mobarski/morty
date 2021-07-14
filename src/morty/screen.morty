@@ -1,6 +1,3 @@
-# virtual device ID
-const SCR  1
-
 # virtual device OP
 const INIT 0
 const IGET 1
@@ -20,55 +17,55 @@ const PUTPIXEL 14
 const GETPIXEL 15
 
 def I (--i)
-	IGET io.SCR
+	IGET io.1
 end
 
 def W (--w)
-	WGET io.SCR
+	WGET io.1
 end
 
 def H (--h)
-	HGET io.SCR
+	HGET io.1
 end
 
 def C (--c)
-	CGET io.SCR
+	CGET io.1
 end
 
 def P (--p)
-	PGET io.SCR
+	PGET io.1
 end
 
 def seti (i--)
-	ISET io.SCR
+	ISET io.1
 end
 
 def setc (c--)
-	CSET io.SCR
+	CSET io.1
 end
 
 def fill (w--)
-	FILL io.SCR
+	FILL io.1
 end
 
 def rgbaget(--rgba)
-	RGBAGET io.SCR
+	RGBAGET io.1
 end
 
 def rgbaset(rgba--)
-	RGBASET io.SCR
+	RGBASET io.1
 end
 
 def pset (p--)
-	PSET io.SCR
+	PSET io.1
 end
 
 def putpixel (--)
-	PUTPIXEL io.SCR
+	PUTPIXEL io.1
 end
 
 def getpixel (--c)
-	GETPIXEL io.SCR
+	GETPIXEL io.1
 end
 
 # ---[ extension ]-------------------------------------------------------------
