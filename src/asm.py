@@ -14,7 +14,9 @@ def to_cells(text, op_code, do_optimize=False, do_debug=False):
 	if do_optimize: # TODO: separate into another tool
 		tokens    = optimize(tokens, peephole.rules)
 		if do_debug:
+			print("DEBUG:", file=sys.stderr)
 			print(" ".join(tokens), file=sys.stderr)
+			print("", file=sys.stderr)
 	tokens        = split_tokens(tokens)
 	cells         = compile(tokens, op_code)
 	return cells
@@ -148,8 +150,10 @@ if __name__=="__main__":
 	cells = to_cells(code, OPCODE, do_optimize=args.O, do_debug=args.d)
 	text = cells_to_text(cells)
 	if args.d:
+		print("DEBUG:", file=sys.stderr)
 		print(text, file=sys.stderr)
 		print(f"cells: {len(cells)}", file=sys.stderr)
+		print("", file=sys.stderr)
 	if args.o:
 		open(args.o,'w').write(text)
 	else:

@@ -78,7 +78,16 @@ def replace_rget_add_getset(a,b,c):
 
 # -----------------------------------------------------------------------------
 
+def match_ret_goto(a,b,c):
+	return a=='ret.0' and b==']:' and c=='goto.@['
+
+def replace_ret_goto(a,b,c):
+	return ["ret.0"]
+
+# -----------------------------------------------------------------------------
+
 rules = [
+	(3, match_ret_goto, replace_ret_goto),
 	(2, match_ret_qret, replace_ret_qret),
 	(3, match_push_push_alu, replace_push_push_alu),
 	(2, match_push_alu, replace_push_alu),
