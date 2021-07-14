@@ -18,57 +18,21 @@ const RGBASET 13
 const PUTPIXEL 14
 const GETPIXEL 15
 
-def I (--i)
-	IGET io.1
-end
+# ---[ core ]------------------------------------------------------------------
 
-def W (--w)
-	WGET io.1
-end
-
-def H (--h)
-	HGET io.1
-end
-
-def C (--c)
-	CGET io.1
-end
-
-def P (--p)
-	PGET io.1
-end
-
-def seti (i--)
-	ISET io.1
-end
-
-def setc (c--)
-	CSET io.1
-end
-
-def fill (w--)
-	FILL io.1
-end
-
-def rgbaget(--rgba)
-	RGBAGET io.1
-end
-
-def rgbaset(rgba--)
-	RGBASET io.1
-end
-
-def pset (p--)
-	PSET io.1
-end
-
-def putpixel (--)
-	PUTPIXEL io.1
-end
-
-def getpixel (--c)
-	GETPIXEL io.1
-end
+def I (--i)  IGET io.1 end
+def W (--w)  WGET io.1 end
+def H (--h)  HGET io.1 end
+def C (--c)  CGET io.1 end
+def P (--p)  PGET io.1 end
+def seti (i--) ISET io.1 end
+def setc (c--) CSET io.1 end
+def fill (w--) FILL io.1 end
+def rgbaget(--rgba) RGBAGET  io.1 end
+def rgbaset(rgba--) RGBASET  io.1 end
+def pset (p--)      PSET     io.1 end
+def putpixel (--)   PUTPIXEL io.1 end
+def getpixel (--c)  GETPIXEL io.1 end
 
 # ---[ extension ]-------------------------------------------------------------
 

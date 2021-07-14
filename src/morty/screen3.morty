@@ -1,0 +1,56 @@
+# screen module - io/ext version
+# lower X (4?) bits for function_id, the rest for device_id
+
+# ---[ core ]------------------------------------------------------------------
+
+def W  (--x) io.17 end
+def H  (--x) io.18 end
+def P  (--x) io.19 end
+def C  (--x) io.20 end
+def >C (x--) io.21 end
+def I  (--x) io.22 end
+def >I (x--) io.23 end
+
+def init (--)  io.24 end
+def fill (x--) io.25 end
+def flip (--)  io.26 end
+def pix  (--)  io.27 end
+def <pix (--x) io.28 end
+
+def >P    (x--)    io.29 end
+def >rgba (rgba--) io.30 end
+def <rgba (--rgba) io.31 end
+
+# ---[ extension ]------------------------------------------------------------
+
+def cls (--)
+	0 W H mul fill
+end
+
+def X (--x) 
+	I W mod
+end
+
+def Y (--y)
+	I W div 
+end
+
+def setx (x--) :x
+	Y W mul x add >I
+end
+
+def sety (y--) :y
+	y W mul X add >I
+end
+
+def setxy (xy--) :y :x
+	y W mul x add >I
+end
+
+def rect (wh--) :h :w
+	h times
+		I
+		w fill
+		W add >I
+	loop
+end
