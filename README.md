@@ -465,5 +465,7 @@ Stack based labels:
 |       **Parable (mem slices)** | https://github.com/crcx/parable                                |
 |         **Vaporisation (mem)** | https://slightknack.dev/blog/vaporization/                     |
 |          **Custom Allocators** | https://slembcke.github.io/2020/10/12/CustomAllocators.html    |
+|           **Global optimizer** | https://www.researchgate.net/publication/213890050_A_portable_machine-independent_global_optimizer_-_design_and_measurements |
+
 
 [//]: # (online .md editor: https://markdown-editor.github.io/ )
