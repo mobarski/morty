@@ -6,24 +6,16 @@ macro <SCR ioget.1
 # ---[ core ]------------------------------------------------------------------
 
 def W  (--x) 1 <SCR end
-def >W (x--) 1 >SCR end
 def H  (--x) 2 <SCR end
-def >H (x--) 2 >SCR end
 def P  (--x) 3 <SCR end
-def >P (x--) 3 >SCR end
 def C  (--x) 4 <SCR end
-def >C (x--) 4 >SCR end
 def I  (--x) 5 <SCR end
-def >I (x--) 5 >SCR end
 
-def R  (--x) 6 <SCR end
-def >R (x--) 6 >SCR end
-def G  (--x) 7 <SCR end
-def >G (x--) 7 >SCR end
-def B  (--x) 8 <SCR end
-def >B (x--) 8 >SCR end
-def A  (--x) 9 <SCR end
-def >A (x--) 9 >SCR end
+def >W (x--) 1 >SCR end
+def >H (x--) 2 >SCR end
+def >P (x--) 3 >SCR end
+def >C (x--) 4 >SCR end
+def >I (x--) 5 >SCR end
 
 def fill  (x--) 10 >SCR end
 def init  (--)  11 >SCR end
@@ -64,7 +56,7 @@ def rect (wh--) :h :w
 	h times
 		I
 		w fill
-		W add >I
+		(I) W add >I
 	loop
 end
 
@@ -74,15 +66,11 @@ end
 200 >H
 init
 
-2 >C
-10 setx
-10 sety
-100 100 rect
-
-4 >C
-210 setx
-10 sety
-100 100 rect
+8 times
+	100 i mul 10 setxy
+	i >C
+	100 100 rect
+loop
 
 flip
 

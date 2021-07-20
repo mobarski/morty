@@ -28,19 +28,19 @@ if __name__=="__main__":
 	
 	if args.e:
 		dependencies = "<script>\n"
-		dependencies += open('js/vm.js').read()
-		dependencies += open('js/io.js').read()
-		dependencies += open('js/screen.js').read()
+		for path in ['js/vm.js','js/io.js','js/screen.js']:
+			dependencies += dedent(open(path).read())
 		dependencies += "</script>\n"
 	else:
-		dependencies = """
+		dependencies = dedent("""
 			<script src="vm.js"></script>
 			<script src="io.js"></script>
 			<script src="screen.js"></script>
-		"""
+		""")
 	tokens = tokenize(code)
 	rom = serialize(tokens)
-	html = f"""{dependencies}
+	html = f"""
+		{dependencies}
 		<div id="screen"></div>
 		<a onclick='fullscreen()'>fullscreen</a/>
 
