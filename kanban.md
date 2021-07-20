@@ -5,6 +5,7 @@
 - C  - shorter VMINFO (TOS IP SD RD HD dt)
 
 ## Next
+- https://rosettacode.org/wiki/Mandelbrot_set#Julia
 - local labels (visibility limited to single function)
 - structs: usage
 - types: methods
