@@ -70,30 +70,20 @@ end
 
 # ---[ test ]------------------------------------------------------------------
 
-vminfo
-
-400 >W
+800 >W
 200 >H
 init
 
-vminfo
-
 2 >C
-# 10 setx
-# 10 sety
-# 100 100 rect
-
-vminfo
+10 setx
+10 sety
+100 100 rect
 
 4 >C
-# 210 setx
-# 0 sety
-# 100 100 rect
-
-vminfo
+210 setx
+10 sety
+100 100 rect
 
 flip
-
-vminfo
 
 halt

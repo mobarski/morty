@@ -54,7 +54,7 @@ function run() {
 	mem = vm.mem
 	vm.ts_vminfo = ms_clock()
 	outer_loop:
-	for (i=0; i<100; i++) { // TODO: replace with while (1)
+	for (i=0; i<100000; i++) { // TODO: replace with while (1)
 		op = mem[vm.ip]
 		arg = mem[vm.ip+1]
 		vm.ip += 2
@@ -67,6 +67,34 @@ function run() {
 			case GOTO: vm.ip=arg;                                            break;
 			case HALT: break outer_loop;                                     break;
 			case NOP:                                                        break;
+			// LOOPS
+			case TIMES:
+				v=s_pop()
+				r_push(arg)
+				r_push(1)
+				r_push(v-1)
+				r_push(0)
+				break
+				// TODO zero iterations
+			case FOR:
+				v3=s_pop()
+				v2=s_pop()
+				v1=s_pop()
+				r_push(arg)
+				r_push(v3)
+				r_push(v2)
+				r_push(v1)
+				break // TODO zero iterations
+			case LOOP:
+				if (mem[vm.rp] < mem[vm.rp-1]) {
+					vm.ip = arg
+					mem[vm.rp] += mem[vm.rp-2]
+				} else {
+					vm.rp -= 4
+				} 
+				break
+			case BREAK:    vm.ip=mem[vm.rp-3]+2; vm.rp-=4; break;
+			case CONTINUE: vm.ip=mem[vm.rp-3];             break;
 			// RETURN STACK
 			case STOR:   v=s_pop(); r_push(v);          break;
 			case RTOS:   v=r_pop(); s_push(v);          break;
