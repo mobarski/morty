@@ -98,6 +98,8 @@ def potential-energy (m h -- e)
 end
 ```
 
+[Ackerman](src/test/morty/acker.morty)
+
 ## Comments
 
 Morty has three kinds of comments:
