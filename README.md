@@ -98,14 +98,15 @@ def potential-energy (m h -- e)
 end
 ```
 
-[Ackermann's Function](src/test/morty/acker.morty)
-[Fibonacci Numbers](src/test/morty/fibo.morty)
-[Nested Loops](src/test/morty/nestedloop.morty)
-[Heapsort](src/test/morty/heapsort.morty)
-[Quicksort](src/test/morty/qsort.morty)
-[Quicksort](src/test/morty/qsort2.morty)
-[Random Number Generator](src/test/morty/random.html)
-
+The Great Win32 Computer Language Shootout:
+- [Ackermann's Function](src/test/morty/acker.morty)
+- [Fibonacci Numbers](src/test/morty/fibo.morty)
+- [Nested Loops](src/test/morty/loops.morty)
+- [Heapsort](src/test/morty/heapsort.morty)
+- [Quicksort](src/test/morty/qsort.morty)
+- [Quicksort](src/test/morty/qsort2.morty)
+- [Random Number Generator](src/test/morty/random.morty)
+- [Sieve of Erathostenes](src/test/morty/sieve.morty)
 
 ## Comments
 
