@@ -70,7 +70,11 @@ if 0:
 	asm = "push.1   push.2   add.0   jz.@[   push.1   ret.0   qret.0   ]:   push.3"
 	test_asm(asm, optimize=True)
 
-if 1:
+if 0:
 	#asm = "push.1 goto.@[ 11 22 33 push.@] push.@@" # @@ after @]
 	asm = "push.1 goto.@[ 11 22 33 44 55 66 push.@@ push.@]" # @@ before @]
+	test_asm(asm)
+
+if 1:
+	asm = "push.33 push.44 aaa: push.55 !aaa push.77"
 	test_asm(asm)

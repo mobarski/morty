@@ -73,6 +73,8 @@ def compile(tokens, op_code):
 			cells += [c]
 		elif t[-1] == ':':
 			pass
+		elif t[0]=='!':
+			cells += [op_code.get('push'),'@'+t[1:]]
 		else:
 			try:
 				cells += [int(t)]
