@@ -4,6 +4,7 @@ scr.w = 0
 scr.h = 0
 scr.c = 0
 scr.i = 0
+scr.t = 0 // last sync time
 scr.pal = [
 	0x1a,0x18,0x28,0xff,
 	0x4d,0x5a,0x6c,0xff,
@@ -34,6 +35,8 @@ function init_screen(width=800, height=400) {
     image_data = ctx.getImageData(0, 0, ctx.canvas.width, ctx.canvas.height)
 	frame_buffer = new Array(ctx.canvas.width * ctx.canvas.height)
 	frame_buffer.fill(0)
+	
+	scr.t = clock()
 }
 
 function fullscreen() {
@@ -50,6 +53,11 @@ function fullscreen() {
 
 function flip() {
 	ctx.putImageData(image_data, 0, 0)
+}
+
+function clock() {
+	return new Date().getTime()
+	//return performance.now()
 }
 
 // ----------------------------------------------------------------------------

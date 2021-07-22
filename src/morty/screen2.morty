@@ -26,8 +26,8 @@ def flip  (--)  12 >SCR end
 def pset  (--)  13 >SCR end (>pixel)
 def pget  (--x) 13 <SCR end (<pixel)
 
-def <rgba (--rgba) 6 <SCR end
-def >rgba (rgba--) 6 >SCR end
+def <rgb (--rgb) 6 <SCR end
+def >rgb (rgb--) 6 >SCR end
 
 # ---[ extension ]-------------------------------------------------------------
 

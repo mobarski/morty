@@ -16,11 +16,11 @@
 
 
 def numgeon
-	0 >color   0   0   0 255 >rgba
-	1 >color  22  22  22 255 >rgba
-	2 >color 255 255 255 255 >rgba
-	3 >color 190   0   0 255 >rgba
-	4 >color   0 190   0 255 >rgba
-	5 >color   0 190 190 255 >rgba
-	6 >color 255  90 255 255 >rgba
+	0 >color   0   0   0 >rgb
+	1 >color  22  22  22 >rgb
+	2 >color 255 255 255 >rgb
+	3 >color 190   0   0 >rgb
+	4 >color   0 190   0 >rgb
+	5 >color   0 190 190 >rgb
+	6 >color 255  90 255 >rgb
 end
