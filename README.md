@@ -102,7 +102,6 @@ The Great Win32 Computer Language Shootout:
 - [Ackermann's Function](src/test/morty/acker.morty)
 - [Fibonacci Numbers](src/test/morty/fibo.morty)
 - [Nested Loops](src/test/morty/loops.morty)
-- [Heapsort](src/test/morty/heapsort.morty)
 - [Random Number Generator](src/test/morty/random.morty)
 - [Sieve of Erathostenes](src/test/morty/sieve.morty)
 
