@@ -1,8 +1,9 @@
 # Kanban
 
 ## Active
-- JS - IO ops - canvas
-- C  - shorter VMINFO (TOS IP SD RD HD dt)
+- JS - time frames / draw function
+- JS - mouse
+- C - shorter VMINFO (TOS IP SD RD HD dt)
 
 ## Next
 - https://rosettacode.org/wiki/Mandelbrot_set#Julia
@@ -44,6 +45,8 @@
 - add Morty to linguist (https://github.com/github/linguist) so it can be detected by GitHub
 
 ## Done
+- quote function (push function addr -> !name )
+- JS - IO ops - canvas
 - JS - better code loading
 - JS - canvas api adapter
 - JS - shorter VMINFO (TOS IP SD RD HD dt)
