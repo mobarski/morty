@@ -77,6 +77,10 @@ def compile(tokens):
 		# MODE: normal
 		if t[0] in '\r\n\t (#':
 			asm = t
+		elif t[-1]==':':
+			asm = t # LABEL
+		elif '.' in t:
+			asm = t # VM ASM op
 		elif t[0] in '[]':
 			asm = f' ({t}) '
 		# sugar

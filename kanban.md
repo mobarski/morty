@@ -1,12 +1,13 @@
 # Kanban
 
 ## Active
+- remove macro support
+- FIX - `push.@[` `goto.@]` `]:` in morty (`[' and `]` treated as comments) -> drop support for separators ???
 - JS - time frames / draw function
-- JS - mouse
+- JS - touch / mouse
 - C - shorter VMINFO (TOS IP SD RD HD dt)
 
 ## Next
-- https://rosettacode.org/wiki/Mandelbrot_set#Julia
 - local labels (visibility limited to single function)
 - structs: usage
 - types: methods
@@ -43,8 +44,10 @@
 - literate programming (compile from markdown)
 - multiprocessing
 - add Morty to linguist (https://github.com/github/linguist) so it can be detected by GitHub
+- https://rosettacode.org/wiki/Mandelbrot_set#Julia
 
 ## Done
+- FIX - vm.asm usage in morty
 - quote function (push function addr -> !name )
 - JS - IO ops - canvas
 - JS - better code loading

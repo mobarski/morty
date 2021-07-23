@@ -53,7 +53,7 @@ if 0:
 		foo dot
 	""")
 
-if 1:
+if 0:
 	test_code("""
 		const x 1 # comment 1 ERROR: this is not treated as comment !!!
 		const y 2 ( yy yyy y yy yyy )
@@ -66,4 +66,14 @@ if 1:
 		foo
 		1 >scr 2
 		1 xxx 2
+	""")
+
+if 1:
+	test_code("""
+		aaa:
+			push.42
+		goto.@aaa
+		push.@[
+		goto.@]
+		]:
 	""")

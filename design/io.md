@@ -2,14 +2,14 @@
 
 IO subsystem uses vectored exectution.
 
-Selected Approach: B+D
+Selected Approach: A+D+E
 
 
 ## Get+Set vs Cntl
 
 ### Option A:
  
-IO operations are separated into three categories - get,set,exec
+IO operations are separated into x categories - get,set,exec,...
 Get/Set changes virtual device memory.
 Exec runs virtual device function.
 
@@ -82,3 +82,9 @@ Most intuitive.
 
 ```
 
+## Interrupts
+
+`!fun ipt ioset.dev` - set interrupt handler to `fun`.
+VM main function starts at ip=fun and halts on ret
+
+`window.setInterval(fun, 1000.0/freq)`
