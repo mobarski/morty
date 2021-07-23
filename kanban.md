@@ -1,16 +1,16 @@
 # Kanban
 
 ## Active
-- FIX - `push.@[` `goto.@]` `]:` in morty (`[' and `]` treated as comments) -> drop support for separators ???
+- VM interrupts handlers
 - JS - time frames / draw function
 - JS - touch / mouse
-- C - shorter VMINFO (TOS IP SD RD HD dt)
 
 ## Next
+- modules
 - local labels (visibility limited to single function)
 - structs: usage
 - types: methods
-- modules
+- FIX - `push.@[` `goto.@]` `]:` in morty (`[' and `]` treated as comments) -> drop support for separators ???
 
 ## To do
 - peephole optimizer as a separate tool
@@ -46,6 +46,7 @@
 - https://rosettacode.org/wiki/Mandelbrot_set#Julia
 
 ## Done
+- C - shorter VMINFO (TOS IP SD RD HD dt)
 - remove macro support
 - FIX - vm.asm usage in morty
 - quote function (push function addr -> !name )

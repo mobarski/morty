@@ -78,7 +78,10 @@ switch(op) {
 
 	// DEBUG
 	case VMINFO:
-		fprintf(stderr,"T:%d\tSP:%d\tRP:%d\tFP:%d\tIP:%d\tHP:%d\tSDMX:%d\tRDMX:%d\tDDMX:%d\tOLI:%d\tILC:%d\tdt:%d ms \n",tos,sp,rp,fp,ip,hp,sd_max,rd_max,hd_max,oli,ilc,ms_clock()-ts_vminfo);
+		sd = sp-state.sp;
+		rd = rp-state.rp;
+		hd = hp-state.hp;
+		fprintf(stderr,"TOS:%d\tIP:%d\tSD:%d\tRD:%d\tHD:%d\tdt:%d ms \n",tos,ip,sd,rd,hd,ms_clock()-ts_vminfo);
 		fflush(stderr);
 		ts_vminfo = ms_clock();
 		break;
