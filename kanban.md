@@ -1,7 +1,6 @@
 # Kanban
 
 ## Active
-- remove macro support
 - FIX - `push.@[` `goto.@]` `]:` in morty (`[' and `]` treated as comments) -> drop support for separators ???
 - JS - time frames / draw function
 - JS - touch / mouse
@@ -47,6 +46,7 @@
 - https://rosettacode.org/wiki/Mandelbrot_set#Julia
 
 ## Done
+- remove macro support
 - FIX - vm.asm usage in morty
 - quote function (push function addr -> !name )
 - JS - IO ops - canvas

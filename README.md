@@ -215,14 +215,7 @@ Field names are prefixed with a dot to make them easier to grep and highlight.
 
 ## Macros
 
-TODO
-
-```
-macro rot  stor.0 swap.0 rtos.0 swap.0
-```
-
-Macros cannot be longer than 1 line.
-This is on purpose to keep the macros simple.
+There will be no macros in Morty.
 
 ## Lambda functions
 
