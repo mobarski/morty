@@ -85,6 +85,12 @@ function run() {
 				r_push(v2)
 				r_push(v1)
 				break // TODO zero iterations
+			case BEGIN:
+				r_push(arg)
+				r_push(0)
+				r_push(1)
+				r_push(0)
+				break
 			case LOOP:
 				if (mem[vm.rp] < mem[vm.rp-1]) {
 					vm.ip = arg
