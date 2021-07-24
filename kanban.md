@@ -1,7 +1,7 @@
 # Kanban
 
 ## Active
-- VM interrupts handlers
+- VM interrupts handlers (run function, halt when it returns)
 - JS - time frames / draw function
 - JS - touch / mouse
 
