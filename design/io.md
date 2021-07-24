@@ -88,3 +88,8 @@ Most intuitive.
 VM main function starts at ip=fun and halts on ret
 
 `window.setInterval(fun, 1000.0/freq)`
+
+Interrupt handler function must end with HALT.
+Screen redraw handler must be set before init.
+External (ie JS) init function stores the IP of the handler.
+External time event performs `vm.ip=handler; run()`.
