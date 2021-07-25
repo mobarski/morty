@@ -76,4 +76,5 @@ if 1:
 		push.@[
 		goto.@]
 		]:
+		&aaa $x
 	""")

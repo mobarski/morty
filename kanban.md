@@ -1,7 +1,6 @@
 # Kanban
 
 ## Active
-- fix !draw
 - JS - touch / mouse
 
 ## Next
@@ -44,6 +43,7 @@
 - https://rosettacode.org/wiki/Mandelbrot_set#Julia
 
 ## Done
+- fix !draw -> &draw
 - modules
 - VM interrupts handlers (run function, halt when it returns)
 - JS - time frames / draw function

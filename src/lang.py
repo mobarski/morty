@@ -129,6 +129,8 @@ def compile(tokens):
 			asm = f"call.@{t}"
 		elif t in const:
 			asm = f"push.{const[t]}"
+		elif t[0]=='&':
+			asm = f"push.@{t[1:]}"
 		#
 		elif t == 'const':
 			const_name = tokens[i+1] # skip whitespace
