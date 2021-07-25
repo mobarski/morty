@@ -2,10 +2,7 @@
 
 ## Active
 - fix !draw
-- VM interrupts handlers (run function, halt when it returns)
-- JS - time frames / draw function
 - JS - touch / mouse
-- modules
 
 ## Next
 - local labels (visibility limited to single function)
@@ -47,6 +44,9 @@
 - https://rosettacode.org/wiki/Mandelbrot_set#Julia
 
 ## Done
+- modules
+- VM interrupts handlers (run function, halt when it returns)
+- JS - time frames / draw function
 - C - shorter VMINFO (TOS IP SD RD HD dt)
 - remove macro support
 - FIX - vm.asm usage in morty

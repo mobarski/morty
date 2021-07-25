@@ -69,6 +69,11 @@ def compile(tokens):
 			asm = t # VM ASM op
 		elif t[0] in '[]':
 			asm = f' ({t}) '
+		elif t=='import':
+			name = tokens[i+1] # skip whitespace
+			i += 2 # whitespace + name
+			tokens[i:i] = get_module_tokens(name)
+			asm = ''
 		# sugar
 		elif t in ['if']:
 			asm = ''
@@ -158,6 +163,10 @@ def is_int(x):
 		return True
 	except:
 		return False
+
+def get_module_tokens(name):
+	code = open(f'morty/{name}.morty').read()
+	return tokenize(code)
 
 # ------------------------------------------------------------------------------
 

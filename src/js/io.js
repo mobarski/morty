@@ -46,22 +46,26 @@ function screen_set() {
 			scr.pal[ci+0] = s_pop() // R
 			break
 		case 10: n=s_pop(); fill(scr.i, n, scr.c); scr.i+=n; break;
-		case 11: init_screen(scr.w, scr.h); break; // scr-init
-		case 12: flip();                    break; // scr-flip
-		case 13: pset(scr.i++);             break; // scr-put
-		case 14: scr.draw_ip = s_pop(); set_draw_fun(); break;
+		case 11: init_screen(scr.w, scr.h);  break; // scr-init
+		case 12: flip();                     break; // scr-flip
+		case 13: pset(scr.i++);              break; // scr-put
+		case 14: v=s_pop(); set_draw_fun(v); break;
 	}
 }
 
-function set_draw_fun() {
+// TODO: rename
+function set_draw_fun(draw_ip) {
 	if (scr.draw_interval_id) {
 		window.clearInterval(scr.draw_interval_id)
 	}
+	// TODO: rename
 	function draw_fun() {
-		if (scr.draw_ip) {
-			vm.ip = scr.draw_ip
+		if (draw_ip) {
+			vm.ip = draw_ip
 			run()
 		}
+		// TODO: mouse x,y,button
 	}
-	scr.draw_interval_id = window.setInterval(draw_fun, 1000.0/50) // TODO: freq
+	scr.draw_interval_id = window.setInterval(draw_fun, 1000.0/60) // TODO: freq
 }
+
