@@ -66,9 +66,20 @@ end
 
 # ---[ test ]------------------------------------------------------------------
 
+{ 0 } $x
+def draw
+	x 1 add $x
+	x 8 mod >color
+	x >I
+	10 10 rect
+	flip
+	halt
+end
+
 800 >width
 200 >height
   8 >colors
+push.@draw 14 ioset.1
 init
 
 8 times

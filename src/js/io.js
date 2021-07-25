@@ -49,5 +49,15 @@ function screen_set() {
 		case 11: init_screen(scr.w, scr.h); break; // scr-init
 		case 12: flip();                    break; // scr-flip
 		case 13: pset(scr.i++);             break; // scr-put
+		case 14: scr.draw_ip = s_pop(); set_draw_fun(); break;
+	}
+}
+
+function set_draw_fun() {
+	scr.draw_fun = function() {
+		if (scr.draw_ip) {
+			vm.ip = scr.draw_ip
+			run()
+		}
 	}
 }

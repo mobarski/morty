@@ -15,7 +15,7 @@ scr.pal = [
 	0xb0,0x48,0x48,0xff,
 	0x5b,0x2e,0x33,0xff,
 ] // https://lospec.com/palette-list/primal8
-
+scr.draw_fun = function () {}
 
 // ----------------------------------------------------------------------------
 
@@ -42,6 +42,7 @@ function init_screen(width=800, height=400) {
 	cnv.addEventListener('mouseup',on_mouse_up)
 	cnv.addEventListener('mousedown',on_mouse_down)
 	cnv.addEventListener('mousemove',on_mouse_move)
+	window.setInterval(scr.draw_fun,1000.0/10) // TODO: freq
 }
 
 function fullscreen() {
