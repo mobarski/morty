@@ -5,9 +5,9 @@
 - VM interrupts handlers (run function, halt when it returns)
 - JS - time frames / draw function
 - JS - touch / mouse
+- modules
 
 ## Next
-- modules
 - local labels (visibility limited to single function)
 - structs: usage
 - types: methods

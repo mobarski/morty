@@ -54,10 +54,14 @@ function screen_set() {
 }
 
 function set_draw_fun() {
-	scr.draw_fun = function() {
+	if (scr.draw_interval_id) {
+		window.clearInterval(scr.draw_interval_id)
+	}
+	function draw_fun() {
 		if (scr.draw_ip) {
 			vm.ip = scr.draw_ip
 			run()
 		}
 	}
+	scr.draw_interval_id = window.setInterval(draw_fun, 1000.0/50) // TODO: freq
 }
