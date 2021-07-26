@@ -1,7 +1,6 @@
 # Kanban
 
 ## Active
-- JS - touch / mouse
 
 ## Next
 - local labels (visibility limited to single function)
@@ -43,6 +42,7 @@
 - https://rosettacode.org/wiki/Mandelbrot_set#Julia
 
 ## Done
+- JS - touch / mouse
 - fix !draw -> &draw
 - modules
 - VM interrupts handlers (run function, halt when it returns)

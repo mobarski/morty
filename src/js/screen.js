@@ -108,40 +108,45 @@ function fill(i0,n,c) {
 
 // ---[ TOUCH ]----------------------------------------------------------------
 
-// this is from itsy0, its not that accurate :/
-function scale_mouse_xy(cx,cy) {
-	var bcr = cnv.getBoundingClientRect()
-	var bcr_left = bcr.left
-	var bcr_top = bcr.top
-	var bcr_w = bcr.width
-	var bcr_h = bcr.height
-	
-	var ratio = bcr_h/scr.h
-	var width = scr.w * ratio
-	var bcr_left = 0.5*(bcr_w-width)
-	
-	var x = (cx - bcr_left) / ratio
-	var y = (cy - bcr_top) / ratio
-	return [x,y]
+scr.touch_pos = -1
+
+function get_mouse_xy(e) {
+	var ratio = cnv.clientWidth / scr.w
+
+	var ox = e.offsetX
+	var oy = e.offsetY
+	var x = ox / ratio
+	var y = oy / ratio
+	return [x,y,ox,oy]
 }
 
 function on_mouse_down(e) {
 	if (e.button!=0) return;
-	console.log('left mouse button DOWN',e)
+	//console.log('left mouse button DOWN',e)
+	var xy = get_mouse_xy(e)
+	var x = xy[0]
+	var y = xy[1]
+	var ox = xy[2]
+	var oy = xy[3]	
+	scr.touch_pos = Math.round(y*scr.w + x)
+	console.log('mouse down',ox,oy,x,y,scr.touch_pos)
 }
 
 function on_mouse_up(e) {
-	if (e.button!=0) return;
-	console.log('left mouse button UP',e)
+	if (e.button!=0) return
+	//console.log('left mouse button UP',scr.touch_pos)
+	scr.touch_pos = -1
 }
 
 function on_mouse_move(e) {
-	var cx = e.clientX
-	var cy = e.clientY
-	var xy = scale_mouse_xy(cx,cy)
+	if (scr.touch_pos < 0) return
+	var xy = get_mouse_xy(e)
 	var x = xy[0]
 	var y = xy[1]
-	console.log('mouse move',cx,cy,x,y,e)
+	var ox = xy[2]
+	var oy = xy[3]	
+	scr.touch_pos = Math.round(y*scr.w + x)
+	console.log('mouse move',ox,oy,x,y,scr.touch_pos)
 }
 
 // ----------------------------------------------------------------------------

@@ -26,7 +26,7 @@ def pget  (--x) 13 ioget.1 end (<pixel)
 def <rgb (--rgb) 6 ioget.1 end
 def >rgb (rgb--) 6 ioset.1 end
 
-def touch (--i) end # return screen position (I) of the touch or -1 (no touch)
+def touch (--i) 15 ioget.1 end # return screen position (I) of the touch or -1 (no touch)
 
 # micro-core: >color I >I fill pget touch
 

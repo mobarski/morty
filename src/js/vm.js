@@ -160,5 +160,5 @@ function run() {
 			case EXT:    break; // TODO
 		}
 	}	
-	console.log('HALT')
+	//console.log('HALT')
 }

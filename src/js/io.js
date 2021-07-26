@@ -28,6 +28,7 @@ function screen_get() {
 			s_push(scr.pal[ci+2]) // B
 			break
 		case 13: s_push(pget()); scr.i++;          break;
+		case 15: s_push(scr.touch_pos);            break; 
 	}
 }
 
