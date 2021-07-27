@@ -60,14 +60,14 @@ Most intuitive.
 ```
 # Option A+D - ioget+ioset + funid on stack
 
-	const I 4
+	def I 4 end
 	I ioget.screen -- <screen.I -- I -- <I
 	I ioset.screen -- >screen.I -- :I -- $I -- >I
 	
 # Option B+D - io + funid on stack
 
-	const IGET 4
-	const ISET 5
+	def IGET 4 end
+	def ISET 5 end
 	
 	IGET io.screen
 	ISET io.screen

@@ -42,13 +42,14 @@
 - https://rosettacode.org/wiki/Mandelbrot_set#Julia
 
 ## Done
+- remove `const` from the language -> optimizer
 - JS - touch / mouse
 - fix !draw -> &draw
 - modules
 - VM interrupts handlers (run function, halt when it returns)
 - JS - time frames / draw function
 - C - shorter VMINFO (TOS IP SD RD HD dt)
-- remove macro support
+- remove macro support -> optimizer
 - FIX - vm.asm usage in morty
 - quote function (push function addr -> !name )
 - JS - IO ops - canvas

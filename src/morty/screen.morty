@@ -1,22 +1,22 @@
 # screen module - io.op version
 
 # virtual device OP
-const INIT 0
-const IGET 1
-const ISET 2
-const WGET 3
-const WSET 4
-const HGET 5
-const HSET 6
-const CGET 7
-const CSET 8
-const PGET 9
-const PSET 10
-const FILL 11
-const RGBAGET 12
-const RGBASET 13
-const PUTPIXEL 14
-const GETPIXEL 15
+def INIT 0 end
+def IGET 1 end
+def ISET 2 end
+def WGET 3 end
+def WSET 4 end
+def HGET 5 end
+def HSET 6 end
+def CGET 7 end
+def CSET 8 end
+def PGET 9 end
+def PSET 10 end
+def FILL 11 end
+def RGBAGET 12 end
+def RGBASET 13 end
+def PUTPIXEL 14 end
+def GETPIXEL 15 end
 
 # ---[ core ]------------------------------------------------------------------
 
