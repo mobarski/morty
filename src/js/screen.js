@@ -110,31 +110,32 @@ function fill(i0,n,c) {
 
 scr.touch_pos = -1
 
+// TODO: fullscreen width < window width -> how to detect?
 function get_mouse_xy(e) {
 	var ratio = cnv.clientWidth / scr.w
+	var top   = (cnv.clientHeight - scr.h * ratio) / 2
+	var left  = 0 / 2 // TODO
 
 	var ox = e.offsetX
 	var oy = e.offsetY
-	var x = ox / ratio
-	var y = oy / ratio
-	return [x,y,ox,oy]
+	var x = Math.round((ox-left) / ratio)
+	var y = Math.round((oy-top) / ratio)
+	return [x,y,ox,oy,top,ratio]
 }
 
+// TODO: out of screen coords
 function on_mouse_down(e) {
 	if (e.button!=0) return;
 	//console.log('left mouse button DOWN',e)
 	var xy = get_mouse_xy(e)
 	var x = xy[0]
-	var y = xy[1]
-	var ox = xy[2]
-	var oy = xy[3]	
+	var y = xy[1]	
 	scr.touch_pos = Math.round(y*scr.w + x)
-	console.log('mouse down',ox,oy,x,y,scr.touch_pos)
+	console.log('mouse down',scr.touch_pos,x,y,xy[2],xy[3],xy[4],xy[5],e)
 }
 
 function on_mouse_up(e) {
 	if (e.button!=0) return
-	//console.log('left mouse button UP',scr.touch_pos)
 	scr.touch_pos = -1
 }
 
@@ -143,10 +144,7 @@ function on_mouse_move(e) {
 	var xy = get_mouse_xy(e)
 	var x = xy[0]
 	var y = xy[1]
-	var ox = xy[2]
-	var oy = xy[3]	
 	scr.touch_pos = Math.round(y*scr.w + x)
-	console.log('mouse move',ox,oy,x,y,scr.touch_pos)
 }
 
 // ----------------------------------------------------------------------------
