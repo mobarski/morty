@@ -116,7 +116,7 @@ function run() {
 			case OVER:   s_push(mem[sp-1]);                                     break;
 			// ALU
 			case MUL:    v=s_pop(); mem[vm.sp] *= v;                        break;
-			case DIV:    v=s_pop(); mem[vm.sp] /= v;                        break; // DIV tends to be slow on microcontrollers
+			case DIV:    v=s_pop(); mem[vm.sp] = Math.floor(mem[vm.sp]/v);  break; // DIV tends to be slow on microcontrollers
 			case ADD:    v=s_pop(); mem[vm.sp] += v;                        break;
 			case SUB:    v=s_pop(); mem[vm.sp] -= v;                        break;
 			case AND:    v=s_pop(); mem[vm.sp] &= v;                        break;

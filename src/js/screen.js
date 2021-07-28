@@ -131,7 +131,7 @@ function on_mouse_down(e) {
 	var x = xy[0]
 	var y = xy[1]	
 	scr.touch_pos = Math.round(y*scr.w + x)
-	console.log('mouse down',scr.touch_pos,x,y,xy[2],xy[3],xy[4],xy[5],e)
+	//console.log('mouse down',scr.touch_pos,x,y,xy[2],xy[3],xy[4],xy[5],e)
 }
 
 function on_mouse_up(e) {
