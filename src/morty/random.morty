@@ -1,0 +1,6 @@
+
+{ 42 } $LAST
+def randint (max--n)
+	LAST get 3877 mul 29573 add 139968 mod LAST set
+	(max) LAST get mul 139968 div (n)
+end
